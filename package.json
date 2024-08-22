@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier-fix": "prettier --write ./src",
+    "prettier-fix": "prettier --write ./app",
     "prepare": "husky install"
   },
   "dependencies": {
