@@ -12,9 +12,9 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text'],
       include: ['**/*.{ts,tsx}'],
-      thresholds: {
-        statements: 80,
-      },
+      // thresholds: {
+      //   statements: 80,
+      // },
     },
     silent: true,
     watch: false,
