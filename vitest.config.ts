@@ -4,14 +4,14 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
-    setupFiles: './tests/setup.ts',
+    setupFiles: 'src/tests/setup.ts',
     css: false,
     coverage: {
       enabled: true,
       all: true,
       provider: 'v8',
       reporter: ['text'],
-      include: ['**/*.{ts,tsx}'],
+      include: ['src/**/*.{ts,tsx}'],
       // thresholds: {
       //   statements: 80,
       // },
