@@ -1,7 +1,26 @@
+'use client';
+
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import React from 'react';
-
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { authSchema } from '../../validation/authValidation';
+import Link from 'next/link';
 const SignIn = () => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(authSchema),
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
+  });
+
+  const onSubmit = () => {
+    console.log('123');
+  };
+
   return (
     <Container maxWidth="xs">
       <Box
@@ -13,29 +32,57 @@ const SignIn = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Sign In
+          Welcome back!
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
+        <p
+          style={{
+            fontSize: '15px',
+            fontWeight: 400,
+            textAlign: 'center',
+            marginTop: '10px',
+            color: 'rgba(0, 0, 0, 0.54)',
+          }}
+        >
+          We are happy to see you again! Sign in to your account to continue
+        </p>
+        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
+          <Controller
             name="email"
-            autoComplete="email"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                {...field}
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                autoComplete="email"
+                error={!!errors.email}
+                helperText={errors.email?.message}
+              />
+            )}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
+          <Controller
             name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                {...field}
+                margin="normal"
+                required
+                fullWidth
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+                error={!!errors.password}
+                helperText={errors.password?.message}
+              />
+            )}
           />
-
           <Button
             type="submit"
             fullWidth
@@ -54,6 +101,20 @@ const SignIn = () => {
           >
             Sign In
           </Button>
+          <p
+            style={{
+              fontSize: '15px',
+              fontWeight: 400,
+              textAlign: 'center',
+              marginTop: '10px',
+              color: 'rgba(0, 0, 0, 0.54)',
+            }}
+          >
+            Don&apos;t have an account?{' '}
+            <Link href="/signup" style={{ color: 'black' }}>
+              Sign Up
+            </Link>
+          </p>
         </Box>
       </Box>
     </Container>

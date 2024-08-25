@@ -1,7 +1,25 @@
-import { Box, Button, Container, TextField, Typography } from '@mui/material';
-import React from 'react';
+'use client';
 
+import { Box, Button, Container, Link, TextField, Typography } from '@mui/material';
+import React from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { authSchema } from '../../validation/authValidation';
 const SignUp = () => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(authSchema),
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
+  });
+
+  const onSubmit = () => {
+    console.log('123');
+  };
+
   return (
     <Container maxWidth="xs">
       <Box
@@ -13,47 +31,94 @@ const SignUp = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Sign Up
+          Create an account
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
+        <p
+          style={{
+            fontSize: '15px',
+            fontWeight: 400,
+            textAlign: 'center',
+            marginTop: '10px',
+            color: 'rgba(0, 0, 0, 0.54)',
+          }}
+        >
+          New here? Sign up and begin your journey
+        </p>
+        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
+          <Controller
             name="username"
-            autoComplete="username"
-            autoFocus
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                {...field}
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                autoComplete="username"
+                // autoFocus add or not?
+                error={!!errors.username}
+                helperText={errors.username?.message}
+              />
+            )}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
+          <Controller
             name="email"
-            autoComplete="email"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                {...field}
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                autoComplete="email"
+                error={!!errors.email}
+                helperText={errors.email?.message}
+              />
+            )}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
+          <Controller
             name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                {...field}
+                margin="normal"
+                required
+                fullWidth
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+                error={!!errors.password}
+                helperText={errors.password?.message}
+              />
+            )}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
+          <Controller
             name="confirmPassword"
-            label="Confirm Password"
-            type="password"
-            id="confirmPassword"
-            autoComplete="current-password"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                {...field}
+                margin="normal"
+                required
+                fullWidth
+                label="Confirm Password"
+                type="password"
+                id="confirmPassword"
+                autoComplete="new-password"
+                error={!!errors.confirmPassword}
+                helperText={errors.confirmPassword?.message}
+              />
+            )}
           />
           <Button
             type="submit"
@@ -73,6 +138,20 @@ const SignUp = () => {
           >
             Sign Up
           </Button>
+          <p
+            style={{
+              fontSize: '15px',
+              fontWeight: 400,
+              textAlign: 'center',
+              marginTop: '10px',
+              color: 'rgba(0, 0, 0, 0.54)',
+            }}
+          >
+            Already have an account? {''}
+            <Link href="/signin" style={{ color: 'black', textDecoration: 'none' }}>
+              Sign In
+            </Link>
+          </p>
         </Box>
       </Box>
     </Container>
