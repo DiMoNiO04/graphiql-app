@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function Home() {
-  return <main>Start project</main>;
+  return <p>Start project</p>;
 }
