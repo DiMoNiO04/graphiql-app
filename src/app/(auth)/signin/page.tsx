@@ -4,21 +4,35 @@ import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { authSchema } from '../../validation/authValidation';
+import { authSignInSchema } from '../../validation/authValidation';
+import { auth } from '@/src/app/firebase/config';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+
 import Link from 'next/link';
+import { AuthFormData } from '@/src/types/authTypes';
 const SignIn = () => {
   const {
     control,
     handleSubmit,
+
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(authSchema),
+    resolver: yupResolver(authSignInSchema),
     mode: 'onBlur',
     reValidateMode: 'onChange',
   });
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
 
-  const onSubmit = () => {
-    console.log('123');
+  const handleSignIn = async (data: AuthFormData) => {
+    console.log('handleSignIn called', data);
+    const { email, password } = data;
+    try {
+      console.log('Attempting to sign in');
+      const res = await signInWithEmailAndPassword(email, password);
+      console.log('Sign in response:', res);
+    } catch (e) {
+      console.error('Error during sign in:', e);
+    }
   };
 
   return (
@@ -45,7 +59,7 @@ const SignIn = () => {
         >
           We are happy to see you again! Sign in to your account to continue
         </p>
-        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
+        <Box component="form" noValidate onSubmit={handleSubmit(handleSignIn)} sx={{ mt: 1 }}>
           <Controller
             name="email"
             control={control}

@@ -4,7 +4,7 @@ import { Box, Button, Container, Link, TextField, Typography } from '@mui/materi
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { authSchema } from '../../validation/authValidation';
+import { authSignUpSchema } from '../../validation/authValidation';
 import { auth } from '@/src/app/firebase/config';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { AuthFormData } from '@/src/types/authTypes';
@@ -18,16 +18,23 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(authSchema),
+    resolver: yupResolver(authSignUpSchema),
     mode: 'onBlur',
     reValidateMode: 'onChange',
   });
 
   const onSubmit = async (data: AuthFormData) => {
+    console.log(data);
     try {
-      const { email, password } = data;
+      const { email, password, username } = data;
       console.log(email);
-      const res = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // await setDoc(doc(db, 'users', user.uid), {
+      //   username,
+      //   email,
+      // });
       toast.success('Account created successfully');
       setTimeout(() => {
         router.push('/signin');
