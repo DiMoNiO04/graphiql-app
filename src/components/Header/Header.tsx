@@ -26,7 +26,7 @@ const Header = () => {
           zIndex: -1,
           inset: 0,
           pointerEvents: 'none',
-          backgroundColor: trigger ? 'rgba(0, 0, 0, 0.3)' : 'rgba(255, 255, 255, 0.9)',
+          backgroundColor: trigger ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.9)',
           transition: 'all 0.2s ease',
         },
       })}

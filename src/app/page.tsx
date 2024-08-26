@@ -39,13 +39,14 @@ export default function Home() {
         </Stack>
         <Stack>
           <Heading>{messages.mainPage.headings.course}</Heading>
-          <Paragraph>{messages.mainPage.info.p4}</Paragraph>
+          <Paragraph>{messages.mainPage.info.p5}</Paragraph>
+          <Paragraph>{messages.mainPage.info.p6}</Paragraph>
         </Stack>
         <Stack>
           <Heading sx={{ textAlign: 'center' }}>{messages.mainPage.headings.team}</Heading>
           <Stack direction="row" gap="1.5rem" flexWrap="wrap" justifyContent="center">
-            {developers.map(({ imgSrc, imgAlt, nameOfPerson }, index) => (
-              <TeamMemberCard key={index} src={imgSrc} alt={imgAlt} name={nameOfPerson} />
+            {developers.map(({ imgSrc, imgAlt, nameOfPerson, contribute }, index) => (
+              <TeamMemberCard key={index} src={imgSrc} alt={imgAlt} name={nameOfPerson} contribution={contribute} />
             ))}
           </Stack>
         </Stack>
