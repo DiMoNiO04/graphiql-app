@@ -5,6 +5,6 @@ import { expect, test } from 'vitest';
 
 test('renders component with text', () => {
   render(<Home />);
-  const element = screen.getByText(/start/i);
+  const element = screen.getByText(/team/i);
   expect(element).toBeInTheDocument();
 });
