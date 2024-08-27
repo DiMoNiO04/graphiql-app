@@ -9,6 +9,7 @@ export default async function Home() {
   console.log(session.name);
   return (
     <main>
+      Welcome
       {session ? (
         <h1>Welcome, {session.name}</h1>
       ) : (
