@@ -10,9 +10,12 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { AuthFormData } from '@/src/types/authTypes';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 
 const SignUp = () => {
   const router = useRouter();
+  const [updateProfile] = useUpdateProfile(auth);
+  const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
   const {
     control,
     handleSubmit,
@@ -28,13 +31,13 @@ const SignUp = () => {
     try {
       const { email, password, username } = data;
       console.log(email);
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+      const userCredential = await createUserWithEmailAndPassword(email, password);
+      if (userCredential) {
+        const user = userCredential.user;
+      }
 
-      // await setDoc(doc(db, 'users', user.uid), {
-      //   username,
-      //   email,
-      // });
+      await updateProfile({ displayName: username });
+
       toast.success('Account created successfully');
       setTimeout(() => {
         router.push('/signin');
