@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers';
 import React from 'react';
 import { getSession } from '../lib/auth/getUserData';
 
@@ -10,7 +9,13 @@ export default async function Home() {
   console.log(session.name);
   return (
     <main>
-      <h1>Welcome, {session.name}</h1>
+      {session ? (
+        <h1>Welcome, {session.name}</h1>
+      ) : (
+        <div>
+          <button>SignIn</button>
+        </div>
+      )}
     </main>
   );
 }
