@@ -32,7 +32,7 @@ const SignIn = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(email, password);
       const token = await userCredential?.user.getIdToken();
-      setCookie('token', token);
+      setCookie('graphiql-app-f134va', token);
       if (userCredential && userCredential.user) {
         router.push('/');
       } else {

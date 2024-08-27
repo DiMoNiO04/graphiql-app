@@ -3,7 +3,7 @@ import { getFirebaseAuth } from '../../app/firebase/firebase-admin';
 
 export async function getSession() {
   const cookieStore = cookies();
-  const token = cookieStore.get('token');
+  const token = cookieStore.get('graphiql-app-f134va');
   if (!token) {
     return null;
   }
