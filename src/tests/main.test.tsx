@@ -1,10 +1,24 @@
 import React from 'react';
 import Home from '../app/page';
 import { render, screen } from '@testing-library/react';
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 
-test('renders component with text', () => {
-  render(<Home />);
-  const element = screen.getByText(/welcome/i);
+vi.mock('next/headers', () => ({
+  cookies: () => ({
+    get: vi.fn().mockReturnValue({ value: 'mocked-token' }),
+  }),
+}));
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+  }),
+}));
+
+test('renders component with text', async () => {
+  const HomeComponent = (await Home()) as React.ReactElement;
+  render(HomeComponent);
+
+  const element = await screen.findByText(/SignIn/i);
   expect(element).toBeInTheDocument();
 });
