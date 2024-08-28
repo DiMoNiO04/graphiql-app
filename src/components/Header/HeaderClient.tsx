@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Logo from './Logo/Logo';
 import LanguageButton from './Language-button/LanguageButton';
 import { DecodedIdToken } from 'firebase-admin/auth';
+import SignOutButton from '../ui/SignOutButton';
 
 const HeaderClient = ({ session }: { session: DecodedIdToken | null }) => {
   const trigger = useScrollTrigger({
@@ -46,22 +47,7 @@ const HeaderClient = ({ session }: { session: DecodedIdToken | null }) => {
         >
           <LanguageButton />
           {session ? (
-            <Button
-              variant="contained"
-              component={Link}
-              href="/signin"
-              sx={{
-                transition: 'all 0.4s ease',
-                backgroundColor: '#000000',
-                color: '#ffffff',
-                '&:hover': {
-                  color: '#000000',
-                  backgroundColor: '#ffffff',
-                },
-              }}
-            >
-              Sign out
-            </Button>
+            <SignOutButton />
           ) : (
             <>
               <Button
