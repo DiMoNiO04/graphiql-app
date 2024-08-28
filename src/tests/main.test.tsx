@@ -4,9 +4,9 @@ import { render, screen } from '@testing-library/react';
 import { expect, test, vi } from 'vitest';
 
 vi.mock('next/headers', () => ({
-  cookies: () => ({
-    get: vi.fn().mockReturnValue({ value: 'mocked-token' }),
-  }),
+  cookies: vi.fn(() => ({
+    get: vi.fn(),
+  })),
 }));
 
 vi.mock('next/navigation', () => ({

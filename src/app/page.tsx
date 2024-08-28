@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from '@mui/material';
-import React, { use } from 'react';
+import React from 'react';
 import Paragraph from '../components/Typography/Paragraph';
 import Heading from '../components/Typography/Heading';
 import { developers } from '../constants/constants';
