@@ -1,15 +1,17 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, ButtonGroup, Stack, Typography } from '@mui/material';
 import React from 'react';
-import Paragraph from '../components/Typography/Paragraph';
-import Heading from '../components/Typography/Heading';
+import Paragraph from '../components/ui/Paragraph';
+import Heading from '../components/ui/Heading';
 import { developers } from '../constants/constants';
 import TeamMemberCard from '../components/TeamMemberCard/TeamMemberCard';
 import { messages } from '../locales/en';
 import { getSession } from '../lib/auth/getUserData';
+import BaseButton from '../components/ui/Button';
 
 export default async function Home() {
   const user = await getSession();
   const name = user?.name || 'User';
+
   return (
     <Box
       sx={{
@@ -20,35 +22,56 @@ export default async function Home() {
       }}
     >
       {user?.name ? (
-        <Typography
-          variant="h1"
-          component="h1"
-          sx={{
-            textAlign: 'center',
-            fontSize: '3rem',
-            fontWeight: '900',
-            color: '#266db6',
-            paddingBottom: '2rem',
-          }}
-        >
-          {`${messages.mainPage.greeting}, ${name}!`}
-        </Typography>
+        <>
+          <Typography
+            variant="h1"
+            component="h1"
+            sx={{
+              textAlign: 'center',
+              fontSize: '3rem',
+              fontWeight: '900',
+              color: '#266db6',
+              paddingBottom: '2rem',
+            }}
+          >
+            {`${messages.mainPage.greeting} Back, ${name}!`}
+          </Typography>
+          <ButtonGroup
+            sx={{
+              marginBottom: '2rem',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <BaseButton href="/graphiQL-client">GraphiQL Client</BaseButton>
+            <BaseButton href="/rest-client">REST Client</BaseButton>
+            <BaseButton href="/history">History</BaseButton>
+          </ButtonGroup>
+        </>
       ) : (
-        // TODO
-        // Add a login button here
-        <Typography
-          variant="h1"
-          component="h1"
-          sx={{
-            textAlign: 'center',
-            fontSize: '3rem',
-            fontWeight: '900',
-            color: '#266db6',
-            paddingBottom: '2rem',
-          }}
-        >
-          {messages.mainPage.greeting}
-        </Typography>
+        <>
+          <Typography
+            variant="h1"
+            component="h1"
+            sx={{
+              textAlign: 'center',
+              fontSize: '3rem',
+              fontWeight: '900',
+              color: '#266db6',
+              paddingBottom: '2rem',
+            }}
+          >
+            {`${messages.mainPage.greeting}!`}
+          </Typography>
+          <ButtonGroup
+            sx={{
+              marginBottom: '2rem',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <BaseButton href="/signin">Sign In</BaseButton>
+            <BaseButton href="/signup">Sign up</BaseButton>
+          </ButtonGroup>
+        </>
       )}
       <Stack spacing={3}>
         <Stack>

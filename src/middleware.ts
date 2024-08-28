@@ -3,10 +3,18 @@ import type { NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   const authRoutes = ['/signin', '/signup'];
-  // check if the current route is an auth route
+  const routes = ['/rest-client', '/history', '/graphiQL-client'];
+
   if (authRoutes.includes(request.nextUrl.pathname)) {
     const sessionCookie = request.cookies.get('graphiql-app-f134va');
     if (sessionCookie) {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+  }
+
+  if (routes.includes(request.nextUrl.pathname)) {
+    const sessionCookie = request.cookies.get('graphiql-app-f134va');
+    if (!sessionCookie) {
       return NextResponse.redirect(new URL('/', request.url));
     }
   }
@@ -14,5 +22,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/signin', '/signup'],
+  matcher: ['/signin', '/signup', '/rest-client', '/history', '/graphiQL-client'],
 };
