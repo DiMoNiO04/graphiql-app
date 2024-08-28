@@ -109,6 +109,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100svh;
+  max-width: 1920px;
 }
 
 .main {

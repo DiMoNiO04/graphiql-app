@@ -1,21 +1,14 @@
 'use client';
 
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
-import React, { use } from 'react';
+import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { authSignInSchema } from '../../validation/authValidation';
-import { auth } from '@/src/app/firebase/config';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { setCookie } from 'cookies-next';
 import Link from 'next/link';
-import { AuthFormData } from '@/src/types/authTypes';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+import { useSignInUser } from '@/src/lib/auth/useSignInUser';
 
 const SignIn = () => {
-  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
-  const router = useRouter();
   const {
     control,
     handleSubmit,
@@ -26,24 +19,7 @@ const SignIn = () => {
     reValidateMode: 'onChange',
   });
 
-  const handleSignIn = async (data: AuthFormData) => {
-    console.log('handleSignIn called', data);
-    const { email, password } = data;
-    try {
-      const userCredential = await signInWithEmailAndPassword(email, password);
-      const token = await userCredential?.user.getIdToken();
-      setCookie('graphiql-app-f134va', token);
-      if (userCredential && userCredential.user) {
-        router.push('/');
-        router.refresh();
-      } else {
-        toast.error('Failed to sign in. Please try again.');
-      }
-    } catch (e) {
-      console.error('Error during sign in:', e);
-      toast.error('An error occurred during sign in. Please try again.');
-    }
-  };
+  const { handleSignIn } = useSignInUser();
 
   return (
     <Container maxWidth="xs">

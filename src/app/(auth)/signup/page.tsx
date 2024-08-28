@@ -1,21 +1,13 @@
 'use client';
 
 import { Box, Button, Container, Link, TextField, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { authSignUpSchema } from '../../validation/authValidation';
-import { auth } from '@/src/app/firebase/config';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { AuthFormData } from '@/src/types/authTypes';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
-import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { useSignUpUser } from '@/src/lib/auth/useSignUpUser';
 
 const SignUp = () => {
-  const router = useRouter();
-  const [updateProfile] = useUpdateProfile(auth);
-  const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
   const {
     control,
     handleSubmit,
@@ -26,26 +18,7 @@ const SignUp = () => {
     reValidateMode: 'onChange',
   });
 
-  const onSubmit = async (data: AuthFormData) => {
-    console.log(data);
-    try {
-      const { email, password, username } = data;
-      console.log(email);
-      const userCredential = await createUserWithEmailAndPassword(email, password);
-      if (userCredential) {
-        const user = userCredential.user;
-      }
-
-      await updateProfile({ displayName: username });
-
-      toast.success('Account created successfully');
-      setTimeout(() => {
-        router.push('/signin');
-      }, 1000);
-    } catch (error) {
-      console.log('Unexpected error:', error);
-    }
-  };
+  const { onSubmit } = useSignUpUser();
 
   return (
     <Container maxWidth="xs">
