@@ -19,6 +19,6 @@ test('renders component with text', async () => {
   const HomeComponent = (await Home()) as React.ReactElement;
   render(HomeComponent);
 
-  const element = await screen.findByText(/SignIn/i);
+  const element = await screen.findByText(/team/i);
   expect(element).toBeInTheDocument();
 });
