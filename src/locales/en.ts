@@ -1,6 +1,6 @@
 export const messages = {
   mainPage: {
-    greeting: 'Welcome, !',
+    greeting: 'Welcome',
     headings: {
       project: 'About project',
       course: 'About course',
