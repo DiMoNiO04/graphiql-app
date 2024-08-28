@@ -15,6 +15,7 @@ export const SignOutHandler = ({ setOpen }: { setOpen: (open: boolean) => void }
       setOpen(false);
       toast.success('You have been signed out successfully.');
       router.push('/signin');
+      router.refresh();
     } catch (error) {
       console.error('Error signing out:', error);
       setOpen(false);

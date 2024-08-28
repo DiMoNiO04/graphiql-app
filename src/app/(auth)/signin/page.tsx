@@ -35,6 +35,7 @@ const SignIn = () => {
       setCookie('graphiql-app-f134va', token);
       if (userCredential && userCredential.user) {
         router.push('/');
+        router.refresh();
       } else {
         toast.error('Failed to sign in. Please try again.');
       }
