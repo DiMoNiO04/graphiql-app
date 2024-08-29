@@ -1,11 +1,11 @@
 'use client';
 
-import { AppBar, Box, Button, Toolbar, useScrollTrigger } from '@mui/material';
-import Link from 'next/link';
+import { AppBar, Box, Toolbar, useScrollTrigger } from '@mui/material';
 import Logo from './Logo/Logo';
 import LanguageButton from './Language-button/LanguageButton';
 import { DecodedIdToken } from 'firebase-admin/auth';
 import SignOutButton from '../ui/SignOutButton';
+import BaseButton from '../ui/Button';
 
 const HeaderClient = ({ session }: { session: DecodedIdToken | null }) => {
   const trigger = useScrollTrigger({
@@ -50,39 +50,8 @@ const HeaderClient = ({ session }: { session: DecodedIdToken | null }) => {
             <SignOutButton />
           ) : (
             <>
-              <Button
-                variant="contained"
-                component={Link}
-                href="/signin"
-                sx={{
-                  transition: 'all 0.4s ease',
-                  backgroundColor: '#000000',
-                  color: '#ffffff',
-                  '&:hover': {
-                    color: '#000000',
-                    backgroundColor: '#ffffff',
-                  },
-                }}
-              >
-                Sign in
-              </Button>
-              <Button
-                variant="contained"
-                component={Link}
-                href="/signup"
-                sx={{
-                  transition: 'all 0.4s ease',
-                  backgroundColor: '#000000',
-                  color: '#ffffff',
-                  margin: '0 5px',
-                  '&:hover': {
-                    color: '#000000',
-                    backgroundColor: '#ffffff',
-                  },
-                }}
-              >
-                Sign up
-              </Button>
+              <BaseButton href="/signin">Sign In</BaseButton>
+              <BaseButton href="/signup">Sign up</BaseButton>
             </>
           )}
         </Box>
