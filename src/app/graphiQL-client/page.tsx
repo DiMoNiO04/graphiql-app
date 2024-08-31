@@ -2,12 +2,16 @@
 
 import NavigationGraphiPanel from '@/src/components/NavigationGraphiPanel/NavigationGraphiPanel';
 import UrlEditorGraphi from '@/src/components/UrlEditorGraphi/UrlEditorGraphi';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
 const GraphiQlClient = () => {
   const [endpointUrl, setEndpointUrl] = useState<string>('');
   const [sdlUrl, setSdlUrl] = useState<string>('');
+
+  const handleSend = () => {
+    console.log('send query');
+  };
 
   return (
     <Stack
@@ -22,7 +26,7 @@ const GraphiQlClient = () => {
       <Typography variant="h4" component="h1" sx={{ textAlign: 'center' }}>
         GraphiQL Client
       </Typography>
-      <Box>
+      <Box sx={{ marginBottom: '4rem' }}>
         <UrlEditorGraphi
           endpointUrl={endpointUrl}
           onEndpointUrlChange={setEndpointUrl}
@@ -30,6 +34,23 @@ const GraphiQlClient = () => {
           onSdlUrlChange={setSdlUrl}
         />
         <NavigationGraphiPanel />
+        <Button
+          onClick={handleSend}
+          variant="contained"
+          sx={{
+            marginTop: 2,
+            width: 200,
+            transition: 'all 0.4s ease',
+            backgroundColor: 'black',
+            color: 'white',
+            '&:hover': {
+              color: 'black',
+              backgroundColor: 'white',
+            },
+          }}
+        >
+          Send
+        </Button>
       </Box>
     </Stack>
   );
