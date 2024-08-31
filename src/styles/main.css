@@ -115,3 +115,15 @@ body {
 .main {
   flex: 1;
 }
+
+.margin-view-overlays {
+  background-color: #eceff1;
+}
+
+.editor-scrollable-element {
+  background-color: #3f51b5;
+}
+
+.editor-border {
+  border: 1px solid #abb0ba;
+}

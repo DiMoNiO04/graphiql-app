@@ -21,3 +21,21 @@ export const developers = [
     contribute: ['Sign In/Sign up pages'],
   },
 ];
+
+export const selectorMethods = [
+  {
+    method: 'GET',
+  },
+  {
+    method: 'POST',
+  },
+  {
+    method: 'PUT',
+  },
+  {
+    method: 'PATCH',
+  },
+  {
+    method: 'DELETE',
+  },
+];
