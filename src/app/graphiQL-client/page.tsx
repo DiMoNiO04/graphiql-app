@@ -1,8 +1,9 @@
 'use client';
 
+import NavigationGraphiPanel from '@/src/components/NavigationGraphiPanel/NavigationGraphiPanel';
 import UrlEditorGraphi from '@/src/components/UrlEditorGraphi/UrlEditorGraphi';
 import { Box, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const GraphiQlClient = () => {
   const [endpointUrl, setEndpointUrl] = useState<string>('');
@@ -28,6 +29,7 @@ const GraphiQlClient = () => {
           sdlUrl={sdlUrl}
           onSdlUrlChange={setSdlUrl}
         />
+        <NavigationGraphiPanel />
       </Box>
     </Stack>
   );

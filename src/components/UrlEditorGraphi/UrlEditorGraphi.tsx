@@ -1,13 +1,7 @@
 import React from 'react';
 import { Box, Stack, TextField, Typography } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-
-interface IUrlEditorGraphi {
-  endpointUrl: string;
-  onEndpointUrlChange: (url: string) => void;
-  sdlUrl: string;
-  onSdlUrlChange: (url: string) => void;
-}
+import { IUrlEditorGraphi } from '@/src/types/urlEditorGraphiTypes';
 
 const UrlEditorGraphi: React.FC<IUrlEditorGraphi> = ({ endpointUrl, onEndpointUrlChange, sdlUrl, onSdlUrlChange }) => {
   const { control, handleSubmit, setValue } = useForm({
