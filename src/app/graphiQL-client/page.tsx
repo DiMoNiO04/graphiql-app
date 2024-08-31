@@ -1,5 +1,6 @@
 'use client';
 
+import Documentation from '@/src/components/Documentation/Documentation';
 import NavigationGraphiPanel from '@/src/components/NavigationGraphiPanel/NavigationGraphiPanel';
 import ResponseViewer from '@/src/components/ResponseViewer/ResponseViewer';
 import UrlEditorGraphi from '@/src/components/UrlEditorGraphi/UrlEditorGraphi';
@@ -11,6 +12,7 @@ const GraphiQlClient = () => {
   const [sdlUrl, setSdlUrl] = useState<string>('');
   const [response, setResponse] = useState<unknown>();
   const [status, setStatus] = useState<number>();
+  const [isOpenDocumentation, setIsOpenDocumentation] = useState<boolean>(false);
 
   const handleSend = () => {
     console.log('send query');
@@ -72,6 +74,23 @@ const GraphiQlClient = () => {
         </Typography>
         <ResponseViewer response={response} status={status} />
       </Stack>
+
+      {isOpenDocumentation && (
+        <Stack
+          spacing={5}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            padding: '4rem 2.5rem',
+          }}
+        >
+          <Typography variant="h4" component="h1" sx={{ textAlign: 'center' }}>
+            Documentation
+          </Typography>
+          <Documentation sdl={sdlUrl} />
+        </Stack>
+      )}
     </>
   );
 };
