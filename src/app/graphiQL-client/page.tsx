@@ -1,10 +1,12 @@
 'use client';
 
+import ControlTabPanel from '@/src/components/ControlTabPanel/ControlTabPanel';
 import Documentation from '@/src/components/Documentation/Documentation';
-import NavigationGraphiPanel from '@/src/components/NavigationGraphiPanel/NavigationGraphiPanel';
 import ResponseViewer from '@/src/components/ResponseViewer/ResponseViewer';
 import UrlEditorGraphi from '@/src/components/UrlEditorGraphi/UrlEditorGraphi';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import VariablesEditor from '@/src/components/VariablesEditor/VariablesEditor';
+import { a11yProps } from '@/src/lib/restClient/getAllyProps';
+import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
 const GraphiQlClient = () => {
@@ -13,6 +15,12 @@ const GraphiQlClient = () => {
   const [response, setResponse] = useState<unknown>();
   const [status, setStatus] = useState<number>();
   const [isOpenDocumentation, setIsOpenDocumentation] = useState<boolean>(false);
+  const [variables, setVariables] = useState<string>('');
+  const [tabsValue, setTabsValue] = useState<number | null>(null);
+
+  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
+    setTabsValue(newValue);
+  };
 
   const handleSend = () => {
     console.log('send query');
@@ -39,7 +47,26 @@ const GraphiQlClient = () => {
             sdlUrl={sdlUrl}
             onSdlUrlChange={setSdlUrl}
           />
-          <NavigationGraphiPanel />
+          <Box sx={{ marginTop: '2rem' }}>
+            <Tabs
+              value={tabsValue}
+              onChange={handleChangeTab}
+              TabIndicatorProps={{ sx: { backgroundColor: '#F26B3A', height: 3, bottom: 2 } }}
+            >
+              <Tab label="Headers" {...a11yProps(0)} />
+              <Tab label="Query" {...a11yProps(1)} />
+              <Tab label="Variables" {...a11yProps(2)} />
+            </Tabs>
+            <ControlTabPanel value={tabsValue} index={0}>
+              Headers Editor
+            </ControlTabPanel>
+            <ControlTabPanel value={tabsValue} index={1}>
+              Query Editor
+            </ControlTabPanel>
+            <ControlTabPanel value={tabsValue} index={2}>
+              <VariablesEditor value={variables} onChange={setVariables} />
+            </ControlTabPanel>
+          </Box>
           <Button
             onClick={handleSend}
             variant="contained"
