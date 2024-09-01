@@ -2,6 +2,7 @@
 
 import ControlTabPanel from '@/src/components/ControlTabPanel/ControlTabPanel';
 import Documentation from '@/src/components/Documentation/Documentation';
+import QueryEditor from '@/src/components/QueryEditor/QueryEditor';
 import ResponseViewer from '@/src/components/ResponseViewer/ResponseViewer';
 import UrlEditorGraphi from '@/src/components/UrlEditorGraphi/UrlEditorGraphi';
 import VariablesEditor from '@/src/components/VariablesEditor/VariablesEditor';
@@ -16,6 +17,7 @@ const GraphiQlClient = () => {
   const [status, setStatus] = useState<number>();
   const [isOpenDocumentation, setIsOpenDocumentation] = useState<boolean>(false);
   const [variables, setVariables] = useState<string>('');
+  const [query, setQuery] = useState<string>('');
   const [tabsValue, setTabsValue] = useState<number | null>(null);
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
@@ -61,7 +63,7 @@ const GraphiQlClient = () => {
               Headers Editor
             </ControlTabPanel>
             <ControlTabPanel value={tabsValue} index={1}>
-              Query Editor
+              <QueryEditor value={query} onChange={setQuery} />
             </ControlTabPanel>
             <ControlTabPanel value={tabsValue} index={2}>
               <VariablesEditor value={variables} onChange={setVariables} />

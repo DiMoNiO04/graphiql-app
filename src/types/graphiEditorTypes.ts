@@ -1,4 +1,4 @@
-export interface IVariablesEditor {
+export interface IGraphiEditor {
   value: string;
   onChange: (value: string) => void;
 }
