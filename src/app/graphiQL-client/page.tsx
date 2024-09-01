@@ -21,7 +21,7 @@ const GraphiQlClient = () => {
   const [isOpenDocumentation, setIsOpenDocumentation] = useState<boolean>(false);
   const [variables, setVariables] = useState<string>('');
   const [query, setQuery] = useState<string>('');
-  const [tabsValue, setTabsValue] = useState<number | null>(null);
+  const [tabsValue, setTabsValue] = useState<number>(0);
   const [headers, setHeaders] = useState<IHeaderProp[]>([]);
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
