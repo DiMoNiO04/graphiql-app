@@ -9,7 +9,7 @@ const QueryEditor: React.FC<IGraphiEditor> = ({ value, onChange }) => {
       value={value}
       onChange={(e) => onChange(e.target.value)}
       multiline
-      rows={10}
+      rows={5}
       fullWidth
       margin="normal"
     />

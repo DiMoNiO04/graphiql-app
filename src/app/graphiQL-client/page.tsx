@@ -1,14 +1,17 @@
 'use client';
 
+import React, { useState } from 'react';
+import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
+
 import ControlTabPanel from '@/src/components/ControlTabPanel/ControlTabPanel';
 import Documentation from '@/src/components/Documentation/Documentation';
+import HeadersEditor from '@/src/components/HeadersEditor/HeadersEditor';
 import QueryEditor from '@/src/components/QueryEditor/QueryEditor';
 import ResponseViewer from '@/src/components/ResponseViewer/ResponseViewer';
 import UrlEditorGraphi from '@/src/components/UrlEditorGraphi/UrlEditorGraphi';
 import VariablesEditor from '@/src/components/VariablesEditor/VariablesEditor';
 import { a11yProps } from '@/src/lib/restClient/getAllyProps';
-import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import { IHeaderProp } from '@/src/types/headersEditorTypes';
 
 const GraphiQlClient = () => {
   const [endpointUrl, setEndpointUrl] = useState<string>('');
@@ -19,6 +22,7 @@ const GraphiQlClient = () => {
   const [variables, setVariables] = useState<string>('');
   const [query, setQuery] = useState<string>('');
   const [tabsValue, setTabsValue] = useState<number | null>(null);
+  const [headers, setHeaders] = useState<IHeaderProp[]>([]);
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setTabsValue(newValue);
@@ -60,7 +64,7 @@ const GraphiQlClient = () => {
               <Tab label="Variables" {...a11yProps(2)} />
             </Tabs>
             <ControlTabPanel value={tabsValue} index={0}>
-              Headers Editor
+              <HeadersEditor headers={headers} onChange={setHeaders} />
             </ControlTabPanel>
             <ControlTabPanel value={tabsValue} index={1}>
               <QueryEditor value={query} onChange={setQuery} />
