@@ -17,6 +17,24 @@ const RestClient = () => {
     setValue(newValue);
   };
 
+  // REST Client
+  const [method, setMethod] = useState('GET');
+  const [url, setUrl] = useState('');
+  const [response, setResponse] = useState('');
+
+  const onSendButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log('Method:', method);
+    console.log('URL:', url);
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      setResponse(JSON.stringify(data, null, 2));
+    } catch (error) {
+      setResponse('Error: ' + (error as Error).message);
+    }
+  };
+
   return (
     <Stack
       spacing={5}
@@ -27,7 +45,13 @@ const RestClient = () => {
         padding: '4rem 2.5rem',
       }}
     >
-      <UrlEditor />
+      <UrlEditor
+        method={method}
+        setMethod={setMethod}
+        url={url}
+        setUrl={setUrl}
+        onSendButtonClick={onSendButtonClick}
+      />
       <Box>
         <Tabs
           value={value}
@@ -65,7 +89,7 @@ const RestClient = () => {
           <BodyEditor />
         </ControlTabPanel>
       </Box>
-      <ResponseEditor />
+      <ResponseEditor response={response} />
     </Stack>
   );
 };

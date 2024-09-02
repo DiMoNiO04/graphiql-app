@@ -3,10 +3,20 @@ import { Box, FormControl, Select, MenuItem, TextField, Button, SelectChangeEven
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-const UrlEditor = () => {
+const UrlEditor = ({
+  method,
+  setMethod,
+  url,
+  setUrl,
+  onSendButtonClick,
+}: {
+  method: string;
+  setMethod: React.Dispatch<React.SetStateAction<string>>;
+  url: string;
+  setUrl: React.Dispatch<React.SetStateAction<string>>;
+  onSendButtonClick: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
+}) => {
   const { control } = useForm();
-
-  const [method, setMethod] = useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
     setMethod(event.target.value);
@@ -55,6 +65,8 @@ const UrlEditor = () => {
                 },
               }}
               fullWidth
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
               id="url"
             />
           )}
@@ -63,6 +75,7 @@ const UrlEditor = () => {
           type="submit"
           fullWidth
           variant="contained"
+          onClick={onSendButtonClick}
           sx={{
             maxWidth: 80,
             height: 40,

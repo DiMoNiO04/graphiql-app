@@ -4,12 +4,8 @@ import Editor from '@monaco-editor/react';
 import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
 
-const ResponseEditor = () => {
+const ResponseEditor = ({ response }: { response: string }) => {
   const [value, setValue] = useState('');
-
-  const handleChange = (value: string | undefined) => {
-    setValue(value || '');
-  };
 
   return (
     <Box sx={{ padding: '16px' }}>
@@ -44,8 +40,7 @@ const ResponseEditor = () => {
           tabSize: 2,
           readOnly: true,
         }}
-        onChange={handleChange}
-        value={value}
+        value={response}
       />
     </Box>
   );
