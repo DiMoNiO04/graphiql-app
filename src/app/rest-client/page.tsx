@@ -9,6 +9,8 @@ import { Box, Tabs, Tab, Stack, Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import RequestHeader from '@/src/components/RequestHeader/RequestHeader';
+import { getFetchData } from '../actions/getFetchData';
+import { postFetchData } from '../actions/postFetchData';
 
 const RestClient = () => {
   const [value, setValue] = useState(0);
@@ -20,19 +22,37 @@ const RestClient = () => {
   // REST Client
   const [method, setMethod] = useState('GET');
   const [url, setUrl] = useState('');
+  const [requestBody, setRequestBody] = useState('');
   const [response, setResponse] = useState('');
 
   const onSendButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log('Url: ', url);
+    console.log('Request Body: ', requestBody);
+    console.log('Method: ', method);
     e.preventDefault();
-    console.log('Method:', method);
-    console.log('URL:', url);
-    try {
-      const res = await fetch(url);
-      const data = await res.json();
-      setResponse(JSON.stringify(data, null, 2));
-    } catch (error) {
-      setResponse('Error: ' + (error as Error).message);
+
+    let result;
+
+    switch (method) {
+      case 'GET':
+        result = await getFetchData(url);
+        break;
+      case 'POST':
+        result = await postFetchData(url, requestBody);
+        break;
+      // case 'PUT':
+      //   result = await putData(url, requestBody);
+      //   break;
+      // case 'DELETE':
+      //   result = await deleteData(url);
+      //   break;
+      default:
+        console.error('Unsupported HTTP method');
+        return;
     }
+
+    setResponse(result);
+    console.log('Response: ', response);
   };
 
   return (
@@ -86,7 +106,7 @@ const RestClient = () => {
           </Button>
         </ControlTabPanel>
         <ControlTabPanel value={value} index={1}>
-          <BodyEditor />
+          <BodyEditor setRequestBody={setRequestBody} requestBody={requestBody} />
         </ControlTabPanel>
       </Box>
       <ResponseEditor response={response} />

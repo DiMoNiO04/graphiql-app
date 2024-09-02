@@ -2,11 +2,8 @@
 
 import Editor from '@monaco-editor/react';
 import { Box, Typography } from '@mui/material';
-import { useState } from 'react';
 
 const ResponseEditor = ({ response }: { response: string }) => {
-  const [value, setValue] = useState('');
-
   return (
     <Box sx={{ padding: '16px' }}>
       <Typography

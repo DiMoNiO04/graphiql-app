@@ -1,15 +1,14 @@
 'use client';
 
 import Editor from '@monaco-editor/react';
-import { useState } from 'react';
 
-const BodyEditor = () => {
-  const [value, setValue] = useState('');
-
-  const handleChange = (value: string | undefined) => {
-    setValue(value || '');
-  };
-
+const BodyEditor = ({
+  setRequestBody,
+  requestBody,
+}: {
+  setRequestBody: React.Dispatch<React.SetStateAction<string>>;
+  requestBody: string;
+}) => {
   return (
     <Editor
       className="editor-border"
@@ -29,8 +28,8 @@ const BodyEditor = () => {
         tabSize: 2,
         readOnly: false,
       }}
-      onChange={handleChange}
-      value={value}
+      onChange={(value) => setRequestBody(value || '')}
+      value={requestBody}
     />
   );
 };
