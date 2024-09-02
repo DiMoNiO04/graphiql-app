@@ -40,12 +40,6 @@ const RestClient = () => {
       case 'POST':
         result = await postFetchData(url, requestBody);
         break;
-      // case 'PUT':
-      //   result = await putData(url, requestBody);
-      //   break;
-      // case 'DELETE':
-      //   result = await deleteData(url);
-      //   break;
       default:
         console.error('Unsupported HTTP method');
         return;
