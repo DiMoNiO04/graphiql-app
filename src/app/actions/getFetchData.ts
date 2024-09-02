@@ -1,8 +1,12 @@
 'use server';
 
+import { decodeBase64 } from '@/src/utils/base64';
+
 export async function getFetchData(url: string) {
+  const decodedUrl = decodeBase64(url);
+
   try {
-    const response = await fetch(url, {
+    const response = await fetch(decodedUrl, {
       method: 'GET',
       cache: 'no-store',
       headers: {

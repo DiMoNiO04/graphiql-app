@@ -1,13 +1,21 @@
 'use server';
 
+import { decodeBase64 } from '@/src/utils/base64';
+
 export async function postFetchData(url: string, body: string) {
+  const decodedUrl = decodeBase64(url);
+  const decodedBody = decodeBase64(body);
+  console.log('URL:', url);
+  console.log('Decoded URL:', decodedUrl);
+  console.log('Body:', body);
+  console.log('Decoded Body:', decodedBody);
   try {
-    const response = await fetch(url, {
+    const response = await fetch(decodedUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: body,
+      body: decodedBody,
     });
 
     if (!response.ok) {

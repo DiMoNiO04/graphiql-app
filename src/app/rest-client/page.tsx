@@ -11,6 +11,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RequestHeader from '@/src/components/RequestHeader/RequestHeader';
 import { getFetchData } from '../actions/getFetchData';
 import { postFetchData } from '../actions/postFetchData';
+import { decodeBase64, encodeBase64 } from '@/src/utils/base64';
 
 const RestClient = () => {
   const [value, setValue] = useState(0);
@@ -33,20 +34,26 @@ const RestClient = () => {
 
     let result;
 
-    switch (method) {
-      case 'GET':
-        result = await getFetchData(url);
-        break;
-      case 'POST':
-        result = await postFetchData(url, requestBody);
-        break;
-      default:
-        console.error('Unsupported HTTP method');
-        return;
-    }
+    try {
+      switch (method) {
+        case 'GET':
+          const encodedGETUrl = encodeBase64(url);
+          result = await getFetchData(encodedGETUrl);
+          break;
+        case 'POST':
+          const encodedPOSTUrl = encodeBase64(url);
+          const encodedRequestBody = encodeBase64(requestBody);
+          result = await postFetchData(encodedPOSTUrl, encodedRequestBody);
+        default:
+          console.error('Unsupported HTTP method');
+      }
 
-    setResponse(result);
-    console.log('Response: ', response);
+      setResponse(result || '');
+      console.log('Response:', result);
+    } catch (error) {
+      console.error('Error:', error);
+      setResponse((error as Error).message);
+    }
   };
 
   return (
