@@ -4,8 +4,10 @@ import { Box, Button, Container, Link, TextField, Typography } from '@mui/materi
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { authSignUpSchema } from '../../validation/authValidation';
+import { authSignUpSchema } from '../../../validation/authValidation';
 import { useSignUpUser } from '@/src/lib/auth/useSignUpUser';
+import { useTranslations } from 'next-intl';
+// import { useSignUpUser } from '@/src/lib/auth/useSignUpUser';
 
 const SignUp = () => {
   const {
@@ -18,6 +20,7 @@ const SignUp = () => {
     reValidateMode: 'onChange',
   });
 
+  const t = useTranslations('MainPage');
   const { onSubmit } = useSignUpUser();
 
   return (
@@ -31,7 +34,7 @@ const SignUp = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Create an account
+          {t('auth.create-account')}
         </Typography>
         <p
           style={{
@@ -42,7 +45,7 @@ const SignUp = () => {
             color: 'rgba(0, 0, 0, 0.54)',
           }}
         >
-          New here? Sign up and begin your journey
+          {t('auth.journey')}
         </p>
         <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
           <Controller
@@ -56,7 +59,7 @@ const SignUp = () => {
                 required
                 fullWidth
                 id="username"
-                label="Username"
+                label={t('auth.username')}
                 autoComplete="username"
                 // autoFocus add or not?
                 error={!!errors.username}
@@ -75,7 +78,7 @@ const SignUp = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label={t('auth.email')}
                 autoComplete="email"
                 error={!!errors.email}
                 helperText={errors.email?.message}
@@ -92,7 +95,7 @@ const SignUp = () => {
                 margin="normal"
                 required
                 fullWidth
-                label="Password"
+                label={t('auth.password')}
                 type="password"
                 id="password"
                 autoComplete="new-password"
@@ -111,7 +114,7 @@ const SignUp = () => {
                 margin="normal"
                 required
                 fullWidth
-                label="Confirm Password"
+                label={t('auth.confirmPassword')}
                 type="password"
                 id="confirmPassword"
                 autoComplete="new-password"
@@ -136,7 +139,7 @@ const SignUp = () => {
               },
             }}
           >
-            Sign Up
+            {t('auth.sign-up')}
           </Button>
           <p
             style={{
@@ -147,9 +150,9 @@ const SignUp = () => {
               color: 'rgba(0, 0, 0, 0.54)',
             }}
           >
-            Already have an account? {''}
+            {t('auth.have-account')} {''}
             <Link href="/signin" style={{ color: 'black', textDecoration: 'none' }}>
-              Sign In
+              {t('auth.sign-in')}
             </Link>
           </p>
         </Box>
