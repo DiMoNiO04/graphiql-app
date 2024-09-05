@@ -37,7 +37,14 @@
     "graphiQL-client": "GraphiQL Client",
     "rest-client": "REST Client",
     "validation": {
-      "username-req": "Username is required"
+      "user-required": "Username is required",
+      "user-length": "Username must be at least 3 characters",
+      "email": "Email is required",
+      "email-format": "Invalid email format",
+      "password-required": "Password is required",
+      "password-length": "Password must be at least 8 characters",
+      "confirm-required": "Confirm Password is required",
+      "passwords-match": "Passwords must match"
     },
     "developers": {
       "names": {
@@ -50,6 +57,20 @@
         "Dmitriy": "Set up project, GraphQL Client page",
         "Maksym": "Sign In/Sign up pages, REST Client page"
       }
+    },
+    "toast-out": {
+      "success": "You have been signed out successfully.",
+      "console": "Error signing out:",
+      "error": "An error occurred while signing out. Please try again."
+    },
+    "toast-in": {
+      "success": "You have successfully logged in.",
+      "errorr": "An error occurred during sign in. Please try again.",
+      "console": "Error during sign in:",
+      "error": "Failed to sign in. Please try again."
+    },
+    "toast-up": {
+      "success": "Account created successfully."
     }
   }
 }

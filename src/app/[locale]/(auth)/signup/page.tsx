@@ -16,8 +16,7 @@ const SignUp = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(authSignUpSchema),
-    mode: 'onBlur',
-    reValidateMode: 'onChange',
+    mode: 'all',
   });
 
   const t = useTranslations('MainPage');
@@ -63,7 +62,7 @@ const SignUp = () => {
                 autoComplete="username"
                 // autoFocus add or not?
                 error={!!errors.username}
-                helperText={errors.username?.message}
+                helperText={errors.username ? <>{t(errors.username.message)}</> : null}
               />
             )}
           />
@@ -81,7 +80,7 @@ const SignUp = () => {
                 label={t('auth.email')}
                 autoComplete="email"
                 error={!!errors.email}
-                helperText={errors.email?.message}
+                helperText={errors.email ? <>{t(errors.email.message)}</> : null}
               />
             )}
           />
@@ -100,7 +99,7 @@ const SignUp = () => {
                 id="password"
                 autoComplete="new-password"
                 error={!!errors.password}
-                helperText={errors.password?.message}
+                helperText={errors.password ? <>{t(errors.password.message)}</> : null}
               />
             )}
           />
@@ -119,7 +118,7 @@ const SignUp = () => {
                 id="confirmPassword"
                 autoComplete="new-password"
                 error={!!errors.confirmPassword}
-                helperText={errors.confirmPassword?.message}
+                helperText={errors.confirmPassword ? <>{t(errors.confirmPassword.message)}</> : null}
               />
             )}
           />

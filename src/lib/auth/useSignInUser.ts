@@ -3,10 +3,11 @@ import { AuthFormData } from '@/src/types/authTypes';
 import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-
+import { useTranslations } from 'next-intl';
 import toast from 'react-hot-toast';
 
 export const useSignInUser = () => {
+  const t = useTranslations('MainPage');
   const router = useRouter();
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
 
@@ -17,14 +18,15 @@ export const useSignInUser = () => {
       const token = await userCredential?.user.getIdToken();
       setCookie('graphiql-app-f134va', token);
       if (userCredential && userCredential.user) {
+        toast.success(t('toast-in.success'));
         router.push('/');
         router.refresh();
       } else {
-        toast.error('Failed to sign in. Please try again.');
+        toast.error(t('toast-in.errorr'));
       }
     } catch (e) {
-      console.error('Error during sign in:', e);
-      toast.error('An error occurred during sign in. Please try again.');
+      console.error(t('toast-in.console'), e);
+      toast.error(t('toast-in.error'));
     }
   };
 

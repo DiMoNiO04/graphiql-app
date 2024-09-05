@@ -16,8 +16,7 @@ const SignIn = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(authSignInSchema),
-    mode: 'onBlur',
-    reValidateMode: 'onChange',
+    mode: 'all',
   });
 
   const t = useTranslations('MainPage');
@@ -63,7 +62,7 @@ const SignIn = () => {
                 label={t('auth.email')}
                 autoComplete="email"
                 error={!!errors.email}
-                helperText={errors.email?.message}
+                helperText={errors.email ? <>{t(errors.email.message)}</> : null}
               />
             )}
           />
@@ -82,7 +81,7 @@ const SignIn = () => {
                 id="password"
                 autoComplete="new-password"
                 error={!!errors.password}
-                helperText={errors.password?.message}
+                helperText={errors.password ? <>{t(errors.password.message)}</> : null}
               />
             )}
           />
