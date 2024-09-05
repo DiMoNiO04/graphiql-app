@@ -8,15 +8,15 @@ const messageImports = {
   ru: () => import('../messages/ru.json'),
 } as const satisfies Record<Locale, () => Promise<{ default: AbstractIntlMessages }>>;
 
-export function isValidLocale(locale: unknown): locale is Locale {
-  return locales.some((l) => l === locale);
+export function isValid(locale: unknown): locale is Locale {
+  return locales.some((element) => element === locale);
 }
 
 export default getRequestConfig(async (params) => {
-  const baseLocale = new Intl.Locale(params.locale).baseName;
-  if (!isValidLocale(baseLocale)) notFound();
+  const defaultLocale = new Intl.Locale(params.locale).baseName;
+  if (!isValid(defaultLocale)) notFound();
 
   return {
-    messages: (await messageImports[baseLocale]()).default,
+    messages: (await messageImports[defaultLocale]()).default,
   };
 });
