@@ -39,3 +39,33 @@ export const selectorMethods = [
     method: 'DELETE',
   },
 ];
+
+export const selectorEditorBodyMethods = [
+  {
+    method: 'Text',
+  },
+  {
+    method: 'JavaScript',
+  },
+  {
+    method: 'JSON',
+  },
+  {
+    method: 'HTML',
+  },
+  {
+    method: 'XML',
+  },
+];
+
+export const selectorResponseParameters = [
+  {
+    method: 'Body',
+  },
+  {
+    method: 'Headers',
+  },
+  {
+    method: 'Cookies',
+  },
+];

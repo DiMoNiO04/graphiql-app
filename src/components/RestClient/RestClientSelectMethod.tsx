@@ -11,7 +11,7 @@ import {
 } from '@/src/components/ui/select';
 import { selectorMethods } from '@/src/constants/constants';
 
-const RestClientSelectMethod = () => {
+const RestClientSelectMethod = ({ setMethod }: { setMethod: (method: string) => void }) => {
   return (
     <Select defaultValue="GET">
       <SelectTrigger style={{ border: '1px solid #E4E4E7' }} className="w-[180px] text-base font-semibold">

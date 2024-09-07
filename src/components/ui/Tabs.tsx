@@ -3,8 +3,6 @@ import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { useState, useRef, useEffect } from 'react';
 
-const tabs = ['Headers', 'Body'];
-
 interface TabProps {
   text: string;
   selected: boolean;
@@ -55,9 +53,10 @@ interface LineTabProps {
   center?: boolean;
   customID?: string;
   onTabChange: (tab: string) => void;
+  tabs: string[];
 }
 
-const LineTabs = ({ center, customID, onTabChange }: LineTabProps) => {
+const LineTabs = ({ center, customID, onTabChange, tabs }: LineTabProps) => {
   const [selected, setSelected] = useState<string>(tabs[0]);
 
   const handleTabChange = (tab: string) => {
@@ -66,7 +65,7 @@ const LineTabs = ({ center, customID, onTabChange }: LineTabProps) => {
   };
 
   return (
-    <div className={cn('mb-8 flex flex-wrap items-center gap-2 border-b border-[#2E2E2E]', center && 'justify-center')}>
+    <div className={cn('mb-8 flex flex-wrap items-center gap-2 border-b border-input', center && 'justify-center')}>
       {tabs.map((tab) => (
         <Tab text={tab} selected={selected === tab} setSelected={handleTabChange} key={tab} customID={customID} />
       ))}

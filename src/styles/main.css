@@ -44,14 +44,6 @@ p {
   padding: 0;
 }
 
-button {
-  border: none;
-  color: inherit;
-  text-align: inherit;
-  padding: 0;
-  background-color: inherit;
-}
-
 ul {
   padding: 0;
   margin: 0;
@@ -119,6 +111,13 @@ input {
   color: inherit;
 }
 
+button {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
 .main {
   flex: 1;
 }
@@ -134,3 +133,4 @@ input {
 .editor-border {
   border: 1px solid #abb0ba;
 }
+

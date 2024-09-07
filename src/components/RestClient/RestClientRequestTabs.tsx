@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import LineTabs from '@/src/components/ui/Tabs';
 import { motion, AnimatePresence } from 'framer-motion';
-const RestClientTabs = () => {
+import RestClientHeaders from './RestClientHeaders';
+import RestClientRequestEditor from './RestClientRequestEditor';
+const RestClientRequestTabs = () => {
+  const tabs = ['Headers', 'Body'];
   const [selectedTab, setSelectedTab] = useState('Headers');
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
@@ -13,9 +16,10 @@ const RestClientTabs = () => {
   };
   return (
     <div>
-      <LineTabs onTabChange={handleTabChange} />
+      <LineTabs onTabChange={handleTabChange} tabs={tabs} />
       <AnimatePresence mode="wait">
         <motion.div
+          className="pb-6"
           key={selectedTab}
           initial="hidden"
           animate="visible"
@@ -23,12 +27,12 @@ const RestClientTabs = () => {
           variants={contentVariants}
           transition={{ duration: 0.15, ease: 'easeInOut' }}
         >
-          {selectedTab === 'Headers' && 'Headers'}
-          {selectedTab === 'Body' && 'Body'}
+          {selectedTab === 'Headers' && <RestClientHeaders />}
+          {selectedTab === 'Body' && <RestClientRequestEditor />}
         </motion.div>
       </AnimatePresence>
     </div>
   );
 };
 
-export default RestClientTabs;
+export default RestClientRequestTabs;
