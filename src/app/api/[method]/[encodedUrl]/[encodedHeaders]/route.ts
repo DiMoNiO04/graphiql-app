@@ -68,7 +68,17 @@ export async function POST(
       body: decodedRequestBody,
     });
     const data = await response.json();
-    return NextResponse.json(data);
+
+    // get the headers from the response
+    const responseHeaders: Record<string, string> = {};
+    response.headers.forEach((value, key) => {
+      responseHeaders[key] = value;
+    });
+
+    return NextResponse.json({
+      data,
+      headers: responseHeaders,
+    });
   } catch (error) {
     if (error instanceof SyntaxError) {
       return NextResponse.json({ error: 'Invalid JSON in the response' }, { status: 500 });
