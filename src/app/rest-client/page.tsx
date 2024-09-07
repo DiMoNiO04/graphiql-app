@@ -17,6 +17,9 @@ const RestClient = () => {
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const [responseHeaders, setResponseHeaders] = useState([]);
+
+  console.log('Response headers:', responseHeaders);
 
   // REST Client
 
@@ -60,9 +63,12 @@ const RestClient = () => {
         default:
           console.error('Unsupported HTTP method');
       }
+      const data = await result?.json(); // get the data for the response content
 
-      const data = await result?.json();
-      setResponse(JSON.stringify(data, null, 2));
+      setResponseHeaders(data['headers']);
+
+      setResponse(JSON.stringify(data, null, 2)); // set the response content
+
       console.log('Response:', result);
     } catch (error) {
       console.error('Error:', error);
