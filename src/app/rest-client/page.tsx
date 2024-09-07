@@ -9,9 +9,7 @@ import { Box, Tabs, Tab, Stack, Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import RequestHeader from '@/src/components/RequestHeader/RequestHeader';
-import { getFetchData } from '../actions/getFetchData';
-import { postFetchData } from '../actions/postFetchData';
-import { decodeBase64, encodeBase64 } from '@/src/utils/base64';
+import { encodeBase64 } from '@/src/utils/base64';
 
 const RestClient = () => {
   const [value, setValue] = useState(0);
@@ -27,28 +25,30 @@ const RestClient = () => {
   const [response, setResponse] = useState('');
 
   const onSendButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('Url: ', url);
-    console.log('Request Body: ', requestBody);
-    console.log('Method: ', method);
     e.preventDefault();
 
-    let result;
-
     try {
+      let result;
+      const encodedUrl = encodeBase64(url);
       switch (method) {
         case 'GET':
-          const encodedGETUrl = encodeBase64(url);
-          result = await getFetchData(encodedGETUrl);
+          result = await fetch(`/api/${method}/${encodedUrl}`);
           break;
         case 'POST':
-          const encodedPOSTUrl = encodeBase64(url);
           const encodedRequestBody = encodeBase64(requestBody);
-          result = await postFetchData(encodedPOSTUrl, encodedRequestBody);
+          result = await fetch(`/api/${method}/${encodedUrl}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ encodedRequestBody }),
+          });
         default:
           console.error('Unsupported HTTP method');
       }
 
-      setResponse(result || '');
+      const data = await result?.json();
+      setResponse(JSON.stringify(data, null, 2));
       console.log('Response:', result);
     } catch (error) {
       console.error('Error:', error);
