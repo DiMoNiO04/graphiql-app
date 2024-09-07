@@ -1,11 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { decodeBase64 } from '../../../../utils/base64';
+import { decodeBase64 } from '../../../../../utils/base64';
+import { Header } from '@/src/types/headers';
 
-export async function GET(request: NextRequest, { params }: { params: { method: string; encodedUrl: string } }) {
-  const { encodedUrl } = params;
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { method: string; encodedUrl: string; encodedHeaders: string } }
+) {
+  const { encodedUrl, encodedHeaders } = params;
   const decodedUrl = decodeBase64(encodedUrl);
+
+  // headers
+  const decodedHeaders = decodeBase64(encodedHeaders);
+  const parsedHeaders = JSON.parse(decodedHeaders);
+  const headersObject = parsedHeaders.reduce((acc: Record<string, string>, header: Header) => {
+    acc[header.key] = header.value;
+    return acc;
+  }, {});
+
   try {
-    const response = await fetch(decodedUrl, { method: 'GET' });
+    const response = await fetch(decodedUrl, { method: 'GET', headers: headersObject });
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
@@ -19,18 +32,29 @@ export async function GET(request: NextRequest, { params }: { params: { method: 
   }
 }
 
-export async function POST(request: NextRequest, { params }: { params: { method: string; encodedUrl: string } }) {
-  const { encodedUrl } = params;
+export async function POST(
+  request: NextRequest,
+  { params }: { params: { method: string; encodedUrl: string; encodedHeaders: string } }
+) {
+  const { encodedUrl, encodedHeaders } = params;
   const decodedUrl = decodeBase64(encodedUrl);
+
+  // headers
+  const decodedHeaders = decodeBase64(encodedHeaders);
+  const parsedHeaders = JSON.parse(decodedHeaders);
+  const headersObject = parsedHeaders.reduce((acc: Record<string, string>, header: Header) => {
+    acc[header.key] = header.value;
+    return acc;
+  }, {});
+
+  console.log('headersObject', headersObject);
   try {
     const { encodedRequestBody } = await request.json();
     const decodedRequestBody = decodeBase64(encodedRequestBody);
-    console.log(decodedRequestBody);
+
     const response = await fetch(decodedUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: headersObject,
       body: decodedRequestBody,
     });
     const data = await response.json();

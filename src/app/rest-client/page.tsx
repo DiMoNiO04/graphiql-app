@@ -19,6 +19,22 @@ const RestClient = () => {
   };
 
   // REST Client
+
+  // HEADERS
+  const [headers, setHeaders] = useState([
+    // essentially means "I can accept any type of content you send me".
+    { key: 'Accept', value: '*/*' },
+    // this is the type of the data you are sending to the server
+    { key: 'Content-Type', value: 'application/json' },
+    // this is the language you want the server to respond in
+    { key: 'Accept-Language', value: 'en-US,en;q=0.9' },
+    // this is the cache control
+    { key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' },
+    // this is the authorization
+    // { key: 'Authorization', value: '' },
+  ]);
+
+  // BODY
   const [method, setMethod] = useState('GET');
   const [url, setUrl] = useState('');
   const [requestBody, setRequestBody] = useState('');
@@ -30,17 +46,15 @@ const RestClient = () => {
     try {
       let result;
       const encodedUrl = encodeBase64(url);
+      const encodedHeaders = encodeBase64(JSON.stringify(headers));
       switch (method) {
         case 'GET':
-          result = await fetch(`/api/${method}/${encodedUrl}`);
+          result = await fetch(`/api/${method}/${encodedUrl}/${encodedHeaders}`);
           break;
         case 'POST':
           const encodedRequestBody = encodeBase64(requestBody);
-          result = await fetch(`/api/${method}/${encodedUrl}`, {
+          result = await fetch(`/api/${method}/${encodedUrl}/${encodedHeaders}`, {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
             body: JSON.stringify({ encodedRequestBody }),
           });
         default:
@@ -83,7 +97,7 @@ const RestClient = () => {
           <Tab label="Body" {...a11yProps(1)} />
         </Tabs>
         <ControlTabPanel value={value} index={0}>
-          <RequestHeader />
+          <RequestHeader setHeaders={setHeaders} headers={headers} />
           <Button
             variant="contained"
             sx={{
