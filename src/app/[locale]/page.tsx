@@ -70,44 +70,44 @@ export default async function Home() {
               justifyContent: 'flex-end',
             }}
           >
-            <BaseButton href="/signin">{t('auth.sign-in')}</BaseButton>
-            <BaseButton href="/signup">{t('auth.sign-up')}</BaseButton>
+            <BaseButton href="/signin">{t('sign-in')}</BaseButton>
+            <BaseButton href="/signup">{t('sign-up')}</BaseButton>
           </ButtonGroup>
         </>
       )}
       <Stack spacing={3}>
         <Stack>
-          <Heading>{t('headings.project')}</Heading>
-          <Paragraph>{t('info.p1')}</Paragraph>
-          <Paragraph>{t('info.p2')}</Paragraph>
-          <Paragraph>{t('info.p3')}</Paragraph>
-          <Paragraph>{t('info.p4')}</Paragraph>
+          <Heading>{t('project')}</Heading>
+          <Paragraph>{t('p1')}</Paragraph>
+          <Paragraph>{t('p2')}</Paragraph>
+          <Paragraph>{t('p3')}</Paragraph>
+          <Paragraph>{t('p4')}</Paragraph>
         </Stack>
         <Stack>
-          <Heading>{t('headings.course')}</Heading>
-          <Paragraph>{t('info.p5')}</Paragraph>
-          <Paragraph>{t('info.p6')}</Paragraph>
+          <Heading>{t('course')}</Heading>
+          <Paragraph>{t('p5')}</Paragraph>
+          <Paragraph>{t('p6')}</Paragraph>
         </Stack>
         <Stack>
-          <Heading sx={{ textAlign: 'center' }}>{t('headings.team')}</Heading>
+          <Heading sx={{ textAlign: 'center' }}>{t('team')}</Heading>
           <Stack direction="row" gap="1.5rem" flexWrap="wrap" justifyContent="center">
             <TeamMemberCard
               src={developers[0].imgSrc}
               alt={developers[0].imgAlt}
-              name={t('developers.names.Yuliya')}
-              contribution={t('developers.contribute.Yuliya')}
+              name={t('name-Yuliya')}
+              contribution={t('contribute-Yuliya')}
             />
             <TeamMemberCard
               src={developers[1].imgSrc}
               alt={developers[1].imgAlt}
-              name={t('developers.names.Dmitriy')}
-              contribution={t('developers.contribute.Dmitriy')}
+              name={t('name-Dmitriy')}
+              contribution={t('contribute-Dmitriy')}
             />
             <TeamMemberCard
               src={developers[2].imgSrc}
               alt={developers[2].imgAlt}
-              name={t('developers.names.Maksym')}
-              contribution={t('developers.contribute.Maksym')}
+              name={t('name-Maksym')}
+              contribution={t('contribute-Maksym')}
             />
           </Stack>
         </Stack>

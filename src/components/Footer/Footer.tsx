@@ -2,6 +2,7 @@ import Stack from '@mui/material/Stack';
 import RSLogo from './RSSchool-Logo/RSLogo';
 import Box from '@mui/material/Box';
 import GithubLinks from './Github-links/GithubLinks';
+import React from 'react';
 
 const Footer = () => {
   return (

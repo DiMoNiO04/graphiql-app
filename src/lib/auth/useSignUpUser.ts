@@ -1,5 +1,5 @@
-import { auth } from '@/src/app/firebase/config';
-import { AuthFormData } from '@/src/types/authTypes';
+import { auth } from '../../app/firebase/config';
+import { AuthFormData } from '../../types/authTypes';
 import { useRouter } from 'next/navigation';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import toast from 'react-hot-toast';
@@ -16,7 +16,7 @@ export const useSignUpUser = () => {
       const { email, password, username } = data;
       await createUserWithEmailAndPassword(email, password);
       await updateProfile({ displayName: username });
-      toast.success(t('toast-up.success'));
+      toast.success(t('success-up'));
       setTimeout(() => {
         router.push('/signin');
       }, 1000);

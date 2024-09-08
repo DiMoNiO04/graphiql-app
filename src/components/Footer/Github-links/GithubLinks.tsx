@@ -1,6 +1,7 @@
 import Stack from '@mui/material/Stack';
 import { Avatar, Link } from '@mui/material';
-import { developers } from '@/src/constants/constants';
+import { developers } from '../../../constants/constants';
+import React from 'react';
 
 const GithubLinks = () => {
   return (
