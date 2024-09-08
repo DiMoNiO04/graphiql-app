@@ -17,7 +17,7 @@ export default defineConfig({
       //   statements: 80,
       // },
     },
-    // silent: true,
-    // watch: false,
+    silent: true,
+    watch: false,
   },
 });
