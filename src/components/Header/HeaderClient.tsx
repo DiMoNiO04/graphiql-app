@@ -6,8 +6,12 @@ import LanguageButton from './Language-button/LanguageButton';
 import { DecodedIdToken } from 'firebase-admin/auth';
 import SignOutButton from '../ui/SignOutButton';
 import BaseButton from '../ui/Button';
+import { useTranslations } from 'next-intl';
+import React from 'react';
 
 const HeaderClient = ({ session }: { session: DecodedIdToken | null }) => {
+  const t = useTranslations('MainPage');
+
   const trigger = useScrollTrigger({
     threshold: 0,
     disableHysteresis: true,
@@ -50,8 +54,10 @@ const HeaderClient = ({ session }: { session: DecodedIdToken | null }) => {
             <SignOutButton />
           ) : (
             <>
-              <BaseButton href="/signin">Sign In</BaseButton>
-              <BaseButton href="/signup">Sign up</BaseButton>
+              <BaseButton data-testid="signin-button" href="/signin">
+                {t('sign-in')}
+              </BaseButton>
+              <BaseButton href="/signup">{t('sign-up')}</BaseButton>
             </>
           )}
         </Box>

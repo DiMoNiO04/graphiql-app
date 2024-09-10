@@ -4,9 +4,10 @@ import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { authSignInSchema } from '../../validation/authValidation';
+import { authSignInSchema } from '../../../validation/authValidation';
 import Link from 'next/link';
-import { useSignInUser } from '@/src/lib/auth/useSignInUser';
+import { useSignInUser } from '../../../../lib/auth/useSignInUser';
+import { useTranslations } from 'next-intl';
 
 const SignIn = () => {
   const {
@@ -15,10 +16,10 @@ const SignIn = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(authSignInSchema),
-    mode: 'onBlur',
-    reValidateMode: 'onChange',
+    mode: 'all',
   });
 
+  const t = useTranslations('MainPage');
   const { handleSignIn } = useSignInUser();
 
   return (
@@ -32,7 +33,8 @@ const SignIn = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Welcome back!
+          {t('greeting-auth')}
+          {'!'}
         </Typography>
         <p
           style={{
@@ -43,7 +45,7 @@ const SignIn = () => {
             color: 'rgba(0, 0, 0, 0.54)',
           }}
         >
-          We are happy to see you again! Sign in to your account to continue
+          {t('phrase')}
         </p>
         <Box component="form" noValidate onSubmit={handleSubmit(handleSignIn)} sx={{ mt: 1 }}>
           <Controller
@@ -57,10 +59,10 @@ const SignIn = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label={t('email')}
                 autoComplete="email"
                 error={!!errors.email}
-                helperText={errors.email?.message}
+                helperText={errors.email ? <>{t(errors.email.message)}</> : null}
               />
             )}
           />
@@ -74,17 +76,18 @@ const SignIn = () => {
                 margin="normal"
                 required
                 fullWidth
-                label="Password"
+                label={t('password')}
                 type="password"
                 id="password"
                 autoComplete="new-password"
                 error={!!errors.password}
-                helperText={errors.password?.message}
+                helperText={errors.password ? <>{t(errors.password.message)}</> : null}
               />
             )}
           />
           <Button
             type="submit"
+            data-testid="button-submit"
             fullWidth
             variant="contained"
             sx={{
@@ -99,7 +102,7 @@ const SignIn = () => {
               },
             }}
           >
-            Sign In
+            {t('sign-in')}
           </Button>
           <p
             style={{
@@ -110,9 +113,9 @@ const SignIn = () => {
               color: 'rgba(0, 0, 0, 0.54)',
             }}
           >
-            Don&apos;t have an account?{' '}
+            {t('no-account')}{' '}
             <Link href="/signup" style={{ color: 'black' }}>
-              Sign Up
+              {t('sign-up')}
             </Link>
           </p>
         </Box>

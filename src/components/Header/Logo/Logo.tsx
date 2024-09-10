@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import LogoImage from './LogoImage';
+import React from 'react';
 
 const Logo = () => {
   return (
