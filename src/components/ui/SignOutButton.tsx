@@ -1,8 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Link } from '@mui/material';
-import { SignOutHandler } from '@/src/lib/auth/handleSignOut';
+import { SignOutHandler } from '../../lib/auth/handleSignOut';
 import { useTranslations } from 'next-intl';
 
 const SignOutButton = () => {
@@ -36,7 +35,7 @@ const SignOutButton = () => {
           },
         }}
       >
-        {t('auth.sign-out')}
+        {t('sign-out')}
       </Button>
       <Dialog
         open={open}
@@ -44,16 +43,16 @@ const SignOutButton = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{t('auth.dialog-title')}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{t('dialog-title')}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">{t('auth.dialog-text')}</DialogContentText>
+          <DialogContentText id="alert-dialog-description">{t('dialog-text')}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            {t('auth.cancel')}
+            {t('cancel')}
           </Button>
           <Button onClick={handleSignOut} color="primary" autoFocus>
-            {t('auth.sign-out')}
+            {t('sign-out')}
           </Button>
         </DialogActions>
       </Dialog>

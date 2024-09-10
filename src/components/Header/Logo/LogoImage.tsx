@@ -1,3 +1,5 @@
+import React from 'react';
+
 const LogoImage = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg

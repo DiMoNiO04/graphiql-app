@@ -7,6 +7,7 @@ import { DecodedIdToken } from 'firebase-admin/auth';
 import SignOutButton from '../ui/SignOutButton';
 import BaseButton from '../ui/Button';
 import { useTranslations } from 'next-intl';
+import React from 'react';
 
 const HeaderClient = ({ session }: { session: DecodedIdToken | null }) => {
   const t = useTranslations('MainPage');
@@ -53,8 +54,10 @@ const HeaderClient = ({ session }: { session: DecodedIdToken | null }) => {
             <SignOutButton />
           ) : (
             <>
-              <BaseButton href="/signin">{t('auth.sign-in')}</BaseButton>
-              <BaseButton href="/signup">{t('auth.sign-up')}</BaseButton>
+              <BaseButton data-testid="signin-button" href="/signin">
+                {t('sign-in')}
+              </BaseButton>
+              <BaseButton href="/signup">{t('sign-up')}</BaseButton>
             </>
           )}
         </Box>

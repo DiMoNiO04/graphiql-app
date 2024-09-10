@@ -1,43 +1,53 @@
 'use client';
 
-import { useState } from 'react';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import { useLocale } from 'next-intl';
-import { useRouter } from 'next/navigation';
-import { Locale } from '@/src/types/localesTypes';
+import { MenuItem, IconButton, Menu, Box } from '@mui/material';
+import { localeNames, locales, usePathname, useRouter, type Locale } from '../../../i18n/i18n.config';
+import React from 'react';
 import { useTranslations } from 'next-intl';
+import { Language } from '@mui/icons-material';
 
-const LanguageButton = () => {
+export default function LanguageButton() {
+  const pathname = usePathname();
   const router = useRouter();
-  const locale = useLocale();
-  const [, setLanguage] = useState<string>('en');
+
   const t = useTranslations('MainPage');
 
-  const handleChange = (e: SelectChangeEvent) => {
-    setLanguage(e.target.value);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const handleItemClick = (newLocale: Locale) => {
-    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
-    router.refresh();
+    router.replace(pathname, { locale: newLocale });
+    setAnchorEl(null);
   };
 
   return (
-    <FormControl sx={{ marginRight: 1, minWidth: 120 }} size="small">
-      <InputLabel id="label">{t('language')}</InputLabel>
-      <Select labelId="select-label" id="select" value={locale} label="Language" onChange={handleChange}>
-        <MenuItem value={'en'} selected={locale === 'en'} onClick={() => handleItemClick('en')}>
-          en
-        </MenuItem>
-        <MenuItem value={'ru'} selected={locale === 'ru'} onClick={() => handleItemClick('ru')}>
-          ru
-        </MenuItem>
-      </Select>
-    </FormControl>
+    <Box>
+      <IconButton sx={{ color: '#000000' }} onClick={handleClick}>
+        <Language />
+      </IconButton>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        {locales.map((locale) => (
+          <MenuItem key={locale} value={locale} onClick={() => handleItemClick(locale)}>
+            {localeNames[locale]}
+          </MenuItem>
+        ))}
+      </Menu>
+    </Box>
   );
-};
-
-export default LanguageButton;
+}

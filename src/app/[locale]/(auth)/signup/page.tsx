@@ -5,9 +5,8 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { authSignUpSchema } from '../../../validation/authValidation';
-import { useSignUpUser } from '@/src/lib/auth/useSignUpUser';
+import { useSignUpUser } from '../../../../lib/auth/useSignUpUser';
 import { useTranslations } from 'next-intl';
-// import { useSignUpUser } from '@/src/lib/auth/useSignUpUser';
 
 const SignUp = () => {
   const {
@@ -33,7 +32,7 @@ const SignUp = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          {t('auth.create-account')}
+          {t('create-account')}
         </Typography>
         <p
           style={{
@@ -44,7 +43,7 @@ const SignUp = () => {
             color: 'rgba(0, 0, 0, 0.54)',
           }}
         >
-          {t('auth.journey')}
+          {t('journey')}
         </p>
         <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
           <Controller
@@ -58,9 +57,8 @@ const SignUp = () => {
                 required
                 fullWidth
                 id="username"
-                label={t('auth.username')}
+                label={t('username')}
                 autoComplete="username"
-                // autoFocus add or not?
                 error={!!errors.username}
                 helperText={errors.username ? <>{t(errors.username.message)}</> : null}
               />
@@ -77,7 +75,7 @@ const SignUp = () => {
                 required
                 fullWidth
                 id="email"
-                label={t('auth.email')}
+                label={t('email')}
                 autoComplete="email"
                 error={!!errors.email}
                 helperText={errors.email ? <>{t(errors.email.message)}</> : null}
@@ -92,9 +90,10 @@ const SignUp = () => {
               <TextField
                 {...field}
                 margin="normal"
+                inputProps={{ 'data-testid': 'password-test' }}
                 required
                 fullWidth
-                label={t('auth.password')}
+                label={t('password')}
                 type="password"
                 id="password"
                 autoComplete="new-password"
@@ -111,9 +110,10 @@ const SignUp = () => {
               <TextField
                 {...field}
                 margin="normal"
+                inputProps={{ 'data-testid': 'confirm-test' }}
                 required
                 fullWidth
-                label={t('auth.confirmPassword')}
+                label={t('confirmPassword')}
                 type="password"
                 id="confirmPassword"
                 autoComplete="new-password"
@@ -124,6 +124,7 @@ const SignUp = () => {
           />
           <Button
             type="submit"
+            data-testid="up-submit"
             fullWidth
             variant="contained"
             sx={{
@@ -138,7 +139,7 @@ const SignUp = () => {
               },
             }}
           >
-            {t('auth.sign-up')}
+            {t('sign-up')}
           </Button>
           <p
             style={{
@@ -149,9 +150,9 @@ const SignUp = () => {
               color: 'rgba(0, 0, 0, 0.54)',
             }}
           >
-            {t('auth.have-account')} {''}
+            {t('have-account')} {''}
             <Link href="/signin" style={{ color: 'black', textDecoration: 'none' }}>
-              {t('auth.sign-in')}
+              {t('sign-in')}
             </Link>
           </p>
         </Box>

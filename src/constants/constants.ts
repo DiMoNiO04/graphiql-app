@@ -4,7 +4,7 @@ export const developers = [
     href: 'https://github.com/Yuliya241',
     imgSrc: 'https://avatars.githubusercontent.com/u/119517257?v=4',
     imgAlt: 'Yuliya',
-    contribute: 'Main Page,REST Client layout,Language support',
+    contribute: 'Main Page,REST Client layout,Language support,Unit-tests',
   },
   {
     nameOfPerson: 'Dmitriy',

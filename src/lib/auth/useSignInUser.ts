@@ -1,5 +1,5 @@
-import { auth } from '@/src/app/firebase/config';
-import { AuthFormData } from '@/src/types/authTypes';
+import { auth } from '../../app/firebase/config';
+import { AuthFormData } from '../../types/authTypes';
 import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
@@ -18,15 +18,15 @@ export const useSignInUser = () => {
       const token = await userCredential?.user.getIdToken();
       setCookie('graphiql-app-f134va', token);
       if (userCredential && userCredential.user) {
-        toast.success(t('toast-in.success'));
+        toast.success(t('success-in'));
         router.push('/');
         router.refresh();
       } else {
-        toast.error(t('toast-in.errorr'));
+        toast.error(t('errorr-in'));
       }
     } catch (e) {
-      console.error(t('toast-in.console'), e);
-      toast.error(t('toast-in.error'));
+      console.error(t('console-in'), e);
+      toast.error(t('error-in'));
     }
   };
 

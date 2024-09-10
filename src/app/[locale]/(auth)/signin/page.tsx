@@ -6,7 +6,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { authSignInSchema } from '../../../validation/authValidation';
 import Link from 'next/link';
-import { useSignInUser } from '@/src/lib/auth/useSignInUser';
+import { useSignInUser } from '../../../../lib/auth/useSignInUser';
 import { useTranslations } from 'next-intl';
 
 const SignIn = () => {
@@ -45,7 +45,7 @@ const SignIn = () => {
             color: 'rgba(0, 0, 0, 0.54)',
           }}
         >
-          {t('auth.phrase')}
+          {t('phrase')}
         </p>
         <Box component="form" noValidate onSubmit={handleSubmit(handleSignIn)} sx={{ mt: 1 }}>
           <Controller
@@ -59,7 +59,7 @@ const SignIn = () => {
                 required
                 fullWidth
                 id="email"
-                label={t('auth.email')}
+                label={t('email')}
                 autoComplete="email"
                 error={!!errors.email}
                 helperText={errors.email ? <>{t(errors.email.message)}</> : null}
@@ -76,7 +76,7 @@ const SignIn = () => {
                 margin="normal"
                 required
                 fullWidth
-                label={t('auth.password')}
+                label={t('password')}
                 type="password"
                 id="password"
                 autoComplete="new-password"
@@ -87,6 +87,7 @@ const SignIn = () => {
           />
           <Button
             type="submit"
+            data-testid="button-submit"
             fullWidth
             variant="contained"
             sx={{
@@ -101,7 +102,7 @@ const SignIn = () => {
               },
             }}
           >
-            {t('auth.sign-in')}
+            {t('sign-in')}
           </Button>
           <p
             style={{
@@ -112,9 +113,9 @@ const SignIn = () => {
               color: 'rgba(0, 0, 0, 0.54)',
             }}
           >
-            {t('auth.no-account')}{' '}
+            {t('no-account')}{' '}
             <Link href="/signup" style={{ color: 'black' }}>
-              {t('auth.sign-up')}
+              {t('sign-up')}
             </Link>
           </p>
         </Box>
