@@ -14,6 +14,7 @@ export function HeaderProvider({ children }: { children: React.ReactNode }) {
     { key: 'Content-Type', value: 'application/json' },
     { key: 'Accept-Language', value: 'en-US,en;q=0.9' },
     { key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' },
+    // { key: '', value: '' },
   ]);
 
   return <HeaderContext.Provider value={{ headers, setHeaders }}>{children}</HeaderContext.Provider>;
