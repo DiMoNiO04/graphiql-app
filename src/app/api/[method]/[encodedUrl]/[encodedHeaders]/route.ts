@@ -12,8 +12,11 @@ export async function GET(
   // headers
   const decodedHeaders = decodeBase64(encodedHeaders);
   const parsedHeaders = JSON.parse(decodedHeaders);
+  // convert the headers to an object
   const headersObject = parsedHeaders.reduce((acc: Record<string, string>, header: Header) => {
-    acc[header.key] = header.value;
+    if (header.sent) {
+      acc[header.key] = header.value;
+    }
     return acc;
   }, {});
 
@@ -53,11 +56,11 @@ export async function POST(
   const decodedHeaders = decodeBase64(encodedHeaders);
   const parsedHeaders = JSON.parse(decodedHeaders);
   const headersObject = parsedHeaders.reduce((acc: Record<string, string>, header: Header) => {
-    acc[header.key] = header.value;
+    if (header.sent) {
+      acc[header.key] = header.value;
+    }
     return acc;
   }, {});
-
-  console.log('headersObject', headersObject);
   try {
     const { encodedRequestBody } = await request.json();
     const decodedRequestBody = decodeBase64(encodedRequestBody);

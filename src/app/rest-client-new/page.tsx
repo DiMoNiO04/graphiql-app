@@ -14,8 +14,7 @@ const RestClient = () => {
   const [responseStatus, setResponseStatus] = useState('');
   console.log(response, 'response');
   // HEADERS
-  const { headers, setHeaders } = useHeaders();
-  console.log(headers, 'headers');
+  const { headers } = useHeaders();
   const [responseHeaders, setResponseHeaders] = useState([]);
 
   const onSendButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
