@@ -1,8 +1,7 @@
 import React from 'react';
 
 import Editor from '@monaco-editor/react';
-
-import RestClientSelectEditorMethod from './RestClientSelectEditorMethod';
+import Loader from '../Loading/Loading';
 
 // TODO ADD  theme="vs-dark" WHEN DARK
 const RestClientResponseEditor = ({ response }: { response: string }) => {
@@ -14,7 +13,7 @@ const RestClientResponseEditor = ({ response }: { response: string }) => {
         width={700}
         language="json"
         theme="vs"
-        // loading={<div>Loading...</div>}
+        loading={''}
         options={{
           minimap: { enabled: false },
           contextmenu: false,
@@ -27,7 +26,6 @@ const RestClientResponseEditor = ({ response }: { response: string }) => {
           tabSize: 2,
           readOnly: true,
         }}
-        // onChange={(value) => setRequestBody(value || '')}
         value={response}
       />
     </div>

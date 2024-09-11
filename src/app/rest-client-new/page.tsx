@@ -12,13 +12,16 @@ const RestClient = () => {
   const [requestBody, setRequestBody] = useState('');
   const [response, setResponse] = useState('');
   const [responseStatus, setResponseStatus] = useState<number | string | null>(null);
+  const [responseTime, setResponseTime] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   // HEADERS
   const { headers } = useHeaders();
   const [responseHeaders, setResponseHeaders] = useState([]);
 
   const onSendButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
+    const startTime = performance.now();
+    setIsLoading(true);
     try {
       let result;
       const encodedUrl = encodeBase64(url);
@@ -37,19 +40,20 @@ const RestClient = () => {
           console.error('Unsupported HTTP method');
       }
       const data = await result?.json(); // get the data for the response content
-
-      console.log('data', data);
-
+      const endTime = performance.now();
+      setResponseTime(endTime - startTime);
       setResponseHeaders(data['headers']);
-
+      console.log('Response time:', responseTime);
       setResponseStatus(data['status']);
       setResponse(JSON.stringify(data['data'], null, 2)); // set the response content
-
+      setIsLoading(false);
       // console.log('Response:', result);
     } catch (error) {
       console.error('Error:', error);
       setResponse((error as Error).message);
       setResponseStatus(500);
+      setResponseTime(null);
+      setIsLoading(false);
     }
   };
 
@@ -66,7 +70,12 @@ const RestClient = () => {
       </div>
 
       <div className="flex-1 flex flex-col gap-10 border-t-2 border-input pt-3 h-screen ">
-        <RestClientResponse response={response} responseStatus={responseStatus} />
+        <RestClientResponse
+          response={response}
+          responseStatus={responseStatus}
+          responseTime={responseTime}
+          isLoading={isLoading}
+        />
       </div>
     </div>
   );

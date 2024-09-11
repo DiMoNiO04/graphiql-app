@@ -82,6 +82,7 @@ export async function POST(
     return NextResponse.json({
       data,
       headers: responseHeaders,
+      status: response.status,
     });
   } catch (error) {
     if (error instanceof SyntaxError) {
