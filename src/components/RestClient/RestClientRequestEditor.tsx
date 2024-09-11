@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Editor from '@monaco-editor/react';
 
 import RestClientSelectEditorMethod from './RestClientSelectEditorMethod';
+import Loader from '../Loading/Loading';
 
 // TODO ADD  theme="vs-dark" WHEN DARK
 const RestClientRequestEditor = ({
@@ -12,16 +13,18 @@ const RestClientRequestEditor = ({
   setRequestBody: (body: string) => void;
   requestBody: string;
 }) => {
+  const [bodyMethod, setBodyMethod] = useState('json');
+
   return (
     <div className="flex flex-col items-start gap-3 w-full">
-      <RestClientSelectEditorMethod />
+      <RestClientSelectEditorMethod setBodyMethod={setBodyMethod} />
       <Editor
         className="border-input border "
         height="35vh"
         width={700}
-        language="json"
+        language={bodyMethod.toLowerCase()}
         theme="vs"
-        // loading={<div>Loading...</div>}
+        loading={<Loader size={35} />}
         options={{
           minimap: { enabled: false },
           contextmenu: false,

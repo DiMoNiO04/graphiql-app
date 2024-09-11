@@ -9,9 +9,9 @@ import {
 } from '@/src/components/ui/select';
 import { selectorEditorBodyMethods } from '@/src/constants/constants';
 
-const RestClientSelectEditorMethod = () => {
+const RestClientSelectEditorMethod = ({ setBodyMethod }: { setBodyMethod: (method: string) => void }) => {
   return (
-    <Select defaultValue="JSON">
+    <Select defaultValue="JSON" onValueChange={(value) => setBodyMethod(value)}>
       <SelectTrigger style={{ border: '1px solid #E4E4E7' }} className="w-[180px] text-sm font-semibold">
         <SelectValue />
       </SelectTrigger>
