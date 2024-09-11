@@ -1,6 +1,7 @@
 export interface Header {
   key: string;
   value: string;
+  sent: boolean;
 }
 
 export interface RequestHeaderProps {

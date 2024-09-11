@@ -10,11 +10,10 @@ const HeaderContext = createContext<RequestHeaderProps>({
 
 export function HeaderProvider({ children }: { children: React.ReactNode }) {
   const [headers, setHeaders] = useState([
-    { key: 'Accept', value: '*/*' },
-    { key: 'Content-Type', value: 'application/json' },
-    { key: 'Accept-Language', value: 'en-US,en;q=0.9' },
-    { key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' },
-    // { key: '', value: '' },
+    { key: 'Accept', value: '*/*', sent: true },
+    { key: 'Content-Type', value: 'application/json', sent: true },
+    { key: 'Accept-Language', value: 'en-US,en;q=0.9', sent: true },
+    { key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate', sent: true },
   ]);
 
   return <HeaderContext.Provider value={{ headers, setHeaders }}>{children}</HeaderContext.Provider>;

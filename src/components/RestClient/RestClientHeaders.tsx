@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from '../ui/input';
 import { Trash2, CirclePlus } from 'lucide-react';
 import { useHeaders } from '@/src/contexts/HeaderContext';
@@ -8,7 +8,6 @@ import toast from 'react-hot-toast';
 
 const RestClientHeaders = () => {
   const { headers, setHeaders } = useHeaders();
-  const [isChecked, setIsChecked1] = useState(false);
 
   const protectedKeys = ['Accept', 'Content-Type', 'Accept-Language', 'Cache-Control'];
 
@@ -19,8 +18,13 @@ const RestClientHeaders = () => {
     }
     setHeaders(headers.filter((header) => header !== itemToRemove));
   };
+
   const onAddHeader = () => {
-    setHeaders([...headers, { key: '', value: '' }]);
+    setHeaders([...headers, { key: '', value: '', sent: false }]);
+  };
+
+  const isHeaderEmpty = (header: Header): boolean => {
+    return header.key.trim() === '' || header.value.trim() === '';
   };
 
   const onHeaderChange = (index: number, field: 'key' | 'value', newValue: string) => {
@@ -28,6 +32,33 @@ const RestClientHeaders = () => {
     updatedHeaders[index] = { ...updatedHeaders[index], [field]: newValue };
     setHeaders(updatedHeaders);
   };
+
+  const onCheckboxChange = (index: number, checked: boolean | string) => {
+    const updatedHeaders = [...headers];
+    const header = updatedHeaders[index];
+
+    if (isHeaderEmpty(header) && checked) {
+      toast.error('Cannot send header with empty key or value');
+      return;
+    }
+
+    updatedHeaders[index] = { ...header, sent: checked as boolean };
+    setHeaders(updatedHeaders);
+  };
+
+  useEffect(() => {
+    const updatedHeaders = headers.map((header) => {
+      if (header.sent && isHeaderEmpty(header)) {
+        return { ...header, sent: false };
+      }
+      return header;
+    });
+
+    if (JSON.stringify(updatedHeaders) !== JSON.stringify(headers)) {
+      setHeaders(updatedHeaders);
+    }
+  }, [headers, setHeaders]);
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-3">
@@ -35,7 +66,7 @@ const RestClientHeaders = () => {
           return (
             <div className="flex gap-2 max-w-[700px] w-full" key={index}>
               <div className="flex gap-3 w-full items-center">
-                <Checkbox checked={true} />
+                <Checkbox checked={header.sent} onCheckedChange={(checked) => onCheckboxChange(index, checked)} />
                 <Input
                   type="text"
                   placeholder="Header Key"
