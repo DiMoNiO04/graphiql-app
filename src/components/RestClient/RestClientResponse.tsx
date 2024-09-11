@@ -1,9 +1,13 @@
 import React from 'react';
 import RestClientSelectResponseParameters from './RestClientSelectResponseParameters';
 import RestClientResponseEditor from './RestClientResponseEditor';
-const RestClientResponse = ({ response }: { response: string }) => {
-  console.log(response);
-
+const RestClientResponse = ({
+  response,
+  responseStatus,
+}: {
+  response: string;
+  responseStatus: number | string | null;
+}) => {
   return (
     <div>
       <h2 className="text-xl font-semibold">Response</h2>
@@ -15,7 +19,7 @@ const RestClientResponse = ({ response }: { response: string }) => {
             <RestClientSelectResponseParameters />
             <span>Status:</span>
 
-            {/* <span>{response.status}</span> */}
+            <span>{responseStatus}</span>
           </div>
           <RestClientResponseEditor response={response} />
         </div>

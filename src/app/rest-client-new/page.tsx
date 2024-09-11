@@ -11,8 +11,7 @@ const RestClient = () => {
   const [url, setUrl] = useState('');
   const [requestBody, setRequestBody] = useState('');
   const [response, setResponse] = useState('');
-  const [responseStatus, setResponseStatus] = useState('');
-  console.log(response, 'response');
+  const [responseStatus, setResponseStatus] = useState<number | string | null>(null);
   // HEADERS
   const { headers } = useHeaders();
   const [responseHeaders, setResponseHeaders] = useState([]);
@@ -39,14 +38,18 @@ const RestClient = () => {
       }
       const data = await result?.json(); // get the data for the response content
 
+      console.log('data', data);
+
       setResponseHeaders(data['headers']);
 
-      setResponse(JSON.stringify(data, null, 2)); // set the response content
+      setResponseStatus(data['status']);
+      setResponse(JSON.stringify(data['data'], null, 2)); // set the response content
 
-      console.log('Response:', result);
+      // console.log('Response:', result);
     } catch (error) {
       console.error('Error:', error);
       setResponse((error as Error).message);
+      setResponseStatus(500);
     }
   };
 
@@ -63,7 +66,7 @@ const RestClient = () => {
       </div>
 
       <div className="flex-1 flex flex-col gap-10 border-t-2 border-input pt-3 h-screen ">
-        <RestClientResponse response={response} />
+        <RestClientResponse response={response} responseStatus={responseStatus} />
       </div>
     </div>
   );

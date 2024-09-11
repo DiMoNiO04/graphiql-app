@@ -33,6 +33,7 @@ export async function GET(
     return NextResponse.json({
       data,
       headers: responseHeaders,
+      status: response.status,
     });
   } catch (error) {
     if (error instanceof SyntaxError) {
