@@ -79,6 +79,7 @@ export async function POST(
       responseHeaders[key] = value;
     });
 
+    console.log('Response headers at POST:', responseHeaders);
     return NextResponse.json({
       data,
       headers: responseHeaders,

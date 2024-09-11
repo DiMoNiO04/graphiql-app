@@ -22,6 +22,7 @@ const RestClient = () => {
     e.preventDefault();
     const startTime = performance.now();
     setIsLoading(true);
+    console.log(method, 'method');
     try {
       let result;
       const encodedUrl = encodeBase64(url);
@@ -43,7 +44,6 @@ const RestClient = () => {
       const endTime = performance.now();
       setResponseTime(endTime - startTime);
       setResponseHeaders(data['headers']);
-      console.log('Response time:', responseTime);
       setResponseStatus(data['status']);
       setResponse(JSON.stringify(data['data'], null, 2)); // set the response content
       setIsLoading(false);
@@ -66,7 +66,7 @@ const RestClient = () => {
           url={url}
           onSendButtonClick={onSendButtonClick}
         />
-        <RestClientRequestTabs />
+        <RestClientRequestTabs setRequestBody={setRequestBody} requestBody={requestBody} />
       </div>
 
       <div className="flex-1 flex flex-col gap-10 border-t-2 border-input pt-3 h-screen ">

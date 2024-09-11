@@ -5,8 +5,13 @@ import Editor from '@monaco-editor/react';
 import RestClientSelectEditorMethod from './RestClientSelectEditorMethod';
 
 // TODO ADD  theme="vs-dark" WHEN DARK
-const RestClientRequestEditor = () => {
-  const response = '';
+const RestClientRequestEditor = ({
+  setRequestBody,
+  requestBody,
+}: {
+  setRequestBody: (body: string) => void;
+  requestBody: string;
+}) => {
   return (
     <div className="flex flex-col items-start gap-3 w-full">
       <RestClientSelectEditorMethod />
@@ -29,8 +34,8 @@ const RestClientRequestEditor = () => {
           tabSize: 2,
           readOnly: false,
         }}
-        // onChange={(value) => setRequestBody(value || '')}
-        value={response}
+        onChange={(value) => setRequestBody(value || '')}
+        value={requestBody}
       />
     </div>
   );
