@@ -9,9 +9,13 @@ import {
   SelectValue,
 } from '@/src/components/ui/select';
 import { selectorResponseParameters } from '@/src/constants/constants';
-const RestClientSelectResponseParameters = () => {
+const RestClientSelectResponseParameters = ({
+  setResponseParameters,
+}: {
+  setResponseParameters: (responseParameters: string) => void;
+}) => {
   return (
-    <Select defaultValue="Body">
+    <Select onValueChange={(value) => setResponseParameters(value)} defaultValue="Body">
       <SelectTrigger style={{ border: '1px solid #E4E4E7' }} className="w-[180px] text-sm font-semibold">
         <SelectValue />
       </SelectTrigger>

@@ -65,7 +65,4 @@ export const selectorResponseParameters = [
   {
     method: 'Headers',
   },
-  {
-    method: 'Cookies',
-  },
 ];

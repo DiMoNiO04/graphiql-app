@@ -16,7 +16,7 @@ const RestClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   // HEADERS
   const { headers } = useHeaders();
-  const [responseHeaders, setResponseHeaders] = useState([]);
+  const [responseHeaders, setResponseHeaders] = useState<Record<string, string>>({});
 
   const onSendButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -37,6 +37,25 @@ const RestClient = () => {
             method: 'POST',
             body: JSON.stringify({ encodedRequestBody }),
           });
+        case 'DELETE':
+          result = await fetch(`/api/${method}/${encodedUrl}/${encodedHeaders}`, {
+            method: 'DELETE',
+          });
+          break;
+        case 'PUT':
+          const encodedPutBody = encodeBase64(requestBody);
+          result = await fetch(`/api/${method}/${encodedUrl}/${encodedHeaders}`, {
+            method: 'PUT',
+            body: JSON.stringify({ encodedRequestBody: encodedPutBody }),
+          });
+          break;
+        case 'PATCH':
+          const encodedPatchBody = encodeBase64(requestBody);
+          result = await fetch(`/api/${method}/${encodedUrl}/${encodedHeaders}`, {
+            method: 'PATCH',
+            body: JSON.stringify({ encodedRequestBody: encodedPatchBody }),
+          });
+          break;
         default:
           console.error('Unsupported HTTP method');
       }
@@ -47,7 +66,6 @@ const RestClient = () => {
       setResponseStatus(data['status']);
       setResponse(JSON.stringify(data['data'], null, 2)); // set the response content
       setIsLoading(false);
-      // console.log('Response:', result);
     } catch (error) {
       console.error('Error:', error);
       setResponse((error as Error).message);
@@ -75,6 +93,7 @@ const RestClient = () => {
           responseStatus={responseStatus}
           responseTime={responseTime}
           isLoading={isLoading}
+          responseHeaders={responseHeaders}
         />
       </div>
     </div>
