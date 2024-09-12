@@ -1,51 +1,28 @@
 'use client';
-
-import BodyEditor from '@/src/components/BodyEditor/BodyEditor';
-import ControlTabPanel from '@/src/components/ControlTabPanel/ControlTabPanel';
-import ResponseEditor from '@/src/components/ResponseEditor/ResponseEditor';
-import UrlEditor from '@/src/components/UrlEditor.tsx/UrlEditor';
-import { a11yProps } from '@/src/lib/restClient/getAllyProps';
-import { Box, Tabs, Tab, Stack, Button, Typography } from '@mui/material';
-import { useState } from 'react';
-import AddIcon from '@mui/icons-material/Add';
-import RequestHeader from '@/src/components/RequestHeader/RequestHeader';
+import React, { useState } from 'react';
+import RestClientRequestHeader from '@/src/components/RestClient/RestClientRequestHeader';
+import RestClientRequestTabs from '@/src/components/RestClient/RestClientRequestTabs';
+import RestClientResponse from '@/src/components/RestClient/RestClientResponse';
 import { encodeBase64 } from '@/src/utils/base64';
-
+import { useHeaders } from '@/src/contexts/HeaderContext';
 const RestClient = () => {
-  const [value, setValue] = useState(0);
-
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-  const [responseHeaders, setResponseHeaders] = useState([]);
-
-  console.log('Response headers:', responseHeaders);
-
-  // REST Client
-
-  // HEADERS
-  const [headers, setHeaders] = useState([
-    // essentially means "I can accept any type of content you send me".
-    { key: 'Accept', value: '*/*' },
-    // this is the type of the data you are sending to the server
-    { key: 'Content-Type', value: 'application/json' },
-    // this is the language you want the server to respond in
-    { key: 'Accept-Language', value: 'en-US,en;q=0.9' },
-    // this is the cache control
-    { key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' },
-    // this is the authorization
-    // { key: 'Authorization', value: '' },
-  ]);
-
   // BODY
   const [method, setMethod] = useState('GET');
   const [url, setUrl] = useState('');
   const [requestBody, setRequestBody] = useState('');
   const [response, setResponse] = useState('');
+  const [responseStatus, setResponseStatus] = useState<number | string | null>(null);
+  const [responseTime, setResponseTime] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  // HEADERS
+  const { headers } = useHeaders();
+  const [responseHeaders, setResponseHeaders] = useState<Record<string, string>>({});
 
   const onSendButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
+    const startTime = performance.now();
+    setIsLoading(true);
+    console.log(method, 'method');
     try {
       let result;
       const encodedUrl = encodeBase64(url);
@@ -60,78 +37,66 @@ const RestClient = () => {
             method: 'POST',
             body: JSON.stringify({ encodedRequestBody }),
           });
+        case 'DELETE':
+          result = await fetch(`/api/${method}/${encodedUrl}/${encodedHeaders}`, {
+            method: 'DELETE',
+          });
+          break;
+        case 'PUT':
+          const encodedPutBody = encodeBase64(requestBody);
+          result = await fetch(`/api/${method}/${encodedUrl}/${encodedHeaders}`, {
+            method: 'PUT',
+            body: JSON.stringify({ encodedRequestBody: encodedPutBody }),
+          });
+          break;
+        case 'PATCH':
+          const encodedPatchBody = encodeBase64(requestBody);
+          result = await fetch(`/api/${method}/${encodedUrl}/${encodedHeaders}`, {
+            method: 'PATCH',
+            body: JSON.stringify({ encodedRequestBody: encodedPatchBody }),
+          });
+          break;
         default:
           console.error('Unsupported HTTP method');
       }
       const data = await result?.json(); // get the data for the response content
-
+      const endTime = performance.now();
+      setResponseTime(endTime - startTime);
       setResponseHeaders(data['headers']);
-
-      setResponse(JSON.stringify(data, null, 2)); // set the response content
-
-      console.log('Response:', result);
+      setResponseStatus(data['status']);
+      setResponse(JSON.stringify(data['data'], null, 2)); // set the response content
+      setIsLoading(false);
     } catch (error) {
       console.error('Error:', error);
       setResponse((error as Error).message);
+      setResponseStatus(500);
+      setResponseTime(null);
+      setIsLoading(false);
     }
   };
 
   return (
-    <Stack
-      spacing={5}
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        padding: '4rem 2.5rem',
-      }}
-    >
-      <UrlEditor
-        method={method}
-        setMethod={setMethod}
-        url={url}
-        setUrl={setUrl}
-        onSendButtonClick={onSendButtonClick}
-      />
-      <Box>
-        <Tabs
-          value={value}
-          onChange={handleChangeTab}
-          TabIndicatorProps={{ sx: { backgroundColor: '#F26B3A', height: 3, bottom: 2 } }}
-        >
-          <Tab label="Headers" {...a11yProps(0)} />
-          <Tab label="Body" {...a11yProps(1)} />
-        </Tabs>
-        <ControlTabPanel value={value} index={0}>
-          <RequestHeader setHeaders={setHeaders} headers={headers} />
-          <Button
-            variant="contained"
-            sx={{
-              transition: 'all 0.4s ease',
-              backgroundColor: '#000000',
-              color: '#ffffff',
-              margin: '1.5rem 0',
-              display: 'flex',
-              width: 175,
-              alignSelf: 'flex-end',
-              '&:hover': {
-                color: '#000000',
-                backgroundColor: '#ffffff',
-              },
-            }}
-          >
-            <Box sx={{ alignItems: 'center', display: 'flex' }}>
-              <AddIcon />
-              <Typography marginLeft={1}>Add header</Typography>
-            </Box>
-          </Button>
-        </ControlTabPanel>
-        <ControlTabPanel value={value} index={1}>
-          <BodyEditor setRequestBody={setRequestBody} requestBody={requestBody} />
-        </ControlTabPanel>
-      </Box>
-      <ResponseEditor response={response} />
-    </Stack>
+    <div className="flex justify-center flex-col py-16 px-10 max-w-[1200px] mx-auto text-sm font-medium h-screen max-h-[1990px]">
+      <div className="flex-1 flex flex-col gap-10 ">
+        <RestClientRequestHeader
+          setMethod={setMethod}
+          setUrl={setUrl}
+          url={url}
+          onSendButtonClick={onSendButtonClick}
+        />
+        <RestClientRequestTabs setRequestBody={setRequestBody} requestBody={requestBody} />
+      </div>
+
+      <div className="flex-1 flex flex-col gap-10 border-t-2 border-input pt-3 h-screen ">
+        <RestClientResponse
+          response={response}
+          responseStatus={responseStatus}
+          responseTime={responseTime}
+          isLoading={isLoading}
+          responseHeaders={responseHeaders}
+        />
+      </div>
+    </div>
   );
 };
 
