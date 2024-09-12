@@ -5,6 +5,7 @@ import RestClientRequestTabs from '@/src/components/RestClient/RestClientRequest
 import RestClientResponse from '@/src/components/RestClient/RestClientResponse';
 import { encodeBase64 } from '@/src/utils/base64';
 import { useHeaders } from '@/src/contexts/HeaderContext';
+import { saveRequestToLocalStorage } from '@/src/utils/saveRequestToLocalStorage';
 const RestClient = () => {
   // BODY
   const [method, setMethod] = useState('GET');
@@ -65,6 +66,7 @@ const RestClient = () => {
       setResponseHeaders(data['headers']);
       setResponseStatus(data['status']);
       setResponse(JSON.stringify(data['data'], null, 2)); // set the response content
+      saveRequestToLocalStorage(url, method, data['status'], 'rest-client');
       setIsLoading(false);
     } catch (error) {
       console.error('Error:', error);
@@ -72,6 +74,7 @@ const RestClient = () => {
       setResponseStatus(500);
       setResponseTime(null);
       setIsLoading(false);
+      saveRequestToLocalStorage(url, method, 500, 'rest-client');
     }
   };
 
