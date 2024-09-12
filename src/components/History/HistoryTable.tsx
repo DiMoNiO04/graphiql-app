@@ -3,16 +3,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Eye, ChevronsUpDown } from 'lucide-react';
 import { RequestHistoryItem } from '@/src/types/history';
 import { formatDistanceToNow, parseISO } from 'date-fns';
+import { getStatusStyle, getStatusText } from '@/src/utils/getStatusTextAndStyle';
 
-const HistoryTable = ({ history }: { history: RequestHistoryItem[] }) => {
-  useEffect(() => {
-    // sort the history by date in descending order
-    const initialSort = [...history].sort((a, b) => parseISO(b.date).getTime() - parseISO(a.date).getTime());
-    setSortedHistory(initialSort);
-  }, [history]);
-
+const HistoryTable = ({ history, searchUrlTerm }: { history: RequestHistoryItem[]; searchUrlTerm: string }) => {
   const [sortedHistory, setSortedHistory] = useState(history);
-
+  const [filteredHistory, setFilteredHistory] = useState(history);
   const [sortConfig, setSortConfig] = useState<{ key: 'url' | 'date'; direction: 'asc' | 'desc' }>({
     key: 'date',
     direction: 'desc',
@@ -39,6 +34,13 @@ const HistoryTable = ({ history }: { history: RequestHistoryItem[] }) => {
     setSortedHistory(sorted);
     setSortConfig({ key, direction });
   };
+
+  useEffect(() => {
+    const filtered = history.filter((item) => item.url.toLowerCase().includes(searchUrlTerm.toLowerCase()));
+    setFilteredHistory(filtered);
+    const sorted = [...filtered].sort((a, b) => parseISO(b.date).getTime() - parseISO(a.date).getTime());
+    setSortedHistory(sorted);
+  }, [history, searchUrlTerm]);
 
   return (
     <Table className="w-full border-2 border-input ">
@@ -70,13 +72,23 @@ const HistoryTable = ({ history }: { history: RequestHistoryItem[] }) => {
       <TableBody>
         {sortedHistory.map(({ url, method, date, status, id }) => (
           <TableRow key={id}>
-            <TableCell className="font-medium">{url}</TableCell>
+            <TableCell className="font-medium overflow-hidden text-ellipsis whitespace-nowrap max-w-[200px]">
+              {url}
+            </TableCell>
             <TableCell className="text-gray-500">{method}</TableCell>
             <TableCell>{formatDistanceToNow(parseISO(date), { addSuffix: true })}</TableCell>
             <TableCell>
-              <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
-                {status !== null ? status : 'Undefined'}
-              </span>
+              {status !== undefined && status !== null && status !== '' ? (
+                <span
+                  className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${getStatusStyle(status)}`}
+                >
+                  {status} {getStatusText(status)}
+                </span>
+              ) : (
+                <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">
+                  Undefined
+                </span>
+              )}
             </TableCell>
             <TableCell className="text-right">
               <button className="text-sm flex items-center gap-1">

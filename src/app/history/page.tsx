@@ -7,6 +7,7 @@ import { Search } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
 const History = () => {
+  const [searchUrlTerm, setSearchUrlTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [history, setHistory] = useState<RequestHistoryItem[]>([]);
   useEffect(() => {
@@ -29,7 +30,13 @@ const History = () => {
           <h1 className="text-2xl font-bold">History</h1>
           <p className="text-black/70">View a record of all your API requests you have made.</p>
         </div>
-        <Input type="text" placeholder={'Filter history by URL'} svg={<Search size={18} className="text-black/70" />} />
+        <Input
+          type="text"
+          placeholder={'Filter history by URL'}
+          svg={<Search size={18} className="text-black/70" />}
+          onChange={(e) => setSearchUrlTerm(e.target.value)}
+          value={searchUrlTerm}
+        />
       </div>
       {isLoading ? (
         <div className="flex justify-center items-center py-64">
@@ -40,7 +47,7 @@ const History = () => {
           <p className="text-black/70">No history found.</p>
         </div>
       ) : (
-        <HistoryTable history={history} />
+        <HistoryTable history={history} searchUrlTerm={searchUrlTerm} />
       )}
     </div>
   );
