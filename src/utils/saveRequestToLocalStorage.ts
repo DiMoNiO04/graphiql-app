@@ -1,3 +1,5 @@
+import { Header } from '../types/headers';
+
 const generateUniqueId = () => {
   const min = 100000;
   const max = 999999;
@@ -10,6 +12,7 @@ export const saveRequestToLocalStorage = (
   url: string,
   method: string,
   status: number | string | null,
+  headers: Header[],
   requestType: 'rest-client' | 'graphql'
 ) => {
   const requestHistory = JSON.parse(localStorage.getItem('graphiql-app-history-f134va') || '[]');
@@ -19,6 +22,7 @@ export const saveRequestToLocalStorage = (
     method,
     date: new Date().toISOString(),
     status,
+    headers,
     type: requestType,
   };
   requestHistory.push(newRequest);

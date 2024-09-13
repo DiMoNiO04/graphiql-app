@@ -4,6 +4,7 @@ import { Eye, ChevronsUpDown } from 'lucide-react';
 import { RequestHistoryItem } from '@/src/types/history';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { getStatusStyle, getStatusText } from '@/src/utils/getStatusTextAndStyle';
+import { useRouter } from 'next/navigation';
 
 const HistoryTable = ({ history, searchUrlTerm }: { history: RequestHistoryItem[]; searchUrlTerm: string }) => {
   const [sortedHistory, setSortedHistory] = useState(history);
@@ -12,7 +13,7 @@ const HistoryTable = ({ history, searchUrlTerm }: { history: RequestHistoryItem[
     key: 'date',
     direction: 'desc',
   });
-
+  const router = useRouter();
   const handleSort = (key: 'url' | 'date') => {
     // if the current sort key is the same as the key that was clicked, toggle the direction
     let direction: 'asc' | 'desc' = 'asc';
@@ -33,6 +34,12 @@ const HistoryTable = ({ history, searchUrlTerm }: { history: RequestHistoryItem[
 
     setSortedHistory(sorted);
     setSortConfig({ key, direction });
+  };
+
+  const redirectToClient = ({ url, method, date, status, id, type }: RequestHistoryItem) => {
+    const clientPath = type === 'rest-client' ? '/rest-client' : '/graphql';
+    console.log(id);
+    router.push(`${clientPath}?id=${id}`);
   };
 
   useEffect(() => {
@@ -70,7 +77,7 @@ const HistoryTable = ({ history, searchUrlTerm }: { history: RequestHistoryItem[
         </TableRow>
       </TableHeader>
       <TableBody>
-        {sortedHistory.map(({ url, method, date, status, id }) => (
+        {sortedHistory.map(({ url, method, date, status, id, type }) => (
           <TableRow key={id}>
             <TableCell className="font-medium overflow-hidden text-ellipsis whitespace-nowrap max-w-[200px]">
               {url}
@@ -91,7 +98,10 @@ const HistoryTable = ({ history, searchUrlTerm }: { history: RequestHistoryItem[
               )}
             </TableCell>
             <TableCell className="text-right">
-              <button className="text-sm flex items-center gap-1">
+              <button
+                className="text-sm flex items-center gap-1 transition-all duration-300 ease-in-out hover:bg-black/10 rounded-md px-2 py-1 text-gray-500 hover:text-black"
+                onClick={() => redirectToClient({ url, method, date, status, id, type })}
+              >
                 <Eye size={16} /> <span>View</span>
               </button>
             </TableCell>

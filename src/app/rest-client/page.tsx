@@ -66,7 +66,7 @@ const RestClient = () => {
       setResponseHeaders(data['headers']);
       setResponseStatus(data['status']);
       setResponse(JSON.stringify(data['data'], null, 2)); // set the response content
-      saveRequestToLocalStorage(url, method, data['status'], 'rest-client');
+      saveRequestToLocalStorage(url, method, data['status'], headers, 'rest-client');
       setIsLoading(false);
     } catch (error) {
       console.error('Error:', error);
@@ -74,7 +74,7 @@ const RestClient = () => {
       setResponseStatus(500);
       setResponseTime(null);
       setIsLoading(false);
-      saveRequestToLocalStorage(url, method, 500, 'rest-client');
+      saveRequestToLocalStorage(url, method, 500, headers, 'rest-client');
     }
   };
 
