@@ -1,27 +1,53 @@
 'use client';
-import { useState } from 'react';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
 
-const LanguageButton = () => {
-  const [language, setLanguage] = useState('');
+import { MenuItem, IconButton, Menu, Box } from '@mui/material';
+import { localeNames, locales, usePathname, useRouter, type Locale } from '../../../i18n/i18n.config';
+import React from 'react';
+import { useTranslations } from 'next-intl';
+import { Language } from '@mui/icons-material';
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setLanguage(event.target.value);
+export default function LanguageButton() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const t = useTranslations('MainPage');
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
   };
-  setLanguage;
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleItemClick = (newLocale: Locale) => {
+    router.replace(pathname, { locale: newLocale });
+    setAnchorEl(null);
+  };
 
   return (
-    <FormControl sx={{ marginRight: 1, minWidth: 120 }} size="small">
-      <InputLabel id="label">Language</InputLabel>
-      <Select labelId="select-label" id="select" value={language} label="Language" onChange={handleChange}>
-        <MenuItem value={'en'}>en</MenuItem>
-        <MenuItem value={'ru'}>ru</MenuItem>
-      </Select>
-    </FormControl>
+    <Box>
+      <IconButton sx={{ color: '#000000' }} onClick={handleClick}>
+        <Language />
+      </IconButton>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        {locales.map((locale) => (
+          <MenuItem key={locale} value={locale} onClick={() => handleItemClick(locale)}>
+            {localeNames[locale]}
+          </MenuItem>
+        ))}
+      </Menu>
+    </Box>
   );
-};
-
-export default LanguageButton;
+}

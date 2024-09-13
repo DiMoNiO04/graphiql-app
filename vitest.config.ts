@@ -12,6 +12,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text'],
       include: ['src/**/*.{ts,tsx}'],
+      exclude: ['src/types', 'src/tests'],
       // thresholds: {
       //   statements: 80,
       // },

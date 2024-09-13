@@ -1,5 +1,13 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import createIntlMiddleware from 'next-intl/middleware';
+import { locales } from './i18n/i18n.config';
+
+const intlMiddleware = createIntlMiddleware({
+  locales,
+  defaultLocale: 'en',
+  localePrefix: 'never',
+});
 
 export async function middleware(request: NextRequest) {
   const authRoutes = ['/signin', '/signup'];
@@ -18,9 +26,10 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/', request.url));
     }
   }
-  return NextResponse.next();
+
+  return NextResponse.next() && intlMiddleware(request);
 }
 
 export const config = {
-  matcher: ['/signin', '/signup', '/rest-client', '/history', '/graphiQL-client'],
+  matcher: ['/signin', '/signup', '/rest-client', '/history', '/graphiQL-client', '/((?!api|_next|_vercel|.*\\..*).*)'],
 };
