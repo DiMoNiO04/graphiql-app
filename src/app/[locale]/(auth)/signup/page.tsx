@@ -4,8 +4,9 @@ import { Box, Button, Container, Link, TextField, Typography } from '@mui/materi
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { authSignUpSchema } from '../../validation/authValidation';
-import { useSignUpUser } from '@/src/lib/auth/useSignUpUser';
+import { authSignUpSchema } from '../../../validation/authValidation';
+import { useSignUpUser } from '../../../../lib/auth/useSignUpUser';
+import { useTranslations } from 'next-intl';
 
 const SignUp = () => {
   const {
@@ -14,10 +15,10 @@ const SignUp = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(authSignUpSchema),
-    mode: 'onBlur',
-    reValidateMode: 'onChange',
+    mode: 'all',
   });
 
+  const t = useTranslations('MainPage');
   const { onSubmit } = useSignUpUser();
 
   return (
@@ -31,7 +32,7 @@ const SignUp = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Create an account
+          {t('create-account')}
         </Typography>
         <p
           style={{
@@ -42,7 +43,7 @@ const SignUp = () => {
             color: 'rgba(0, 0, 0, 0.54)',
           }}
         >
-          New here? Sign up and begin your journey
+          {t('journey')}
         </p>
         <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
           <Controller
@@ -56,11 +57,10 @@ const SignUp = () => {
                 required
                 fullWidth
                 id="username"
-                label="Username"
+                label={t('username')}
                 autoComplete="username"
-                // autoFocus add or not?
                 error={!!errors.username}
-                helperText={errors.username?.message}
+                helperText={errors.username ? <>{t(errors.username.message)}</> : null}
               />
             )}
           />
@@ -75,10 +75,10 @@ const SignUp = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label={t('email')}
                 autoComplete="email"
                 error={!!errors.email}
-                helperText={errors.email?.message}
+                helperText={errors.email ? <>{t(errors.email.message)}</> : null}
               />
             )}
           />
@@ -90,14 +90,15 @@ const SignUp = () => {
               <TextField
                 {...field}
                 margin="normal"
+                inputProps={{ 'data-testid': 'password-test' }}
                 required
                 fullWidth
-                label="Password"
+                label={t('password')}
                 type="password"
                 id="password"
                 autoComplete="new-password"
                 error={!!errors.password}
-                helperText={errors.password?.message}
+                helperText={errors.password ? <>{t(errors.password.message)}</> : null}
               />
             )}
           />
@@ -109,19 +110,21 @@ const SignUp = () => {
               <TextField
                 {...field}
                 margin="normal"
+                inputProps={{ 'data-testid': 'confirm-test' }}
                 required
                 fullWidth
-                label="Confirm Password"
+                label={t('confirmPassword')}
                 type="password"
                 id="confirmPassword"
                 autoComplete="new-password"
                 error={!!errors.confirmPassword}
-                helperText={errors.confirmPassword?.message}
+                helperText={errors.confirmPassword ? <>{t(errors.confirmPassword.message)}</> : null}
               />
             )}
           />
           <Button
             type="submit"
+            data-testid="up-submit"
             fullWidth
             variant="contained"
             sx={{
@@ -136,7 +139,7 @@ const SignUp = () => {
               },
             }}
           >
-            Sign Up
+            {t('sign-up')}
           </Button>
           <p
             style={{
@@ -147,9 +150,9 @@ const SignUp = () => {
               color: 'rgba(0, 0, 0, 0.54)',
             }}
           >
-            Already have an account? {''}
+            {t('have-account')} {''}
             <Link href="/signin" style={{ color: 'black', textDecoration: 'none' }}>
-              Sign In
+              {t('sign-in')}
             </Link>
           </p>
         </Box>

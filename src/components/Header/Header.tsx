@@ -1,6 +1,6 @@
 import React from 'react';
 import HeaderClient from './HeaderClient';
-import { getSession } from '@/src/lib/auth/getUserData';
+import { getSession } from '../../lib/auth/getUserData';
 
 const Header = async () => {
   const session = await getSession();

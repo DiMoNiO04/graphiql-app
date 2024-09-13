@@ -1,11 +1,13 @@
-import { auth } from '@/src/app/firebase/config';
+import { auth } from '../../app/firebase/config';
 import { deleteCookie } from 'cookies-next';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 
 export const SignOutHandler = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
   const router = useRouter();
+  const t = useTranslations('MainPage');
 
   const handleSignOut = async () => {
     try {
@@ -13,13 +15,13 @@ export const SignOutHandler = ({ setOpen }: { setOpen: (open: boolean) => void }
       deleteCookie('graphiql-app-f134va');
 
       setOpen(false);
-      toast.success('You have been signed out successfully.');
+      toast.success(t('success-out'));
       router.push('/');
       router.refresh();
     } catch (error) {
-      console.error('Error signing out:', error);
+      console.error(t('console-out'), error);
       setOpen(false);
-      toast.error('An error occurred while signing out. Please try again.');
+      toast.error(t('error-out'));
     }
   };
 

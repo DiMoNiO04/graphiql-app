@@ -11,7 +11,7 @@ const TeamMemberCard = ({
   src: string;
   alt: string;
   name: string;
-  contribution: string[];
+  contribution: string;
 }) => {
   return (
     <Card
@@ -43,7 +43,7 @@ const TeamMemberCard = ({
           {name}
         </Typography>
         <Stack>
-          {contribution.map((index) => {
+          {contribution.split(',').map((index) => {
             return (
               <Box
                 key={index}
