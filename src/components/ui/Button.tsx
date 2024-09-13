@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Button from '@mui/material/Button';
 import React from 'react';
 
-const BaseButton = ({ children, href }: { children: React.ReactNode; href: string }) => {
+const BaseButton = ({ children, href }: { children: React.ReactNode; href?: string }) => {
   return (
     <Button
       variant="contained"
