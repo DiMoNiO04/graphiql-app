@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import '../../styles/globals.css';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import { Toaster } from 'react-hot-toast';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-
-const inter = Inter({ subsets: ['latin'] });
+import { GeistSans } from 'geist/font/sans';
+import { HeaderProvider } from '@/src/contexts/HeaderContext';
 
 export const metadata: Metadata = {
   title: 'REST/GraphiQL Client',
@@ -24,15 +23,17 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body className={inter.className}>
+    <html lang={locale} className={GeistSans.className}>
+      <body>
         <NextIntlClientProvider messages={messages}>
-          <Toaster position="bottom-right" />
-          <div className="container">
-            <Header />
-            <main className="main">{children}</main>
-            <Footer />
-          </div>
+          <HeaderProvider>
+            <Toaster position="bottom-right" />
+            <div className="container">
+              <Header />
+              <main className="main">{children}</main>
+              <Footer />
+            </div>
+          </HeaderProvider>
         </NextIntlClientProvider>
       </body>
     </html>
