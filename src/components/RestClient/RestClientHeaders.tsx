@@ -64,8 +64,8 @@ const RestClientHeaders = () => {
       <div className="flex flex-col gap-3">
         {headers.map((header, index) => {
           return (
-            <div className="flex gap-2 max-w-[700px] w-full" key={index}>
-              <div className="flex gap-3 w-full items-center">
+            <div className="flex gap-2  w-full" key={index}>
+              <div className="flex gap-3 items-center">
                 <Checkbox checked={header.sent} onCheckedChange={(checked) => onCheckboxChange(index, checked)} />
                 <Input
                   type="text"

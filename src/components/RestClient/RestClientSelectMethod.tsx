@@ -1,19 +1,12 @@
 import React from 'react';
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/src/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/src/components/ui/select';
 import { selectorMethods } from '@/src/constants/constants';
 
-const RestClientSelectMethod = ({ setMethod }: { setMethod: (method: string) => void }) => {
+const RestClientSelectMethod = ({ setMethod, method }: { setMethod: (method: string) => void; method: string }) => {
+  console.log(method);
   return (
-    <Select defaultValue="GET" onValueChange={(value) => setMethod(value)}>
+    <Select value={method ? method : 'GET'} onValueChange={(value) => setMethod(value as string)}>
       <SelectTrigger style={{ border: '1px solid #E4E4E7' }} className="w-[180px] text-base font-semibold">
         <SelectValue />
       </SelectTrigger>

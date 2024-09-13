@@ -13,6 +13,7 @@ export const saveRequestToLocalStorage = (
   method: string,
   status: number | string | null,
   headers: Header[],
+  requestBody: string,
   requestType: 'rest-client' | 'graphql'
 ) => {
   const requestHistory = JSON.parse(localStorage.getItem('graphiql-app-history-f134va') || '[]');
@@ -22,6 +23,7 @@ export const saveRequestToLocalStorage = (
     method,
     date: new Date().toISOString(),
     status,
+    body: requestBody,
     headers,
     type: requestType,
   };

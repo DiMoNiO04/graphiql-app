@@ -22,7 +22,6 @@ const History = () => {
 
     fetchRequestHistory();
   }, []);
-
   console.log('history', history);
   return (
     <div className="flex justify-center flex-col py-16 px-10 max-w-[1200px] mx-auto text-sm font-medium gap-4">

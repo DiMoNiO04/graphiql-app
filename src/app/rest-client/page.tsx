@@ -1,11 +1,14 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import RestClientRequestHeader from '@/src/components/RestClient/RestClientRequestHeader';
 import RestClientRequestTabs from '@/src/components/RestClient/RestClientRequestTabs';
 import RestClientResponse from '@/src/components/RestClient/RestClientResponse';
 import { encodeBase64 } from '@/src/utils/base64';
 import { useHeaders } from '@/src/contexts/HeaderContext';
 import { saveRequestToLocalStorage } from '@/src/utils/saveRequestToLocalStorage';
+import { useSearchParams } from 'next/navigation';
+import { getLocalStorageDataById } from '@/src/utils/getLocalStorageDataById';
+import { RequestHistoryItem } from '@/src/types/history';
 const RestClient = () => {
   // BODY
   const [method, setMethod] = useState('GET');
@@ -15,8 +18,10 @@ const RestClient = () => {
   const [responseStatus, setResponseStatus] = useState<number | string | null>(null);
   const [responseTime, setResponseTime] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const [historyData, setHistoryData] = useState<RequestHistoryItem | null>(null);
   // HEADERS
-  const { headers } = useHeaders();
+  const { headers, setHeaders } = useHeaders();
   const [responseHeaders, setResponseHeaders] = useState<Record<string, string>>({});
 
   const onSendButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -66,7 +71,7 @@ const RestClient = () => {
       setResponseHeaders(data['headers']);
       setResponseStatus(data['status']);
       setResponse(JSON.stringify(data['data'], null, 2)); // set the response content
-      saveRequestToLocalStorage(url, method, data['status'], headers, 'rest-client');
+      saveRequestToLocalStorage(url, method, data['status'], headers, requestBody, 'rest-client');
       setIsLoading(false);
     } catch (error) {
       console.error('Error:', error);
@@ -74,9 +79,22 @@ const RestClient = () => {
       setResponseStatus(500);
       setResponseTime(null);
       setIsLoading(false);
-      saveRequestToLocalStorage(url, method, 500, headers, 'rest-client');
+      saveRequestToLocalStorage(url, method, 500, headers, requestBody, 'rest-client');
     }
   };
+
+  useEffect(() => {
+    const id = searchParams.get('id');
+    if (id) {
+      const data = getLocalStorageDataById(id);
+
+      setHistoryData(data);
+      setUrl(data?.url ?? '');
+      setMethod(data?.method ?? 'GET');
+      setHeaders(data?.headers ?? []);
+      setRequestBody(data?.body ?? '');
+    }
+  }, [searchParams, setHeaders]);
 
   return (
     <div className="flex justify-center flex-col py-16 px-10 max-w-[1200px] mx-auto text-sm font-medium h-screen max-h-[1990px]">
@@ -84,8 +102,10 @@ const RestClient = () => {
         <RestClientRequestHeader
           setMethod={setMethod}
           setUrl={setUrl}
+          method={method}
           url={url}
           onSendButtonClick={onSendButtonClick}
+          historyData={historyData}
         />
         <RestClientRequestTabs setRequestBody={setRequestBody} requestBody={requestBody} />
       </div>
