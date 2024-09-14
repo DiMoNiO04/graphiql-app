@@ -8,8 +8,9 @@ import SignOutButton from '../ui/SignOutButton';
 import BaseButton from '../ui/Button';
 import { useTranslations } from 'next-intl';
 import React from 'react';
+import { SessionResult } from '@/src/types/sessionResult';
 
-const HeaderClient = ({ session }: { session: DecodedIdToken | null }) => {
+const HeaderClient = ({ session }: { session: SessionResult }) => {
   const t = useTranslations('MainPage');
 
   const trigger = useScrollTrigger({
