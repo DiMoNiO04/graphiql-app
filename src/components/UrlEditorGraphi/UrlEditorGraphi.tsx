@@ -1,26 +1,24 @@
 import React from 'react';
-import { Box, Stack, TextField, Typography } from '@mui/material';
-import { Controller, useForm } from 'react-hook-form';
-import { IUrlEditorGraphi } from '@/src/types/urlEditorGraphiTypes';
+import { Box, Button, Stack, TextField, Typography } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
-const UrlEditorGraphi: React.FC<IUrlEditorGraphi> = ({ endpointUrl, onEndpointUrlChange, sdlUrl, onSdlUrlChange }) => {
-  const { control, handleSubmit, setValue } = useForm({
-    defaultValues: {
-      url: endpointUrl,
-      sdlUrl: sdlUrl,
-    },
-  });
-
-  const onSubmit = (data: { url: string; sdlUrl: string }) => {
-    onEndpointUrlChange(data.url);
-    onSdlUrlChange(data.sdlUrl);
-  };
+const UrlEditorGraphi = ({
+  url,
+  setUrl,
+  sdlUrl,
+  setSdlUrl,
+  onSendButtonClick,
+}: {
+  setUrl: (url: string) => void;
+  url: string;
+  setSdlUrl: (sdlUrl: string) => void;
+  onSendButtonClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  sdlUrl: string;
+}) => {
+  const t = useTranslations('MainPage');
 
   return (
     <Box
-      component="form"
-      noValidate
-      onSubmit={handleSubmit(onSubmit)}
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -28,54 +26,50 @@ const UrlEditorGraphi: React.FC<IUrlEditorGraphi> = ({ endpointUrl, onEndpointUr
       }}
     >
       <Stack direction="row" spacing={2} alignItems="center">
-        <Typography variant="h6" component="div" sx={{ flexShrink: 0, width: '150px' }}>
-          Endpoint URL
+        <Typography variant="h6" component="div" sx={{ flexShrink: 0, width: '10rem' }}>
+          {t('endpoint')}
         </Typography>
-        <Controller
-          name="url"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              placeholder="Enter Endpoint URL"
-              fullWidth
-              sx={{
-                height: 40,
-                '.MuiInputBase-root': {
-                  height: 40,
-                },
-              }}
-              margin="normal"
-              onChange={(e) => setValue('url', e.target.value)}
-            />
-          )}
+        <TextField
+          sx={{ width: '100%' }}
+          type="text"
+          placeholder={t('endpoint-placeholder')}
+          onChange={(e) => setUrl(e.target.value)}
+          value={url}
         />
       </Stack>
 
       <Stack direction="row" spacing={2} alignItems="center">
-        <Typography variant="h6" component="div" sx={{ flexShrink: 0, width: '150px' }}>
-          SDL URL
+        <Typography variant="h6" component="div" sx={{ flexShrink: 0, width: '10rem' }}>
+          {t('sdl')}
         </Typography>
-        <Controller
-          name="sdlUrl"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              placeholder="Enter SDL URL"
-              fullWidth
-              sx={{
-                height: 40,
-                '.MuiInputBase-root': {
-                  height: 40,
-                },
-              }}
-              margin="normal"
-              onChange={(e) => setValue('sdlUrl', e.target.value)}
-            />
-          )}
+        <TextField
+          sx={{ width: '100%' }}
+          type="text"
+          placeholder={t('sdl-placeholder')}
+          onChange={(e) => setSdlUrl(e.target.value)}
+          value={sdlUrl}
         />
       </Stack>
+
+      <Button
+        onClick={onSendButtonClick}
+        variant="contained"
+        sx={{
+          display: 'flex',
+          alignSelf: 'flex-end',
+          marginTop: 2,
+          width: 175,
+          transition: 'all 0.4s ease',
+          backgroundColor: 'black',
+          color: 'white',
+          '&:hover': {
+            color: 'black',
+            backgroundColor: 'white',
+          },
+        }}
+      >
+        {t('send')}
+      </Button>
     </Box>
   );
 };

@@ -1,29 +1,58 @@
 import { IResponseViewer } from '@/src/types/responseViewerTypes';
-import { Box, Paper, Stack, Typography } from '@mui/material';
+import { Editor } from '@monaco-editor/react';
+import { Box, Stack } from '@mui/material';
 import React from 'react';
+import { getStatusStyle, getStatusText } from '@/src/utils/getStatusTextAndStyle';
+import { useTranslations } from 'next-intl';
 
-const ResponseViewer: React.FC<IResponseViewer> = ({ response, status }) => {
+const ResponseViewer: React.FC<IResponseViewer> = ({ response, status, responseTime }) => {
+  const t = useTranslations('MainPage');
+
   return (
     <Box sx={{ mt: 4 }}>
-      <Paper sx={{ padding: 2, overflowY: 'auto' }}>
-        <Stack direction="row" spacing={2} alignItems="center">
-          <Typography variant="h6" component="h3" sx={{ flexShrink: 0, width: '150px' }}>
-            Status
-          </Typography>
-          <Typography variant="h6" sx={{ color: 'grey' }}>
-            {status}
-          </Typography>
-        </Stack>
-
-        <Stack direction="row" spacing={2} alignItems="center">
-          <Typography variant="h6" component="h3" sx={{ flexShrink: 0, width: '150px' }}>
-            Body
-          </Typography>
-          <Typography variant="h6" sx={{ color: 'grey' }}>
-            {<pre>{JSON.stringify(response, null, 2)}</pre>}
-          </Typography>
-        </Stack>
-      </Paper>
+      <Stack direction="column" spacing={2} alignItems="center">
+        <div className="flex gap-4 w-full justify-center">
+          {status !== null ? (
+            <p>
+              {t('status')}
+              <span className={`font-medium ${getStatusStyle(status)} px-1  rounded`}>
+                {status} {getStatusText(status)}
+              </span>
+            </p>
+          ) : (
+            <p>{t('status')}</p>
+          )}
+          <span className="text-black/50 ">|</span>
+          {responseTime !== null ? (
+            <p>
+              {t('time')} <span className="bg-blue-500/20 px-1 rounded-md">{responseTime.toFixed(2)} ms</span>
+            </p>
+          ) : (
+            <p>{t('time')}</p>
+          )}
+        </div>
+        <Editor
+          className="border-input border "
+          height="35vh"
+          width={700}
+          language="json"
+          theme="vs"
+          loading={''}
+          options={{
+            minimap: { enabled: false },
+            contextmenu: false,
+            quickSuggestions: false,
+            selectionHighlight: false,
+            renderLineHighlight: 'none',
+            hideCursorInOverviewRuler: true,
+            overviewRulerLanes: 0,
+            overviewRulerBorder: false,
+            tabSize: 2,
+            readOnly: true,
+          }}
+          value={response}
+        />
+      </Stack>
     </Box>
   );
 };

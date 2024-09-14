@@ -51,6 +51,21 @@
     "errorr-in": "An error occurred during sign in. Please try again.",
     "console-in": "Error during sign in:",
     "error-in": "Failed to sign in. Please try again.",
-    "success-up": "Account created successfully."
+    "success-up": "Account created successfully.",
+    "send": "Send",
+    "response": "Response",
+    "documentation": "Documentation",
+    "headers": "Headers",
+    "query": "Query",
+    "variables": "Variables",
+    "add-header": "Add header",
+    "status": "Status:",
+    "time": "Response time:",
+    "body": "Body:",
+    "endpoint": "Endpoint URL",
+    "sdl": "SDL URL",
+    "endpoint-placeholder": "Enter Endpoint URL",
+    "sdl-placeholder": "Enter SDL URL",
+    "prettierText": "prettier"
   }
 }

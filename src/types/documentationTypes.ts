@@ -1,3 +1,5 @@
+import { GraphQLSchema } from 'graphql';
+
 export interface IDocumentation {
-  sdl: string;
+  schema: GraphQLSchema | null;
 }

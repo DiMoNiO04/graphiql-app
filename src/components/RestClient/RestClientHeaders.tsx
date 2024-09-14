@@ -5,8 +5,10 @@ import { useHeaders } from '@/src/contexts/HeaderContext';
 import { Checkbox } from '../ui/checkbox';
 import { Header } from '@/src/types/headers';
 import toast from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 
 const RestClientHeaders = () => {
+  const t = useTranslations('MainPage');
   const { headers, setHeaders } = useHeaders();
 
   const protectedKeys = ['Accept', 'Content-Type', 'Accept-Language', 'Cache-Control'];
@@ -95,7 +97,7 @@ const RestClientHeaders = () => {
         onClick={onAddHeader}
       >
         <CirclePlus size={18} />
-        Add Header
+        {t('add-header')}
       </button>
     </div>
   );

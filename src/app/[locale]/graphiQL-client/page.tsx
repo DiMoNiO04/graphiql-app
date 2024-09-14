@@ -5,31 +5,104 @@ import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
 
 import ControlTabPanel from '@/src/components/ControlTabPanel/ControlTabPanel';
 import Documentation from '@/src/components/Documentation/Documentation';
-import HeadersEditor from '@/src/components/HeadersEditor/HeadersEditor';
 import QueryEditor from '@/src/components/QueryEditor/QueryEditor';
 import ResponseViewer from '@/src/components/ResponseViewer/ResponseViewer';
 import UrlEditorGraphi from '@/src/components/UrlEditorGraphi/UrlEditorGraphi';
 import VariablesEditor from '@/src/components/VariablesEditor/VariablesEditor';
 import { a11yProps } from '@/src/lib/restClient/getAllyProps';
-import { IHeaderProp } from '@/src/types/headersEditorTypes';
+import RestClientHeaders from '@/src/components/RestClient/RestClientHeaders';
+import { encodeBase64 } from '@/src/utils/base64';
+import { useTranslations } from 'next-intl';
+import { convertJson, getArr, isBrackets, prettierTextArea } from '@/src/utils/prettifyUtils';
+import { useHeaders } from '@/src/contexts/HeaderContext';
+import { Header } from '@/src/types/headers';
+import { buildClientSchema, getIntrospectionQuery, GraphQLSchema } from 'graphql';
 
 const GraphiQlClient = () => {
-  const [endpointUrl, setEndpointUrl] = useState<string>('');
-  const [sdlUrl, setSdlUrl] = useState<string>('');
-  const [response, setResponse] = useState<unknown>();
-  const [status, setStatus] = useState<number>();
+  const t = useTranslations('MainPage');
+  const [endpointUrl, setEndpointUrl] = useState('');
+  const [sdlUrl, setSdlUrl] = useState('');
+  const [response, setResponse] = useState('');
   const [isOpenDocumentation, setIsOpenDocumentation] = useState<boolean>(false);
   const [variables, setVariables] = useState<string>('');
   const [query, setQuery] = useState<string>('');
   const [tabsValue, setTabsValue] = useState<number>(0);
-  const [headers, setHeaders] = useState<IHeaderProp[]>([]);
+  const [responseStatus, setResponseStatus] = useState<number | string | null>(null);
+  const [responseTime, setResponseTime] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { headers, setHeaders } = useHeaders();
+  const [responseHeaders, setResponseHeaders] = useState<Record<string, string>>({});
+  const [schema, setSchema] = useState<GraphQLSchema | null>(null);
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setTabsValue(newValue);
   };
 
-  const handleSend = () => {
-    console.log('send query');
+  const handleSend = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const startTime = performance.now();
+    try {
+      const headersObject = headers.reduce((acc: Record<string, string>, header: Header) => {
+        if (header.sent) {
+          acc[header.key] = header.value;
+        }
+        return acc;
+      }, {});
+      const result = await fetch(`${endpointUrl}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...headersObject,
+        },
+        body: JSON.stringify({
+          query: query,
+          variables: variables,
+        }),
+      });
+      const data = await result?.json();
+      const endTime = performance.now();
+      setResponseTime(endTime - startTime);
+      setResponseHeaders(data['headers']);
+      setResponseStatus(result.status);
+      setResponse(JSON.stringify(data, null, 2));
+      setIsLoading(false);
+
+      const res = await fetch(`${endpointUrl}?sdl`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...headersObject,
+        },
+        body: JSON.stringify({
+          query: getIntrospectionQuery(),
+        }),
+      });
+      console.log(`${endpointUrl}?sdl`);
+      const dataSdl = await res.json();
+      setSchema(dataSdl);
+      setIsOpenDocumentation(true);
+      console.log(dataSdl);
+      // console.log(buildClientSchema(dataSdl))
+      // console.log(buildClientSchema(dataSdl))
+    } catch (error) {
+      console.error('Error:', error);
+      setResponse((error as Error).message);
+      setResponseStatus(500);
+      setResponseTime(null);
+      setIsLoading(false);
+    }
+  };
+
+  const prettierText = () => {
+    if (query) {
+      const arr = getArr(query);
+      if (isBrackets(arr)) {
+        setQuery(prettierTextArea(arr));
+      }
+    }
+    if (variables) {
+      setVariables(convertJson(variables));
+    }
   };
 
   return (
@@ -44,27 +117,50 @@ const GraphiQlClient = () => {
         }}
       >
         <Typography variant="h4" component="h1" sx={{ textAlign: 'center' }}>
-          GraphiQL Client
+          {t('graphiQL-client')}
         </Typography>
-        <Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <UrlEditorGraphi
-            endpointUrl={endpointUrl}
-            onEndpointUrlChange={setEndpointUrl}
-            sdlUrl={sdlUrl}
-            onSdlUrlChange={setSdlUrl}
+            url={endpointUrl}
+            setUrl={setEndpointUrl}
+            sdlUrl={endpointUrl !== '' ? `${endpointUrl}?sdl` : ''}
+            setSdlUrl={setSdlUrl}
+            onSendButtonClick={handleSend}
           />
+          <Button
+            variant="contained"
+            onClick={prettierText}
+            sx={{
+              transition: 'all 0.4s ease',
+              backgroundColor: '#000000',
+              color: '#ffffff',
+              marginTop: 3,
+              display: 'flex',
+              flexShrink: 0,
+              width: 175,
+              alignSelf: 'flex-end',
+              '&:hover': {
+                color: '#000000',
+                backgroundColor: '#ffffff',
+              },
+            }}
+          >
+            <Box sx={{ alignItems: 'center', display: 'flex' }}>
+              <Typography marginLeft={1}>{t('prettierText')}</Typography>
+            </Box>
+          </Button>
           <Box sx={{ marginTop: '2rem' }}>
             <Tabs
               value={tabsValue}
               onChange={handleChangeTab}
               TabIndicatorProps={{ sx: { backgroundColor: '#F26B3A', height: 3, bottom: 2 } }}
             >
-              <Tab label="Headers" {...a11yProps(0)} />
-              <Tab label="Query" {...a11yProps(1)} />
-              <Tab label="Variables" {...a11yProps(2)} />
+              <Tab label={t('headers')} {...a11yProps(0)} />
+              <Tab label={t('query')} {...a11yProps(1)} />
+              <Tab label={t('variables')} {...a11yProps(2)} />
             </Tabs>
             <ControlTabPanel value={tabsValue} index={0}>
-              <HeadersEditor headers={headers} onChange={setHeaders} />
+              <RestClientHeaders />
             </ControlTabPanel>
             <ControlTabPanel value={tabsValue} index={1}>
               <QueryEditor value={query} onChange={setQuery} />
@@ -72,24 +168,8 @@ const GraphiQlClient = () => {
             <ControlTabPanel value={tabsValue} index={2}>
               <VariablesEditor value={variables} onChange={setVariables} />
             </ControlTabPanel>
+            <Box sx={{ textAlign: 'right' }}></Box>
           </Box>
-          <Button
-            onClick={handleSend}
-            variant="contained"
-            sx={{
-              marginTop: 2,
-              width: 200,
-              transition: 'all 0.4s ease',
-              backgroundColor: 'black',
-              color: 'white',
-              '&:hover': {
-                color: 'black',
-                backgroundColor: 'white',
-              },
-            }}
-          >
-            Send
-          </Button>
         </Box>
       </Stack>
 
@@ -99,13 +179,13 @@ const GraphiQlClient = () => {
           display: 'flex',
           justifyContent: 'center',
           flexDirection: 'column',
-          padding: '4rem 2.5rem',
+          padding: '2rem 2.5rem 4rem 2.5rem',
         }}
       >
         <Typography variant="h4" component="h1" sx={{ textAlign: 'center' }}>
-          Response
+          {t('response')}
         </Typography>
-        <ResponseViewer response={response} status={status} />
+        <ResponseViewer response={response} status={responseStatus} responseTime={responseTime} />
       </Stack>
 
       {isOpenDocumentation && (
@@ -119,9 +199,9 @@ const GraphiQlClient = () => {
           }}
         >
           <Typography variant="h4" component="h1" sx={{ textAlign: 'center' }}>
-            Documentation
+            {t('documentation')}
           </Typography>
-          <Documentation sdl={sdlUrl} />
+          <Documentation schema={schema} />
         </Stack>
       )}
     </>
