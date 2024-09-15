@@ -24,7 +24,7 @@ const GraphiQLRequestTabs = ({
   setUrl: (url: string) => void;
   url: string;
 }) => {
-  const tabs = ['Headers', 'Query', 'Params', 'Variables'];
+  const tabs = ['Headers', 'Query', 'Params'];
   const [selectedTab, setSelectedTab] = useState('Headers');
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);

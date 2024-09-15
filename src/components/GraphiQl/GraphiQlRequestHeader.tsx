@@ -1,20 +1,22 @@
 import React from 'react';
 import { Input } from '../ui/input';
-import { Send } from 'lucide-react';
 
 const GraphiQLRequestHeader = ({
   url,
   setUrl,
   sdlUrl,
   setSdlUrl,
-  onSendButtonClick,
 }: {
   setUrl: (url: string) => void;
   url: string;
   setSdlUrl: (sdlUrl: string) => void;
-  onSendButtonClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   sdlUrl: string;
 }) => {
+  const handleEndpointUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newEndpointUrl = e.target.value;
+    setUrl(newEndpointUrl);
+    setSdlUrl(`${newEndpointUrl}?sdl`);
+  };
   return (
     <div className="flex flex-col gap-8">
       <h1 className="text-2xl font-bold">GraphiQL Client</h1>
@@ -26,7 +28,7 @@ const GraphiQLRequestHeader = ({
             placeholder="Enter Api endpoint URL"
             className="w-full"
             value={url}
-            onChange={(e) => setUrl(e.target.value)}
+            onChange={handleEndpointUrlChange}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -35,8 +37,8 @@ const GraphiQLRequestHeader = ({
             type="text"
             placeholder="Enter SDL endpoint URL"
             className="w-full"
-            onChange={(e) => setSdlUrl(e.target.value)}
             value={sdlUrl}
+            onChange={(e) => setSdlUrl(e.target.value)}
           />
         </div>
       </div>
