@@ -66,6 +66,6 @@
     "sdl": "SDL URL",
     "endpoint-placeholder": "Enter Endpoint URL",
     "sdl-placeholder": "Enter SDL URL",
-    "prettierText": "prettier"
+    "prettierText": "Prettifying"
   }
 }

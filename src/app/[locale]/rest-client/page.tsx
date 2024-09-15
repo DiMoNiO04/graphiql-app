@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import RestClientRequestHeader from '@/src/components/RestClient/RestClientRequestHeader';
 import RestClientRequestTabs from '@/src/components/RestClient/RestClientRequestTabs';
@@ -9,8 +10,8 @@ import { saveRequestToLocalStorage } from '@/src/utils/saveRequestToLocalStorage
 import { useSearchParams } from 'next/navigation';
 import { getLocalStorageDataById } from '@/src/utils/getLocalStorageDataById';
 import { RequestHistoryItem } from '@/src/types/history';
+
 const RestClient = () => {
-  // BODY
   const [method, setMethod] = useState('GET');
   const [url, setUrl] = useState('');
   const [requestBody, setRequestBody] = useState('');
@@ -20,7 +21,6 @@ const RestClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const [historyData, setHistoryData] = useState<RequestHistoryItem | null>(null);
-  // HEADERS
   const { headers, setHeaders } = useHeaders();
   const [responseHeaders, setResponseHeaders] = useState<Record<string, string>>({});
 
@@ -65,12 +65,12 @@ const RestClient = () => {
         default:
           console.error('Unsupported HTTP method');
       }
-      const data = await result?.json(); // get the data for the response content
+      const data = await result?.json();
       const endTime = performance.now();
       setResponseTime(endTime - startTime);
       setResponseHeaders(data['headers']);
       setResponseStatus(data['status']);
-      setResponse(JSON.stringify(data['data'], null, 2)); // set the response content
+      setResponse(JSON.stringify(data['data'], null, 2));
       saveRequestToLocalStorage(url, method, data['status'], headers, requestBody, 'rest-client');
       setIsLoading(false);
     } catch (error) {

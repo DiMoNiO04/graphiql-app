@@ -4,6 +4,7 @@ import { Box, Stack } from '@mui/material';
 import React from 'react';
 import { getStatusStyle, getStatusText } from '@/src/utils/getStatusTextAndStyle';
 import { useTranslations } from 'next-intl';
+import Loader from '../Loading/Loading';
 
 const ResponseViewer: React.FC<IResponseViewer> = ({ response, status, responseTime }) => {
   const t = useTranslations('MainPage');

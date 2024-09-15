@@ -11,12 +11,11 @@ import UrlEditorGraphi from '@/src/components/UrlEditorGraphi/UrlEditorGraphi';
 import VariablesEditor from '@/src/components/VariablesEditor/VariablesEditor';
 import { a11yProps } from '@/src/lib/restClient/getAllyProps';
 import RestClientHeaders from '@/src/components/RestClient/RestClientHeaders';
-import { encodeBase64 } from '@/src/utils/base64';
 import { useTranslations } from 'next-intl';
 import { convertJson, getArr, isBrackets, prettierTextArea } from '@/src/utils/prettifyUtils';
 import { useHeaders } from '@/src/contexts/HeaderContext';
 import { Header } from '@/src/types/headers';
-import { buildClientSchema, getIntrospectionQuery, GraphQLSchema } from 'graphql';
+import { buildClientSchema, getIntrospectionQuery, printSchema } from 'graphql';
 
 const GraphiQlClient = () => {
   const t = useTranslations('MainPage');
@@ -29,10 +28,9 @@ const GraphiQlClient = () => {
   const [tabsValue, setTabsValue] = useState<number>(0);
   const [responseStatus, setResponseStatus] = useState<number | string | null>(null);
   const [responseTime, setResponseTime] = useState<number | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const { headers, setHeaders } = useHeaders();
   const [responseHeaders, setResponseHeaders] = useState<Record<string, string>>({});
-  const [schema, setSchema] = useState<GraphQLSchema | null>(null);
+  const [schema, setSchema] = useState('');
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setTabsValue(newValue);
@@ -56,7 +54,7 @@ const GraphiQlClient = () => {
         },
         body: JSON.stringify({
           query: query,
-          variables: variables,
+          variables: variables === '' ? {} : JSON.parse(variables),
         }),
       });
       const response = await result?.json();
@@ -65,7 +63,6 @@ const GraphiQlClient = () => {
       setResponseHeaders(response['headers']);
       setResponseStatus(result.status);
       setResponse(JSON.stringify(response, null, 2));
-      setIsLoading(false);
 
       const res = await fetch(`${endpointUrl}?sdl`, {
         method: 'POST',
@@ -79,15 +76,15 @@ const GraphiQlClient = () => {
       });
 
       const { data } = await res.json();
-      setSchema(buildClientSchema(data));
+      setSchema(printSchema(buildClientSchema(data)));
       setIsOpenDocumentation(true);
-      console.log(buildClientSchema(data));
+      if (!result.ok) setIsOpenDocumentation(false);
     } catch (error) {
       console.error('Error:', error);
       setResponse((error as Error).message);
       setResponseStatus(500);
       setResponseTime(null);
-      setIsLoading(false);
+      setIsOpenDocumentation(false);
     }
   };
 
