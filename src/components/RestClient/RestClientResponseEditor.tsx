@@ -3,7 +3,6 @@ import React from 'react';
 import Editor from '@monaco-editor/react';
 import Loader from '../Loading/Loading';
 
-// TODO ADD  theme="vs-dark" WHEN DARK
 const RestClientResponseEditor = ({ response }: { response: string }) => {
   return (
     <div className="flex flex-col items-start gap-3 w-full">

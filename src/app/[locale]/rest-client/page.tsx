@@ -97,7 +97,7 @@ const RestClient = () => {
   }, [searchParams, setHeaders]);
 
   return (
-    <div className="flex justify-center flex-col py-16 px-10 max-w-[1200px] mx-auto text-sm font-medium h-screen max-h-[1990px]">
+    <div className="flex justify-center flex-col py-16 px-10 max-w-[800px] mx-auto text-sm font-medium h-screen max-h-[1990px]">
       <div className="flex-1 flex flex-col gap-10 ">
         <RestClientRequestHeader
           setMethod={setMethod}

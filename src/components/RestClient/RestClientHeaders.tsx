@@ -66,8 +66,8 @@ const RestClientHeaders = () => {
       <div className="flex flex-col gap-3">
         {headers.map((header, index) => {
           return (
-            <div className="flex gap-2  w-full" key={index}>
-              <div className="flex gap-3 items-center">
+            <div className="flex gap-2 w-full" key={index}>
+              <div className="flex gap-3 items-center ">
                 <Checkbox checked={header.sent} onCheckedChange={(checked) => onCheckboxChange(index, checked)} />
                 <Input
                   type="text"
@@ -93,7 +93,7 @@ const RestClientHeaders = () => {
         })}
       </div>
       <button
-        className="bg-[#18181B] text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-[#18181B]/80 transition-all duration-300 w-fit"
+        className=" text-black border border-input px-4 py-2 rounded-md flex items-center gap-2 hover:bg-black/70 hover:text-white transition-all duration-300 w-full justify-center "
         onClick={onAddHeader}
       >
         <CirclePlus size={18} />

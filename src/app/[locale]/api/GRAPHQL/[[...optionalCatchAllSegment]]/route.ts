@@ -17,6 +17,7 @@ export async function POST(
     };
   }
 ) {
+  console.log('API route called');
   const { encodedUrl, encodedHeaders } = params;
   const decodedUrl = decodeBase64(encodedUrl);
   const decodedHeaders = decodeBase64(encodedHeaders);
