@@ -59,12 +59,12 @@ const GraphiQlClient = () => {
           variables: variables,
         }),
       });
-      const data = await result?.json();
+      const response = await result?.json();
       const endTime = performance.now();
       setResponseTime(endTime - startTime);
-      setResponseHeaders(data['headers']);
+      setResponseHeaders(response['headers']);
       setResponseStatus(result.status);
-      setResponse(JSON.stringify(data, null, 2));
+      setResponse(JSON.stringify(response, null, 2));
       setIsLoading(false);
 
       const res = await fetch(`${endpointUrl}?sdl`, {
@@ -77,13 +77,11 @@ const GraphiQlClient = () => {
           query: getIntrospectionQuery(),
         }),
       });
-      console.log(`${endpointUrl}?sdl`);
-      const dataSdl = await res.json();
-      setSchema(dataSdl);
+
+      const { data } = await res.json();
+      setSchema(buildClientSchema(data));
       setIsOpenDocumentation(true);
-      console.log(dataSdl);
-      // console.log(buildClientSchema(dataSdl))
-      // console.log(buildClientSchema(dataSdl))
+      console.log(buildClientSchema(data));
     } catch (error) {
       console.error('Error:', error);
       setResponse((error as Error).message);
