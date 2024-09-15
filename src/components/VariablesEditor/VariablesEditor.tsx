@@ -1,19 +1,9 @@
 import { IGraphiEditor } from '@/src/types/graphiEditorTypes';
-import { TextField } from '@mui/material';
 import React from 'react';
+import { CodeMirrorQueryEditor } from '../QueryEditor/CodeMirrorQueryEditor';
 
 const VariablesEditor: React.FC<IGraphiEditor> = ({ value, onChange }) => {
-  return (
-    <TextField
-      label="Variables"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      multiline
-      rows={5}
-      fullWidth
-      margin="normal"
-    />
-  );
+  return <CodeMirrorQueryEditor lang="json" value={value} className="codemirror" onChange={onChange} />;
 };
 
 export default VariablesEditor;

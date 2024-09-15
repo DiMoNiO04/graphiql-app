@@ -4,7 +4,6 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { selectorMethods } from '@/src/constants/constants';
 
 const RestClientSelectMethod = ({ setMethod, method }: { setMethod: (method: string) => void; method: string }) => {
-  console.log(method);
   return (
     <Select value={method ? method : 'GET'} onValueChange={(value) => setMethod(value as string)}>
       <SelectTrigger style={{ border: '1px solid #E4E4E7' }} className="w-[180px] text-base font-semibold">

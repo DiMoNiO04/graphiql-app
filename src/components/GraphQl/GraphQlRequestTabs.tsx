@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
 import LineTabs from '@/src/components/ui/Tabs';
 import { motion, AnimatePresence } from 'framer-motion';
-import RestClientHeaders from './RestClientHeaders';
-import RestClientRequestEditor from './RestClientRequestEditor';
-import { useTranslations } from 'next-intl';
+import RestClientHeaders from '../RestClient/RestClientHeaders';
+import QueryEditor from '../QueryEditor/QueryEditor';
 import ClientParams from '../RestAndGraphQl/ClientParams';
+import VariablesEditor from '../VariablesEditor/VariablesEditor';
 
-const RestClientRequestTabs = ({
-  setRequestBody,
-  requestBody,
+const GraphQLRequestTabs = ({
+  query,
+  setQuery,
+  variables,
+  setVariables,
+  prettierText,
   setUrl,
   url,
 }: {
-  setRequestBody: (body: string) => void;
-  requestBody: string;
+  query: string;
+  setQuery: (query: string) => void;
+  variables: string;
+  setVariables: (variables: string) => void;
+  prettierText: () => void;
   setUrl: (url: string) => void;
   url: string;
 }) => {
-  const t = useTranslations('MainPage');
-  const tabs = [t('headers'), t('tab-body'), 'Params'];
-  const [selectedTab, setSelectedTab] = useState(t('headers'));
+  const tabs = ['Headers', 'Query', 'Params', 'Variables'];
+  const [selectedTab, setSelectedTab] = useState('Headers');
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
   };
@@ -30,7 +35,7 @@ const RestClientRequestTabs = ({
   };
   return (
     <div>
-      <LineTabs onTabChange={handleTabChange} tabs={tabs} />
+      <LineTabs onTabChange={handleTabChange} tabs={tabs} prettierText={prettierText} />
       <AnimatePresence mode="wait">
         <motion.div
           className="pb-6"
@@ -41,10 +46,9 @@ const RestClientRequestTabs = ({
           variants={contentVariants}
           transition={{ duration: 0.15, ease: 'easeInOut' }}
         >
-          {selectedTab === t('headers') && <RestClientHeaders />}
-          {selectedTab === t('tab-body') && (
-            <RestClientRequestEditor setRequestBody={setRequestBody} requestBody={requestBody} />
-          )}
+          {selectedTab === 'Headers' && <RestClientHeaders />}
+          {selectedTab === 'Query' && <QueryEditor value={query} onChange={setQuery} />}
+          {selectedTab === 'Variables' && <VariablesEditor value={variables} onChange={setVariables} />}
           {selectedTab === 'Params' && <ClientParams setUrl={setUrl} url={url} />}
         </motion.div>
       </AnimatePresence>
@@ -52,4 +56,4 @@ const RestClientRequestTabs = ({
   );
 };
 
-export default RestClientRequestTabs;
+export default GraphQLRequestTabs;

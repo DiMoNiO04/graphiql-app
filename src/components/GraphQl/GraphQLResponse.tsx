@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import RestClientSelectResponseParameters from './RestClientSelectResponseParameters';
-import RestClientResponseEditor from './RestClientResponseEditor';
 import Loader from '../Loading/Loading';
-import RestClientResponseBody from './RestClientResponseBody';
-import RestClientResponseHeaders from './RestClientResponseHeaders';
-import { useTranslations } from 'next-intl';
+import RestClientSelectResponseParameters from '../RestClient/RestClientSelectResponseParameters';
+import RestClientResponseBody from '../RestClient/RestClientResponseBody';
+import RestClientResponseHeaders from '../RestClient/RestClientResponseHeaders';
+import RestClientResponseEditor from '../RestClient/RestClientResponseEditor';
 
-const RestClientResponse = ({
+const GraphQL = ({
   response,
   responseStatus,
   responseTime,
@@ -19,20 +18,19 @@ const RestClientResponse = ({
   isLoading: boolean;
   responseHeaders: Record<string, string>;
 }) => {
-  const t = useTranslations('MainPage');
   const [responseParameters, setResponseParameters] = useState<string>('Body');
 
   return (
     <div>
-      <h2 className="text-xl font-semibold">{t('response')}</h2>
+      <h2 className="text-xl font-semibold">Response</h2>
       {isLoading ? (
         <div className="flex justify-center items-center py-64">
           <Loader size={40} />
         </div>
       ) : response === '' ? (
-        <div>{t('no-response')}</div>
+        <div>No response</div>
       ) : (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 ">
           <div className="flex gap-3">
             <div
               className={` ${
@@ -56,4 +54,4 @@ const RestClientResponse = ({
   );
 };
 
-export default RestClientResponse;
+export default GraphQL;

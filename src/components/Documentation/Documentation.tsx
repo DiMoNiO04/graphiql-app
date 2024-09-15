@@ -1,18 +1,14 @@
 import { IDocumentation } from '@/src/types/documentationTypes';
 import React from 'react';
-import { Box, Typography, Paper, Stack } from '@mui/material';
+import { Box, Paper, Stack, TextField } from '@mui/material';
+import { CodeMirrorQueryEditor } from '../QueryEditor/CodeMirrorQueryEditor';
 
-const Documentation: React.FC<IDocumentation> = ({ sdl }) => {
+const Documentation: React.FC<IDocumentation> = ({ schema }) => {
   return (
-    <Box sx={{ mt: 4 }}>
+    <Box sx={{ mt: 1 }}>
       <Paper sx={{ padding: 2, maxHeight: 300, overflowY: 'auto' }}>
         <Stack direction="row" spacing={2} alignItems="center">
-          <Typography variant="h6" component="h3" sx={{ flexShrink: 0, width: '150px' }}>
-            Documentation
-          </Typography>
-          <Typography variant="h6" sx={{ color: 'grey' }}>
-            {<pre>{sdl}</pre>}
-          </Typography>
+          <CodeMirrorQueryEditor lang="json" value={schema} className="codemirror" />
         </Stack>
       </Paper>
     </Box>

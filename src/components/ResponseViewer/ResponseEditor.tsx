@@ -1,7 +1,7 @@
 import React from 'react';
 import Editor from '@monaco-editor/react';
 
-const RestClientResponseEditor = ({ response }: { response: string }) => {
+const GraphQLResponseEditor = ({ response }: { response: string }) => {
   return (
     <div className="flex flex-col items-start gap-3 w-full">
       <Editor
@@ -29,4 +29,4 @@ const RestClientResponseEditor = ({ response }: { response: string }) => {
   );
 };
 
-export default RestClientResponseEditor;
+export default GraphQLResponseEditor;

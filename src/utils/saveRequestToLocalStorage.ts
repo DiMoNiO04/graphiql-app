@@ -14,7 +14,8 @@ export const saveRequestToLocalStorage = (
   status: number | string | null,
   headers: Header[],
   requestBody: string,
-  requestType: 'rest-client' | 'graphql'
+  sdlUrl?: string,
+  requestType?: 'rest-client' | 'graphql'
 ) => {
   const requestHistory = JSON.parse(localStorage.getItem('graphiql-app-history-f134va') || '[]');
   const newRequest = {
@@ -26,6 +27,7 @@ export const saveRequestToLocalStorage = (
     body: requestBody,
     headers,
     type: requestType,
+    sdlUrl,
   };
   requestHistory.push(newRequest);
   localStorage.setItem('graphiql-app-history-f134va', JSON.stringify(requestHistory));

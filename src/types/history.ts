@@ -6,7 +6,8 @@ export interface RequestHistoryItem {
   method: string;
   date: string;
   status: number | string;
-  body: string;
-  headers: Header[];
+  body?: string;
+  headers?: Header[];
+  sdlUrl?: string;
   type: 'rest-client' | 'graphql';
 }

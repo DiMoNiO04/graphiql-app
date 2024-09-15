@@ -1,4 +1,6 @@
 export interface IResponseViewer {
-  response?: unknown;
-  status?: number;
+  response?: string;
+  status: number | string | null;
+  responseTime: number | null;
+  isLoading: boolean;
 }

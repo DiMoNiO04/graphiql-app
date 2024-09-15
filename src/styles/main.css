@@ -134,3 +134,11 @@ button {
   border: 1px solid #abb0ba;
 }
 
+.codemirror {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  resize: none;
+  border: none;
+  outline: none;
+}
