@@ -3,20 +3,19 @@
 import React, { useState } from 'react';
 import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
 
-import ControlTabPanel from '@/src/components/ControlTabPanel/ControlTabPanel';
-import Documentation from '@/src/components/Documentation/Documentation';
-import QueryEditor from '@/src/components/QueryEditor/QueryEditor';
-import ResponseViewer from '@/src/components/ResponseViewer/ResponseViewer';
-import UrlEditorGraphi from '@/src/components/UrlEditorGraphi/UrlEditorGraphi';
-import VariablesEditor from '@/src/components/VariablesEditor/VariablesEditor';
-import { a11yProps } from '@/src/lib/restClient/getAllyProps';
-import RestClientHeaders from '@/src/components/RestClient/RestClientHeaders';
-import { encodeBase64 } from '@/src/utils/base64';
+import ControlTabPanel from '../../../components/ControlTabPanel/ControlTabPanel';
+import Documentation from '../../../components/Documentation/Documentation';
+import QueryEditor from '../../../components/QueryEditor/QueryEditor';
+import ResponseViewer from '../../../components/ResponseViewer/ResponseViewer';
+import UrlEditorGraphi from '../../../components/UrlEditorGraphi/UrlEditorGraphi';
+import VariablesEditor from '../../../components/VariablesEditor/VariablesEditor';
+import { a11yProps } from '../../../lib/restClient/getAllyProps';
+import RestClientHeaders from '../../../components/RestClient/RestClientHeaders';
 import { useTranslations } from 'next-intl';
-import { convertJson, getArr, isBrackets, prettierTextArea } from '@/src/utils/prettifyUtils';
-import { useHeaders } from '@/src/contexts/HeaderContext';
-import { Header } from '@/src/types/headers';
-import { buildClientSchema, getIntrospectionQuery, GraphQLSchema } from 'graphql';
+import { convertJson, getArr, isBrackets, prettierTextArea } from '../../../utils/prettifyUtils';
+import { useHeaders } from '../../../contexts/HeaderContext';
+import { Header } from '../../../types/headers';
+import { buildClientSchema, getIntrospectionQuery, printSchema } from 'graphql';
 
 const GraphiQlClient = () => {
   const t = useTranslations('MainPage');
@@ -32,7 +31,7 @@ const GraphiQlClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { headers, setHeaders } = useHeaders();
   const [responseHeaders, setResponseHeaders] = useState<Record<string, string>>({});
-  const [schema, setSchema] = useState<GraphQLSchema | null>(null);
+  const [schema, setSchema] = useState('');
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setTabsValue(newValue);
@@ -56,7 +55,7 @@ const GraphiQlClient = () => {
         },
         body: JSON.stringify({
           query: query,
-          variables: variables,
+          variables: variables === '' ? {} : JSON.parse(variables),
         }),
       });
       const response = await result?.json();
@@ -79,15 +78,17 @@ const GraphiQlClient = () => {
       });
 
       const { data } = await res.json();
-      setSchema(buildClientSchema(data));
+      setSchema(printSchema(buildClientSchema(data)));
       setIsOpenDocumentation(true);
-      console.log(buildClientSchema(data));
+      setIsLoading(false);
+      if (!result.ok) setIsOpenDocumentation(false);
     } catch (error) {
       console.error('Error:', error);
       setResponse((error as Error).message);
       setResponseStatus(500);
       setResponseTime(null);
       setIsLoading(false);
+      setIsOpenDocumentation(false);
     }
   };
 
@@ -183,7 +184,7 @@ const GraphiQlClient = () => {
         <Typography variant="h4" component="h1" sx={{ textAlign: 'center' }}>
           {t('response')}
         </Typography>
-        <ResponseViewer response={response} status={responseStatus} responseTime={responseTime} />
+        <ResponseViewer response={response} status={responseStatus} responseTime={responseTime} isLoading={isLoading} />
       </Stack>
 
       {isOpenDocumentation && (

@@ -1,5 +1,6 @@
-import { TabPanelProps } from '@/src/types/tabPanelTypes';
+import { TabPanelProps } from '../../types/tabPanelTypes';
 import { Box } from '@mui/material';
+import React from 'react';
 
 const ControlTabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;

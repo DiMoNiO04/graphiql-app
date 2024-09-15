@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Input } from '../ui/input';
 import { Trash2, CirclePlus } from 'lucide-react';
-import { useHeaders } from '@/src/contexts/HeaderContext';
+import { useHeaders } from '../../contexts/HeaderContext';
 import { Checkbox } from '../ui/checkbox';
-import { Header } from '@/src/types/headers';
+import { Header } from '../../types/headers';
 import toast from 'react-hot-toast';
 import { useTranslations } from 'next-intl';
 

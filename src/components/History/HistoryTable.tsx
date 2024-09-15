@@ -5,8 +5,10 @@ import { RequestHistoryItem } from '@/src/types/history';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { getStatusStyle, getStatusText } from '@/src/utils/getStatusTextAndStyle';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 const HistoryTable = ({ history, searchUrlTerm }: { history: RequestHistoryItem[]; searchUrlTerm: string }) => {
+  const t = useTranslations('MainPage');
   const [sortedHistory, setSortedHistory] = useState(history);
   const [filteredHistory, setFilteredHistory] = useState(history);
   const [sortConfig, setSortConfig] = useState<{ key: 'url' | 'date'; direction: 'asc' | 'desc' }>({
@@ -58,21 +60,21 @@ const HistoryTable = ({ history, searchUrlTerm }: { history: RequestHistoryItem[
               onClick={() => handleSort('url')}
               className="flex items-center transition-all duration-300 ease-in-out hover:bg-border/40 px-2 py-1 rounded-md hover:text-black "
             >
-              URL
+              {t('url-table')}
               <ChevronsUpDown className="ml-2 h-4 w-4" />
             </button>
           </TableHead>
-          <TableHead>Method</TableHead>
+          <TableHead>{t('method-table')}</TableHead>
           <TableHead>
             <button
               onClick={() => handleSort('date')}
               className="flex items-center transition-all duration-300 ease-in-out hover:bg-border/40 px-2 py-1 rounded-md hover:text-black "
             >
-              Date
+              {t('date-table')}
               <ChevronsUpDown className="ml-2 h-4 w-4" />
             </button>
           </TableHead>
-          <TableHead>Status</TableHead>
+          <TableHead>{t('status-table')}</TableHead>
           <TableHead className="w-24"></TableHead>
         </TableRow>
       </TableHeader>
