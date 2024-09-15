@@ -37,33 +37,28 @@ const GraphiQlClientNew = () => {
 
   const [isOpenDocumentation, setIsOpenDocumentation] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const [schema, setSchema] = useState<GraphQLSchema | null>(null);
-
   const [responseHeaders, setResponseHeaders] = useState<Record<string, string>>({});
 
-  console.log(endpointUrl, 'endpointUrl');
   const handleSend = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const startTime = performance.now();
+    setIsLoading(true);
+
     try {
-      const headersObject = headers.reduce((acc: Record<string, string>, header: Header) => {
-        if (header.sent) {
-          acc[header.key] = header.value;
-        }
-        return acc;
-      }, {});
-      const result = await fetch(`api/[[...optionalCatchAllSegment]]/${endpointUrl}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...headersObject,
-        },
-        body: JSON.stringify({
+      const encodedUrl = encodeBase64(endpointUrl);
+      const encodedHeaders = encodeBase64(JSON.stringify(headers));
+      const encodedBody = encodeBase64(
+        JSON.stringify({
           query: query,
-          variables: variables,
-        }),
+          variables: variables ? JSON.parse(variables) : undefined,
+        })
+      );
+
+      const result = await fetch(`/api/GRAPHQL/${encodedUrl}/${encodedBody}?headers=${encodedHeaders}`, {
+        method: 'POST',
       });
+
       const response = await result?.json();
       console.log(response, 'response');
 
@@ -73,7 +68,7 @@ const GraphiQlClientNew = () => {
       console.log('Just set headers:', response['headers']);
       console.log(responseHeaders);
       setResponseStatus(response['status']);
-      setResponse(JSON.stringify(response, null, 2));
+      setResponse(JSON.stringify(response['data'], null, 2));
       setIsLoading(false);
 
       // const res = await fetch(`${endpointUrl}?sdl`, {
