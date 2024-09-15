@@ -31,7 +31,7 @@
     "have-account": "Уже есть аккаунт?",
     "language": "Язык",
     "history": "История",
-    "graphiQL-client": "GraphiQL Клиент",
+    "graphQL-client": "GraphQL Клиент",
     "rest-client": "REST Клиент",
     "user-required": "Имя обязательно",
     "user-length": "Имя должно содержать не менее 3 символов",

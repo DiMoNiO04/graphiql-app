@@ -134,7 +134,13 @@ const GraphQlClient = () => {
   return (
     <div className="flex justify-center flex-col py-16 px-10 max-w-[700px] mx-auto text-sm font-medium ">
       <div className="flex-1 flex flex-col gap-10">
-        <GraphQLRequestHeader url={endpointUrl} setUrl={setEndpointUrl} sdlUrl={sdlUrl} setSdlUrl={setSdlUrl} />
+        <GraphQLRequestHeader
+          url={endpointUrl}
+          setUrl={setEndpointUrl}
+          sdlUrl={sdlUrl}
+          setSdlUrl={setSdlUrl}
+          historyData={historyData}
+        />
         <GraphQLRequestTabs
           query={query}
           setQuery={setQuery}

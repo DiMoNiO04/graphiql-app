@@ -31,7 +31,7 @@
     "have-account": "Already have an account?",
     "language": "Language",
     "history": "History",
-    "graphiQL-client": "GraphiQL Client",
+    "graphQL-client": "GraphQL Client",
     "rest-client": "REST Client",
     "user-required": "Username is required",
     "user-length": "Username must be at least 3 characters",

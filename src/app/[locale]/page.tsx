@@ -47,7 +47,7 @@ export default async function Home() {
               gap: '0.5rem',
             }}
           >
-            <BaseButton href="/graphiQL-client">{t('graphiQL-client')}</BaseButton>
+            <BaseButton href="/graphQL-client">{t('graphQL-client')}</BaseButton>
             <BaseButton href="/rest-client">{t('rest-client')}</BaseButton>
             <BaseButton href="/history">{t('history')}</BaseButton>
           </ButtonGroup>
