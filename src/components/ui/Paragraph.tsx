@@ -8,7 +8,8 @@ const Paragraph = styled('p')({
   fontSize: '1.3rem',
   fontWeight: '400',
   lineHeight: 1.5,
-  color: '#000000',
+  opacity: 0.9,
+  color: 'black',
 });
 
 export default Paragraph;

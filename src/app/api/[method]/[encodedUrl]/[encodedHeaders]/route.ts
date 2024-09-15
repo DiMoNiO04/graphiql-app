@@ -30,6 +30,7 @@ export async function GET(
       responseHeaders[key] = value;
     });
 
+    console.log('Response headers at GET:', responseHeaders);
     return NextResponse.json({
       data,
       headers: responseHeaders,

@@ -1,62 +1,41 @@
 'use client';
-import React, { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Link } from '@mui/material';
+import React from 'react';
 import { SignOutHandler } from '../../lib/auth/handleSignOut';
 import { useTranslations } from 'next-intl';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/src/components/ui/alert-dialog';
 
 const SignOutButton = () => {
   const t = useTranslations('MainPage');
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = (event: React.MouseEvent) => {
-    event.preventDefault();
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const { handleSignOut } = SignOutHandler({ setOpen });
+  const { handleSignOut } = SignOutHandler();
 
   return (
-    <>
-      <Button
-        variant="contained"
-        component={Link}
-        onClick={handleClickOpen}
-        sx={{
-          transition: 'all 0.4s ease',
-          backgroundColor: '#000000',
-          color: '#ffffff',
-          '&:hover': {
-            color: '#000000',
-            backgroundColor: '#ffffff',
-          },
-        }}
-      >
-        {t('sign-out')}
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{t('dialog-title')}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">{t('dialog-text')}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            {t('cancel')}
-          </Button>
-          <Button onClick={handleSignOut} color="primary" autoFocus>
-            {t('sign-out')}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <button className="bg-[#18181B] text-white px-5 py-2 rounded-md flex items-center gap-2 hover:bg-[#18181B]/80 transition-all duration-300 font-medium">
+          {t('sign-out')}
+        </button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{t('dialog-title')}</AlertDialogTitle>
+          <AlertDialogDescription>{t('dialog-text')}</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel> {t('cancel')}</AlertDialogCancel>
+          <AlertDialogAction onClick={handleSignOut}>{t('sign-out')}</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 

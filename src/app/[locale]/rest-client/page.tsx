@@ -22,6 +22,9 @@ const RestClient = () => {
   const searchParams = useSearchParams();
   const [historyData, setHistoryData] = useState<RequestHistoryItem | null>(null);
   const { headers, setHeaders } = useHeaders();
+
+  console.log(url, 'url');
+
   const [responseHeaders, setResponseHeaders] = useState<Record<string, string>>({});
 
   const onSendButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -97,7 +100,7 @@ const RestClient = () => {
   }, [searchParams, setHeaders]);
 
   return (
-    <div className="flex justify-center flex-col py-16 px-10 max-w-[1200px] mx-auto text-sm font-medium h-screen max-h-[1990px]">
+    <div className="flex justify-center flex-col py-16 px-10 max-w-[800px] mx-auto text-sm font-medium  max-h-[1990px]">
       <div className="flex-1 flex flex-col gap-10 ">
         <RestClientRequestHeader
           setMethod={setMethod}
@@ -107,7 +110,7 @@ const RestClient = () => {
           onSendButtonClick={onSendButtonClick}
           historyData={historyData}
         />
-        <RestClientRequestTabs setRequestBody={setRequestBody} requestBody={requestBody} />
+        <RestClientRequestTabs setRequestBody={setRequestBody} requestBody={requestBody} setUrl={setUrl} url={url} />
       </div>
 
       <div className="flex-1 flex flex-col gap-10 border-t-2 border-input pt-3 pb-24 h-screen ">

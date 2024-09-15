@@ -1,26 +1,14 @@
-import Link from 'next/link';
 import Button from '@mui/material/Button';
 import React from 'react';
-
+import Link from 'next/link';
 const BaseButton = ({ children, href }: { children: React.ReactNode; href?: string }) => {
   return (
-    <Button
-      variant="contained"
-      component={Link}
-      href={href}
-      sx={{
-        transition: 'all 0.4s ease',
-        backgroundColor: '#000000',
-        color: '#ffffff',
-        margin: '0 5px',
-        '&:hover': {
-          color: '#000000',
-          backgroundColor: '#ffffff',
-        },
-      }}
+    <Link
+      href={href ?? ''}
+      className={`bg-[#18181B] text-white px-5 py-2 rounded-md flex items-center gap-2 hover:bg-[#18181B]/80 transition-all duration-300 font-medium`}
     >
       {children}
-    </Button>
+    </Link>
   );
 };
 

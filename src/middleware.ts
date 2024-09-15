@@ -9,25 +9,22 @@ const intlMiddleware = createIntlMiddleware({
   localePrefix: 'never',
 });
 
+const authRoutes = ['/signin', '/signup'];
+const protectedRoutes = ['/rest-client', '/history', '/graphiQL-client'];
+
 export async function middleware(request: NextRequest) {
-  const authRoutes = ['/signin', '/signup'];
-  const routes = ['/rest-client', '/history', '/graphiQL-client'];
+  const sessionCookie = request.cookies.get('graphiql-app-f134va');
+  const { pathname } = request.nextUrl;
 
-  if (authRoutes.includes(request.nextUrl.pathname)) {
-    const sessionCookie = request.cookies.get('graphiql-app-f134va');
-    if (sessionCookie) {
-      return NextResponse.redirect(new URL('/', request.url));
-    }
+  if (authRoutes.includes(pathname) && sessionCookie) {
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
-  if (routes.includes(request.nextUrl.pathname)) {
-    const sessionCookie = request.cookies.get('graphiql-app-f134va');
-    if (!sessionCookie) {
-      return NextResponse.redirect(new URL('/', request.url));
-    }
+  if (protectedRoutes.includes(pathname) && !sessionCookie) {
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
-  return NextResponse.next() && intlMiddleware(request);
+  return intlMiddleware(request);
 }
 
 export const config = {

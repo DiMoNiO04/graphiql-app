@@ -4,16 +4,18 @@ import Paragraph from '../../components/ui/Paragraph';
 import Heading from '../../components/ui/Heading';
 import { developers } from '../../constants/constants';
 import TeamMemberCard from '../../components/TeamMemberCard/TeamMemberCard';
-import { getSession } from '../../lib/auth/getUserData';
 import BaseButton from '../../components/ui/Button';
 import { getTranslations } from 'next-intl/server';
+import { getSession } from '@/src/lib/auth/getUserData';
+import SessionHandler from '@/src/components/auth/SessionHandler';
 
 export default async function Home() {
-  const user = await getSession();
-  const name = user?.name || 'User';
+  const session = await getSession();
   const t = await getTranslations('MainPage');
 
-  return (
+  return session.expired ? (
+    <SessionHandler />
+  ) : (
     <Box
       sx={{
         display: 'flex',
@@ -22,25 +24,27 @@ export default async function Home() {
         padding: '4rem 2.5rem',
       }}
     >
-      {user?.name ? (
+      {session?.user?.name ? (
         <>
           <Typography
             variant="h1"
             component="h1"
             sx={{
+              fontFamily: 'inherit',
               textAlign: 'center',
-              fontSize: '3rem',
+              fontSize: '3.2rem',
               fontWeight: '900',
               color: '#266db6',
               paddingBottom: '2rem',
             }}
           >
-            {t('greeting-auth')} {`, ${name}!`}
+            {t('greeting-auth')} {`, ${session?.user?.name}!`}
           </Typography>
           <ButtonGroup
             sx={{
               marginBottom: '2rem',
               justifyContent: 'flex-end',
+              gap: '0.5rem',
             }}
           >
             <BaseButton href="/graphiQL-client">{t('graphiQL-client')}</BaseButton>
@@ -55,7 +59,7 @@ export default async function Home() {
             component="h1"
             sx={{
               textAlign: 'center',
-              fontSize: '3rem',
+              fontSize: '3.2rem',
               fontWeight: '900',
               color: '#266db6',
               paddingBottom: '2rem',
@@ -68,6 +72,7 @@ export default async function Home() {
             sx={{
               marginBottom: '2rem',
               justifyContent: 'flex-end',
+              gap: '0.5rem',
             }}
           >
             <BaseButton href="/signin">{t('sign-in')}</BaseButton>
@@ -90,25 +95,17 @@ export default async function Home() {
         </Stack>
         <Stack>
           <Heading sx={{ textAlign: 'center' }}>{t('team')}</Heading>
-          <Stack direction="row" gap="1.5rem" flexWrap="wrap" justifyContent="center">
-            <TeamMemberCard
-              src={developers[0].imgSrc}
-              alt={developers[0].imgAlt}
-              name={t('name-Yuliya')}
-              contribution={t('contribute-Yuliya')}
-            />
-            <TeamMemberCard
-              src={developers[1].imgSrc}
-              alt={developers[1].imgAlt}
-              name={t('name-Dmitriy')}
-              contribution={t('contribute-Dmitriy')}
-            />
-            <TeamMemberCard
-              src={developers[2].imgSrc}
-              alt={developers[2].imgAlt}
-              name={t('name-Maksym')}
-              contribution={t('contribute-Maksym')}
-            />
+          <Stack direction="row" gap="1.5rem" flexWrap="wrap" justifyContent="center" fontFamily={'inherit'}>
+            {developers.map((developer) => (
+              <TeamMemberCard
+                href={developer.href}
+                src={developer.imgSrc}
+                alt={developer.imgAlt}
+                name={developer.nameOfPerson}
+                contribution={developer.contribute}
+                key={developer.nameOfPerson}
+              />
+            ))}
           </Stack>
         </Stack>
       </Stack>

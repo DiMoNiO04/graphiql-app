@@ -21,7 +21,7 @@ const SignIn = () => {
 
   const t = useTranslations('MainPage');
   const { handleSignIn } = useSignInUser();
-
+  console.log(errors);
   return (
     <Container maxWidth="xs">
       <Box

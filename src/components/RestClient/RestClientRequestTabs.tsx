@@ -4,16 +4,21 @@ import { motion, AnimatePresence } from 'framer-motion';
 import RestClientHeaders from './RestClientHeaders';
 import RestClientRequestEditor from './RestClientRequestEditor';
 import { useTranslations } from 'next-intl';
+import ClientParams from '../RestAndGraphQl/ClientParams';
 
 const RestClientRequestTabs = ({
   setRequestBody,
   requestBody,
+  setUrl,
+  url,
 }: {
   setRequestBody: (body: string) => void;
   requestBody: string;
+  setUrl: (url: string) => void;
+  url: string;
 }) => {
   const t = useTranslations('MainPage');
-  const tabs = [t('headers'), t('tab-body')];
+  const tabs = [t('headers'), t('tab-body'), 'Params'];
   const [selectedTab, setSelectedTab] = useState(t('headers'));
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
@@ -40,6 +45,7 @@ const RestClientRequestTabs = ({
           {selectedTab === t('tab-body') && (
             <RestClientRequestEditor setRequestBody={setRequestBody} requestBody={requestBody} />
           )}
+          {selectedTab === 'Params' && <ClientParams setUrl={setUrl} url={url} />}
         </motion.div>
       </AnimatePresence>
     </div>

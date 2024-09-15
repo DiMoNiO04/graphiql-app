@@ -62,29 +62,29 @@ const RestClientHeaders = () => {
   }, [headers, setHeaders]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 ">
       <div className="flex flex-col gap-3">
         {headers.map((header, index) => {
           return (
             <div className="flex gap-2  w-full" key={index}>
               <div className="flex gap-3 items-center">
-                <Checkbox
-                  data-testid="checkbox"
-                  checked={header.sent}
-                  onCheckedChange={(checked) => onCheckboxChange(index, checked)}
-                />
-                <Input
-                  type="text"
-                  placeholder="Header Key"
-                  value={header.key}
-                  onChange={(e) => onHeaderChange(index, 'key', e.target.value)}
-                />
-                <Input
-                  type="text"
-                  placeholder="Header Value"
-                  value={header.value}
-                  onChange={(e) => onHeaderChange(index, 'value', e.target.value)}
-                />
+                <Checkbox checked={header.sent} onCheckedChange={(checked) => onCheckboxChange(index, checked)} />
+                <div className="flex items-centerw-full gap-2 ">
+                  <Input
+                    type="text"
+                    className="w-"
+                    placeholder="Header Key"
+                    value={header.key}
+                    onChange={(e) => onHeaderChange(index, 'key', e.target.value)}
+                  />
+                  <Input
+                    type="text"
+                    className=" w-full"
+                    placeholder="Header Value"
+                    value={header.value}
+                    onChange={(e) => onHeaderChange(index, 'value', e.target.value)}
+                  />
+                </div>
               </div>
               <button
                 className="rounded-md flex items-center hover:bg-[#18181B]/80 transition-all duration-300 ease-in-out hover:text-white p-2"
@@ -97,7 +97,7 @@ const RestClientHeaders = () => {
         })}
       </div>
       <button
-        className="bg-[#18181B] text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-[#18181B]/80 transition-all duration-300 w-fit"
+        className=" text-black border border-input px-4 py-2 rounded-md flex items-center gap-2 hover:bg-black/70 hover:text-white transition-all duration-300 w-full justify-center "
         onClick={onAddHeader}
         data-testid="button-add"
       >

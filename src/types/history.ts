@@ -8,5 +8,6 @@ export interface RequestHistoryItem {
   status: number | string;
   body?: string;
   headers?: Header[];
+  sdlUrl?: string;
   type: 'rest-client' | 'graphql';
 }

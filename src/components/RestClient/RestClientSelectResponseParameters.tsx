@@ -11,11 +11,13 @@ import {
 import { selectorResponseParameters } from '../../constants/constants';
 const RestClientSelectResponseParameters = ({
   setResponseParameters,
+  responseParameters,
 }: {
   setResponseParameters: (responseParameters: string) => void;
+  responseParameters: string;
 }) => {
   return (
-    <Select onValueChange={(value) => setResponseParameters(value)} defaultValue="Body">
+    <Select onValueChange={(value) => setResponseParameters(value)} value={responseParameters}>
       <SelectTrigger style={{ border: '1px solid #E4E4E7' }} className="w-[180px] text-sm font-semibold">
         <SelectValue />
       </SelectTrigger>
