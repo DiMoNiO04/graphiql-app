@@ -5,8 +5,9 @@ import React from 'react';
 import { getStatusStyle, getStatusText } from '@/src/utils/getStatusTextAndStyle';
 import { useTranslations } from 'next-intl';
 import Loader from '../Loading/Loading';
+import GraphQLResponseEditor from './ResponseEditor';
 
-const ResponseViewer: React.FC<IResponseViewer> = ({ response, status, responseTime }) => {
+const ResponseViewer: React.FC<IResponseViewer> = ({ response, status, responseTime, isLoading }) => {
   const t = useTranslations('MainPage');
 
   return (
@@ -32,27 +33,15 @@ const ResponseViewer: React.FC<IResponseViewer> = ({ response, status, responseT
             <p>{t('time')}</p>
           )}
         </div>
-        <Editor
-          className="border-input border "
-          height="35vh"
-          width={700}
-          language="json"
-          theme="vs"
-          loading={''}
-          options={{
-            minimap: { enabled: false },
-            contextmenu: false,
-            quickSuggestions: false,
-            selectionHighlight: false,
-            renderLineHighlight: 'none',
-            hideCursorInOverviewRuler: true,
-            overviewRulerLanes: 0,
-            overviewRulerBorder: false,
-            tabSize: 2,
-            readOnly: true,
-          }}
-          value={response}
-        />
+        {isLoading ? (
+          <div className="flex justify-center items-center py-64">
+            <Loader size={40} />
+          </div>
+        ) : response === '' ? (
+          <div>{t('no-response')}</div>
+        ) : (
+          response && <GraphQLResponseEditor response={response} />
+        )}
       </Stack>
     </Box>
   );

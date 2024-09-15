@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-
 import Editor from '@monaco-editor/react';
-
 import RestClientSelectEditorMethod from './RestClientSelectEditorMethod';
 import Loader from '../Loading/Loading';
 
-// TODO ADD  theme="vs-dark" WHEN DARK
 const RestClientRequestEditor = ({
   setRequestBody,
   requestBody,

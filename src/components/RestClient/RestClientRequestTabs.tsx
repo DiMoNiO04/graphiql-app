@@ -3,6 +3,8 @@ import LineTabs from '@/src/components/ui/Tabs';
 import { motion, AnimatePresence } from 'framer-motion';
 import RestClientHeaders from './RestClientHeaders';
 import RestClientRequestEditor from './RestClientRequestEditor';
+import { useTranslations } from 'next-intl';
+
 const RestClientRequestTabs = ({
   setRequestBody,
   requestBody,
@@ -10,8 +12,9 @@ const RestClientRequestTabs = ({
   setRequestBody: (body: string) => void;
   requestBody: string;
 }) => {
-  const tabs = ['Headers', 'Body'];
-  const [selectedTab, setSelectedTab] = useState('Headers');
+  const t = useTranslations('MainPage');
+  const tabs = [t('headers'), t('tab-body')];
+  const [selectedTab, setSelectedTab] = useState(t('headers'));
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
   };
@@ -33,8 +36,8 @@ const RestClientRequestTabs = ({
           variants={contentVariants}
           transition={{ duration: 0.15, ease: 'easeInOut' }}
         >
-          {selectedTab === 'Headers' && <RestClientHeaders />}
-          {selectedTab === 'Body' && (
+          {selectedTab === t('headers') && <RestClientHeaders />}
+          {selectedTab === t('tab-body') && (
             <RestClientRequestEditor setRequestBody={setRequestBody} requestBody={requestBody} />
           )}
         </motion.div>

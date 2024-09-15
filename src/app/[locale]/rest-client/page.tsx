@@ -110,7 +110,7 @@ const RestClient = () => {
         <RestClientRequestTabs setRequestBody={setRequestBody} requestBody={requestBody} />
       </div>
 
-      <div className="flex-1 flex flex-col gap-10 border-t-2 border-input pt-3 h-screen ">
+      <div className="flex-1 flex flex-col gap-10 border-t-2 border-input pt-3 pb-24 h-screen ">
         <RestClientResponse
           response={response}
           responseStatus={responseStatus}

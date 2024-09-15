@@ -28,6 +28,7 @@ const GraphiQlClient = () => {
   const [tabsValue, setTabsValue] = useState<number>(0);
   const [responseStatus, setResponseStatus] = useState<number | string | null>(null);
   const [responseTime, setResponseTime] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { headers, setHeaders } = useHeaders();
   const [responseHeaders, setResponseHeaders] = useState<Record<string, string>>({});
   const [schema, setSchema] = useState('');
@@ -63,6 +64,7 @@ const GraphiQlClient = () => {
       setResponseHeaders(response['headers']);
       setResponseStatus(result.status);
       setResponse(JSON.stringify(response, null, 2));
+      setIsLoading(false);
 
       const res = await fetch(`${endpointUrl}?sdl`, {
         method: 'POST',
@@ -78,12 +80,14 @@ const GraphiQlClient = () => {
       const { data } = await res.json();
       setSchema(printSchema(buildClientSchema(data)));
       setIsOpenDocumentation(true);
+      setIsLoading(false);
       if (!result.ok) setIsOpenDocumentation(false);
     } catch (error) {
       console.error('Error:', error);
       setResponse((error as Error).message);
       setResponseStatus(500);
       setResponseTime(null);
+      setIsLoading(false);
       setIsOpenDocumentation(false);
     }
   };
@@ -180,7 +184,7 @@ const GraphiQlClient = () => {
         <Typography variant="h4" component="h1" sx={{ textAlign: 'center' }}>
           {t('response')}
         </Typography>
-        <ResponseViewer response={response} status={responseStatus} responseTime={responseTime} />
+        <ResponseViewer response={response} status={responseStatus} responseTime={responseTime} isLoading={isLoading} />
       </Stack>
 
       {isOpenDocumentation && (
