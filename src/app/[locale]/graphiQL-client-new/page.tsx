@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
 
-import ControlTabPanel from '@/src/components/ControlTabPanel/ControlTabPanel';
 import Documentation from '@/src/components/Documentation/Documentation';
 import QueryEditor from '@/src/components/QueryEditor/QueryEditor';
 import ResponseViewer from '@/src/components/ResponseViewer/ResponseViewer';
@@ -15,13 +14,14 @@ import { encodeBase64 } from '@/src/utils/base64';
 import { useTranslations } from 'next-intl';
 import { convertJson, getArr, isBrackets, prettierTextArea } from '@/src/utils/prettifyUtils';
 import { useHeaders } from '@/src/contexts/HeaderContext';
-import { Header } from '@/src/types/headers';
-import { buildClientSchema, getIntrospectionQuery, GraphQLSchema } from 'graphql';
+
 import GraphiQLRequestHeader from '@/src/components/GraphiQl/GraphiQlRequestHeader';
 import GraphiQLRequestTabs from '@/src/components/GraphiQl/GraphiQlRequestTabs';
 import { Send } from 'lucide-react';
 
 import GraphiQLResponse from '@/src/components/GraphiQl/GraphiQLResponse';
+import { fetchSchema } from '@/src/utils/fetchSchema';
+import Loader from '@/src/components/Loading/Loading';
 
 const GraphiQlClientNew = () => {
   const t = useTranslations('MainPage');
@@ -37,7 +37,7 @@ const GraphiQlClientNew = () => {
 
   const [isOpenDocumentation, setIsOpenDocumentation] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [schema, setSchema] = useState<GraphQLSchema | null>(null);
+  const [schema, setSchema] = useState('');
   const [responseHeaders, setResponseHeaders] = useState<Record<string, string>>({});
 
   const handleSend = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -71,27 +71,22 @@ const GraphiQlClientNew = () => {
       setResponse(JSON.stringify(response['data'], null, 2));
       setIsLoading(false);
 
-      // const res = await fetch(`${endpointUrl}?sdl`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     ...headersObject,
-      //   },
-      //   body: JSON.stringify({
-      //     query: getIntrospectionQuery(),
-      //   }),
-      // });
+      //  SCHEMA
 
-      // const { data } = await res.json();
-      // setSchema(buildClientSchema(data));
-      // setIsOpenDocumentation(true);
-      // console.log(buildClientSchema(data));
+      const schemaText = await fetchSchema(endpointUrl);
+      if (schemaText) {
+        setSchema(schemaText);
+        setIsOpenDocumentation(true);
+      } else {
+        setIsOpenDocumentation(false);
+      }
     } catch (error) {
       console.error('Error:', error);
       setResponse((error as Error).message);
       setResponseStatus(500);
       setResponseTime(null);
       setIsLoading(false);
+      setIsOpenDocumentation(false);
     }
   };
 
@@ -123,6 +118,8 @@ const GraphiQlClientNew = () => {
           variables={variables}
           setVariables={setVariables}
           prettierText={prettierText}
+          setUrl={setEndpointUrl}
+          url={endpointUrl}
         />
         <button
           className={`bg-[#18181B] text-white px-4 py-2 rounded-md flex items-center gap-3 hover:bg-[#18181B]/80 transition-all duration-300 w-full text-center justify-center ${
@@ -141,6 +138,20 @@ const GraphiQlClientNew = () => {
           responseStatus={responseStatus}
           responseHeaders={responseHeaders}
         />
+        {isOpenDocumentation && (
+          <div>
+            <h2 className="text-xl font-semibold"> {t('documentation')}</h2>
+            {isLoading ? (
+              <div className="flex justify-center items-center py-64">
+                <Loader size={40} />
+              </div>
+            ) : (
+              <div>
+                <Documentation schema={schema} />
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { CodeMirrorQueryEditor } from '../QueryEditor/CodeMirrorQueryEditor';
 
 const Documentation: React.FC<IDocumentation> = ({ schema }) => {
   return (
-    <Box sx={{ mt: 4 }}>
+    <Box sx={{ mt: 1 }}>
       <Paper sx={{ padding: 2, maxHeight: 300, overflowY: 'auto' }}>
         <Stack direction="row" spacing={2} alignItems="center">
           <CodeMirrorQueryEditor lang="json" value={schema} className="codemirror" />

@@ -5,6 +5,7 @@ import RestClientHeaders from '../RestClient/RestClientHeaders';
 
 import QueryEditor from '../QueryEditor/QueryEditor';
 import VariablesEditor from '../VariablesEditor/VariablesEditor';
+import ClientParams from '../RestAndGraphQl/ClientParams';
 
 const GraphiQLRequestTabs = ({
   query,
@@ -12,14 +13,18 @@ const GraphiQLRequestTabs = ({
   variables,
   setVariables,
   prettierText,
+  setUrl,
+  url,
 }: {
   query: string;
   setQuery: (query: string) => void;
   variables: string;
   setVariables: (variables: string) => void;
   prettierText: () => void;
+  setUrl: (url: string) => void;
+  url: string;
 }) => {
-  const tabs = ['Headers', 'Query', 'Variables'];
+  const tabs = ['Headers', 'Query', 'Params', 'Variables'];
   const [selectedTab, setSelectedTab] = useState('Headers');
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
@@ -45,6 +50,7 @@ const GraphiQLRequestTabs = ({
           {selectedTab === 'Headers' && <RestClientHeaders />}
           {selectedTab === 'Query' && <QueryEditor value={query} onChange={setQuery} />}
           {selectedTab === 'Variables' && <VariablesEditor value={variables} onChange={setVariables} />}
+          {selectedTab === 'Params' && <ClientParams setUrl={setUrl} url={url} />}
         </motion.div>
       </AnimatePresence>
     </div>
