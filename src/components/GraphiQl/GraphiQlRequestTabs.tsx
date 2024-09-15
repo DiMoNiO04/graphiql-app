@@ -11,11 +11,13 @@ const GraphiQLRequestTabs = ({
   setQuery,
   variables,
   setVariables,
+  prettierText,
 }: {
   query: string;
   setQuery: (query: string) => void;
   variables: string;
   setVariables: (variables: string) => void;
+  prettierText: () => void;
 }) => {
   const tabs = ['Headers', 'Query', 'Variables'];
   const [selectedTab, setSelectedTab] = useState('Headers');
@@ -29,7 +31,7 @@ const GraphiQLRequestTabs = ({
   };
   return (
     <div>
-      <LineTabs onTabChange={handleTabChange} tabs={tabs} />
+      <LineTabs onTabChange={handleTabChange} tabs={tabs} prettierText={prettierText} />
       <AnimatePresence mode="wait">
         <motion.div
           className="pb-6"

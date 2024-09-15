@@ -18,6 +18,7 @@ const RestClientResponse = ({
   responseHeaders: Record<string, string>;
 }) => {
   const [responseParameters, setResponseParameters] = useState<string>('Body');
+
   return (
     <div>
       <h2 className="text-xl font-semibold">Response</h2>
@@ -35,7 +36,10 @@ const RestClientResponse = ({
                 responseParameters === 'Body' && 'max-w-[688px] w-full flex  gap-2 items-end justify-between mt-5'
               } ${responseParameters === 'Headers' && 'max-w-[688px] w-full flex flex-col gap-2 mt-5 max-h-[500px] overflow-y-auto'}`}
             >
-              <RestClientSelectResponseParameters setResponseParameters={setResponseParameters} />
+              <RestClientSelectResponseParameters
+                setResponseParameters={setResponseParameters}
+                responseParameters={responseParameters}
+              />
               {responseParameters === 'Body' && (
                 <RestClientResponseBody responseStatus={responseStatus} responseTime={responseTime} />
               )}

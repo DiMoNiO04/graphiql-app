@@ -54,9 +54,10 @@ interface LineTabProps {
   customID?: string;
   onTabChange: (tab: string) => void;
   tabs: string[];
+  prettierText?: () => void;
 }
 
-const LineTabs = ({ center, customID, onTabChange, tabs }: LineTabProps) => {
+const LineTabs = ({ center, customID, onTabChange, tabs, prettierText }: LineTabProps) => {
   const buttonOnTabs = ['Query', 'Variables'];
   const [selected, setSelected] = useState<string>(tabs[0]);
 
@@ -76,7 +77,10 @@ const LineTabs = ({ center, customID, onTabChange, tabs }: LineTabProps) => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <button className="bg-[#18181B] text-white px-5 py-2 rounded-md flex items-center gap-3 hover:bg-[#18181B]/80 transition-all duration-300 w-fit text-center justify-center absolute top-1/2 -translate-y-1/2 right-0">
+              <button
+                className="bg-[#18181B] text-white px-5 py-2 rounded-md flex items-center gap-3 hover:bg-[#18181B]/80 transition-all duration-300 w-fit text-center justify-center absolute top-1/2 -translate-y-1/2 right-0"
+                onClick={prettierText}
+              >
                 Prettier
               </button>
             </motion.div>

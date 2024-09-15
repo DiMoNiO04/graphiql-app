@@ -3,14 +3,19 @@ import LineTabs from '@/src/components/ui/Tabs';
 import { motion, AnimatePresence } from 'framer-motion';
 import RestClientHeaders from './RestClientHeaders';
 import RestClientRequestEditor from './RestClientRequestEditor';
+import ClientParams from '../RestAndGraphQl/ClientParams';
 const RestClientRequestTabs = ({
   setRequestBody,
   requestBody,
+  setUrl,
+  url,
 }: {
   setRequestBody: (body: string) => void;
   requestBody: string;
+  setUrl: (url: string) => void;
+  url: string;
 }) => {
-  const tabs = ['Headers', 'Body'];
+  const tabs = ['Headers', 'Body', 'Params'];
   const [selectedTab, setSelectedTab] = useState('Headers');
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
@@ -37,6 +42,7 @@ const RestClientRequestTabs = ({
           {selectedTab === 'Body' && (
             <RestClientRequestEditor setRequestBody={setRequestBody} requestBody={requestBody} />
           )}
+          {selectedTab === 'Params' && <ClientParams setUrl={setUrl} url={url} />}
         </motion.div>
       </AnimatePresence>
     </div>

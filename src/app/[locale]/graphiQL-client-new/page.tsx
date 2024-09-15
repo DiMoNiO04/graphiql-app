@@ -108,7 +108,7 @@ const GraphiQlClientNew = () => {
   };
 
   return (
-    <div className="flex justify-center flex-col py-16 px-10 max-w-[700px] mx-auto text-sm font-medium h-screen max-h-[1990px]">
+    <div className="flex justify-center flex-col py-16 px-10 max-w-[700px] mx-auto text-sm font-medium ">
       <div className="flex-1 flex flex-col gap-10">
         <GraphiQLRequestHeader
           url={endpointUrl}
@@ -117,7 +117,13 @@ const GraphiQlClientNew = () => {
           setSdlUrl={setSdlUrl}
           onSendButtonClick={handleSend}
         />
-        <GraphiQLRequestTabs query={query} setQuery={setQuery} variables={variables} setVariables={setVariables} />
+        <GraphiQLRequestTabs
+          query={query}
+          setQuery={setQuery}
+          variables={variables}
+          setVariables={setVariables}
+          prettierText={prettierText}
+        />
         <button
           className={`bg-[#18181B] text-white px-4 py-2 rounded-md flex items-center gap-3 hover:bg-[#18181B]/80 transition-all duration-300 w-full text-center justify-center ${
             endpointUrl === '' ? 'opacity-80 cursor-not-allowed hover:bg-[#18181B]' : ''
