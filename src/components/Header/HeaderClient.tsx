@@ -12,58 +12,62 @@ import { SessionResult } from '@/src/types/sessionResult';
 
 const HeaderClient = ({ session }: { session: SessionResult }) => {
   const t = useTranslations('MainPage');
-
+  console.log(session.error, 'session');
   const trigger = useScrollTrigger({
     threshold: 0,
     disableHysteresis: true,
   });
 
   return (
-    <AppBar
-      position="sticky"
-      sx={() => ({
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        '.MuiToolbar-root': {
-          paddingBlock: 1,
-          boxSizing: 'border-box',
-        },
-        '&::after': {
-          content: '""',
-          position: 'absolute',
-          zIndex: -1,
-          inset: 0,
-          pointerEvents: 'none',
-          backgroundColor: trigger ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.9)',
-          transition: 'all 0.2s ease',
-        },
-      })}
-    >
-      <Toolbar
+    <div className="z-10">
+      <AppBar
+        position="sticky"
         sx={() => ({
-          justifyContent: 'space-between',
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          '.MuiToolbar-root': {
+            paddingBlock: 1,
+
+            boxSizing: 'border-box',
+          },
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            zIndex: -1,
+            inset: 0,
+            pointerEvents: 'none',
+            backgroundColor: trigger ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.9)',
+            transition: 'all 0.2s ease',
+          },
         })}
       >
-        <Logo />
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
+        <Toolbar
+          sx={() => ({
+            justifyContent: 'space-between',
+          })}
         >
-          <LanguageButton />
-          {session ? (
-            <SignOutButton />
-          ) : (
-            <>
-              <BaseButton data-testid="signin-button" href="/signin">
-                {t('sign-in')}
-              </BaseButton>
-              <BaseButton href="/signup">{t('sign-up')}</BaseButton>
-            </>
-          )}
-        </Box>
-      </Toolbar>
-    </AppBar>
+          <Logo />
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+            }}
+          >
+            <LanguageButton />
+            {session.error !== 'No token found in cookie' ? (
+              <SignOutButton />
+            ) : (
+              <div className="flex gap-2 ml-3">
+                <BaseButton data-testid="signin-button" href="/signin">
+                  {t('sign-in')}
+                </BaseButton>
+                <BaseButton href="/signup">{t('sign-up')}</BaseButton>
+              </div>
+            )}
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 };
 

@@ -11,10 +11,11 @@ import SessionHandler from '@/src/components/auth/SessionHandler';
 
 export default async function Home() {
   const session = await getSession();
-
   const t = await getTranslations('MainPage');
 
-  return (
+  return session.expired ? (
+    <SessionHandler />
+  ) : (
     <Box
       sx={{
         display: 'flex',
@@ -23,7 +24,6 @@ export default async function Home() {
         padding: '4rem 2.5rem',
       }}
     >
-      {session.expired ? <SessionHandler /> : null}
       {session?.user?.name ? (
         <>
           <Typography
