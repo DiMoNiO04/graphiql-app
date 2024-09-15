@@ -1,7 +1,8 @@
 import { test, expect, vi, it } from 'vitest';
-import GraphiQlClient from '../app/[locale]/graphiQL-client/page';
+
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
+import GraphQlClient from '../app/[locale]/graphQL-client/page';
 
 vi.mock('firebase/auth');
 
@@ -11,7 +12,7 @@ vi.mock('next-intl', () => ({
 }));
 
 test('renders GraphiQlClient page with text', async () => {
-  render(<GraphiQlClient />);
+  render(<GraphQlClient />);
 
   const elementTeam = await screen.findByText(/Graph/i);
 
@@ -24,7 +25,7 @@ test('renders GraphiQlClient page with text', async () => {
 });
 
 it('should sent request', async () => {
-  render(<GraphiQlClient />);
+  render(<GraphQlClient />);
 
   await act(async () => {
     fireEvent.change(screen.getByTestId('graphql-endpoint'), {
