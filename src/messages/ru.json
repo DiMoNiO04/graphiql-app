@@ -80,6 +80,7 @@
     "status-table": "Статус",
     "url-table": "Путь",
     "method-table": "Метод",
-    "date-table": "Дата"
+    "date-table": "Дата",
+    "params": "Параметры"
   }
 }

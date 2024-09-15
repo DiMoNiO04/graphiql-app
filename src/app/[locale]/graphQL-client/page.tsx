@@ -22,7 +22,7 @@ import GraphQLRequestHeader from '@/src/components/GraphQl/GraphQlRequestHeader'
 
 const GraphQlClient = () => {
   const t = useTranslations('MainPage');
-  // SENT TO GRAPHQL
+
   const { headers, setHeaders } = useHeaders();
   const [endpointUrl, setEndpointUrl] = useState('');
   const [sdlUrl, setSdlUrl] = useState('');
@@ -129,8 +129,6 @@ const GraphQlClient = () => {
     }
   }, [searchParams, setHeaders]);
 
-  console.log(endpointUrl, 'endpointUrl');
-  console.log(sdlUrl, 'sdlUrl');
   return (
     <div className="flex justify-center flex-col py-16 px-10 max-w-[700px] mx-auto text-sm font-medium ">
       <div className="flex-1 flex flex-col gap-10">
@@ -158,7 +156,7 @@ const GraphQlClient = () => {
           onClick={handleSend}
         >
           <Send size={16} />
-          Send
+          {t('send')}
         </button>
         <GraphQLResponse
           response={response}

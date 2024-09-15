@@ -12,7 +12,7 @@ import { SessionResult } from '@/src/types/sessionResult';
 
 const HeaderClient = ({ session }: { session: SessionResult }) => {
   const t = useTranslations('MainPage');
-  console.log(session.error, 'session');
+
   const trigger = useScrollTrigger({
     threshold: 0,
     disableHysteresis: true,

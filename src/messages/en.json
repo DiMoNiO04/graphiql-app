@@ -81,6 +81,7 @@
     "status-table": "Status",
     "url-table": "URL",
     "method-table": "Method",
-    "date-table": "Date"
+    "date-table": "Date",
+    "params": "Params"
   }
 }
