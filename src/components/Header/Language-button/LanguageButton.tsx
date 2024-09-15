@@ -1,7 +1,7 @@
 import { usePathname, useRouter, type Locale } from '../../../i18n/i18n.config';
 import React from 'react';
 import { Globe } from 'lucide-react';
-
+import { useHotkeys } from 'react-hotkeys-hook';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -22,6 +22,9 @@ export default function LanguageButton() {
   const handleItemClick = (newLocale: Locale) => {
     router.replace(pathname, { locale: newLocale });
   };
+
+  useHotkeys('ctrl+e', () => handleItemClick('en'), [handleItemClick]);
+  useHotkeys('ctrl+r', () => handleItemClick('ru'), [handleItemClick]);
   return (
     <div>
       <DropdownMenu>

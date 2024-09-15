@@ -10,5 +10,5 @@
 - React Hook Form
 - Zod??
 - Frame Motion
-
-date-fns
+- react-hotkeys-hook
+- date-fns
