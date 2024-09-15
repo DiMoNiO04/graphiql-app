@@ -1,9 +1,9 @@
 'use client';
 
-import HistoryTable from '@/src/components/History/HistoryTable';
-import Loader from '@/src/components/Loading/Loading';
-import { Input } from '@/src/components/ui/input';
-import { RequestHistoryItem } from '@/src/types/history';
+import HistoryTable from '../../../components/History/HistoryTable';
+import Loader from '../../../components/Loading/Loading';
+import { Input } from '../../../components/ui/input';
+import { RequestHistoryItem } from '../../../types/history';
 import { Search } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/src/components/ui/table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table';
 import { Eye, ChevronsUpDown } from 'lucide-react';
-import { RequestHistoryItem } from '@/src/types/history';
+import { RequestHistoryItem } from '../../types/history';
 import { formatDistanceToNow, parseISO } from 'date-fns';
-import { getStatusStyle, getStatusText } from '@/src/utils/getStatusTextAndStyle';
+import { getStatusStyle, getStatusText } from '../../utils/getStatusTextAndStyle';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
@@ -17,9 +17,8 @@ const HistoryTable = ({ history, searchUrlTerm }: { history: RequestHistoryItem[
   });
   const router = useRouter();
   const handleSort = (key: 'url' | 'date') => {
-    // if the current sort key is the same as the key that was clicked, toggle the direction
     let direction: 'asc' | 'desc' = 'asc';
-    // if the current sort direction is 'asc', change it to 'desc'
+
     if (sortConfig.key === key && sortConfig.direction === 'asc') {
       direction = 'desc';
     }

@@ -35,6 +35,7 @@ const UrlEditorGraphi = ({
           placeholder={t('endpoint-placeholder')}
           onChange={(e) => setUrl(e.target.value)}
           value={url}
+          inputProps={{ 'data-testid': 'graphql-endpoint' }}
         />
       </Stack>
 
@@ -53,6 +54,7 @@ const UrlEditorGraphi = ({
 
       <Button
         onClick={onSendButtonClick}
+        data-testid="graphql-send"
         variant="contained"
         sx={{
           display: 'flex',

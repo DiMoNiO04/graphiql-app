@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import RestClientRequestHeader from '@/src/components/RestClient/RestClientRequestHeader';
-import RestClientRequestTabs from '@/src/components/RestClient/RestClientRequestTabs';
-import RestClientResponse from '@/src/components/RestClient/RestClientResponse';
-import { encodeBase64 } from '@/src/utils/base64';
-import { useHeaders } from '@/src/contexts/HeaderContext';
-import { saveRequestToLocalStorage } from '@/src/utils/saveRequestToLocalStorage';
+import RestClientRequestHeader from '../../../components/RestClient/RestClientRequestHeader';
+import RestClientRequestTabs from '../../../components/RestClient/RestClientRequestTabs';
+import RestClientResponse from '../../../components/RestClient/RestClientResponse';
+import { encodeBase64 } from '../../../utils/base64';
+import { useHeaders } from '../../../contexts/HeaderContext';
+import { saveRequestToLocalStorage } from '../../../utils/saveRequestToLocalStorage';
 import { useSearchParams } from 'next/navigation';
-import { getLocalStorageDataById } from '@/src/utils/getLocalStorageDataById';
-import { RequestHistoryItem } from '@/src/types/history';
+import { getLocalStorageDataById } from '../../../utils/getLocalStorageDataById';
+import { RequestHistoryItem } from '../../../types/history';
 
 const RestClient = () => {
   const [method, setMethod] = useState('GET');

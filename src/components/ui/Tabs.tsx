@@ -1,7 +1,7 @@
 'use client';
-import { cn } from '@/lib/utils';
+import { cn } from '../../../lib/utils';
 import { motion } from 'framer-motion';
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 interface TabProps {
   text: string;

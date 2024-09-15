@@ -1,8 +1,8 @@
 import React from 'react';
 import RestClientSelectMethod from './RestClientSelectMethod';
-import { Input } from '@/src/components/ui/input';
+import { Input } from '../../components/ui/input';
 import { Send } from 'lucide-react';
-import { RequestHistoryItem } from '@/src/types/history';
+import { RequestHistoryItem } from '../../types/history';
 import { useTranslations } from 'next-intl';
 
 const RestClientRequestHeader = ({
@@ -27,7 +27,13 @@ const RestClientRequestHeader = ({
       <h1 className="text-2xl font-bold">{historyData ? `Api: ${historyData.id}` : t('rest-title')}</h1>
       <div className="flex gap-3">
         <RestClientSelectMethod setMethod={setMethod} method={method} />
-        <Input type="text" placeholder={t('api-placeholder')} onChange={(e) => setUrl(e.target.value)} value={url} />
+        <Input
+          data-testid="url"
+          type="text"
+          placeholder={t('api-placeholder')}
+          onChange={(e) => setUrl(e.target.value)}
+          value={url}
+        />
         <button
           className={`bg-[#18181B] text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-[#18181B]/80 transition-all duration-300 ${
             url === '' ? 'opacity-80 cursor-not-allowed hover:bg-[#18181B]' : ''
@@ -35,7 +41,7 @@ const RestClientRequestHeader = ({
           disabled={url === ''}
           onClick={onSendButtonClick}
         >
-          <Send size={16} />
+          <Send size={16} data-testid="button-send" />
           {t('send')}
         </button>
       </div>

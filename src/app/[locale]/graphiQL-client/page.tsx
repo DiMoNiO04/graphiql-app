@@ -16,6 +16,7 @@ import { convertJson, getArr, isBrackets, prettierTextArea } from '../../../util
 import { useHeaders } from '../../../contexts/HeaderContext';
 import { Header } from '../../../types/headers';
 import { buildClientSchema, getIntrospectionQuery, printSchema } from 'graphql';
+import { saveRequestToLocalStorage } from '../../../utils/saveRequestToLocalStorage';
 
 const GraphiQlClient = () => {
   const t = useTranslations('MainPage');
@@ -32,6 +33,7 @@ const GraphiQlClient = () => {
   const { headers, setHeaders } = useHeaders();
   const [responseHeaders, setResponseHeaders] = useState<Record<string, string>>({});
   const [schema, setSchema] = useState('');
+  const [requestBody, setRequestBody] = useState('');
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setTabsValue(newValue);
@@ -65,6 +67,7 @@ const GraphiQlClient = () => {
       setResponseStatus(result.status);
       setResponse(JSON.stringify(response, null, 2));
       setIsLoading(false);
+      saveRequestToLocalStorage(endpointUrl, 'POST', result.status, headers, requestBody, 'graphql');
 
       const res = await fetch(`${endpointUrl}?sdl`, {
         method: 'POST',
@@ -89,6 +92,7 @@ const GraphiQlClient = () => {
       setResponseTime(null);
       setIsLoading(false);
       setIsOpenDocumentation(false);
+      saveRequestToLocalStorage(endpointUrl, 'POST', 500, headers, requestBody, 'graphql');
     }
   };
 
@@ -128,6 +132,7 @@ const GraphiQlClient = () => {
           />
           <Button
             variant="contained"
+            data-testid="button-prettier"
             onClick={prettierText}
             sx={{
               transition: 'all 0.4s ease',

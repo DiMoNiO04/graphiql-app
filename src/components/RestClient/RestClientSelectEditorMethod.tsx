@@ -6,8 +6,9 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/src/components/ui/select';
-import { selectorEditorBodyMethods } from '@/src/constants/constants';
+} from '../../components/ui/select';
+import { selectorEditorBodyMethods } from '../../constants/constants';
+import React from 'react';
 
 const RestClientSelectEditorMethod = ({ setBodyMethod }: { setBodyMethod: (method: string) => void }) => {
   return (
