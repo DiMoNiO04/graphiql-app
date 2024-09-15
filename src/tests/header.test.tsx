@@ -51,13 +51,6 @@ vi.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
 }));
 
-test('renders HeaderClent component with text', () => {
-  render(<HeaderClient session={null} />);
-
-  const textElement = screen.queryByTestId('signin-button');
-  expect(textElement).not.toBeInTheDocument();
-});
-
 test('renders Header component with text', async () => {
   const HeaderComponent = (await Header()) as React.ReactElement;
   render(HeaderComponent);

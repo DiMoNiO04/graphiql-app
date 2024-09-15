@@ -12,7 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/src/components/ui/alert-dialog';
+} from './../../../src/components/ui/alert-dialog';
 
 const SignOutButton = () => {
   const t = useTranslations('MainPage');
