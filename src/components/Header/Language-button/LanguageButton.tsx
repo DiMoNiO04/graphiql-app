@@ -11,7 +11,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from '@/src/components/ui/dropdown-menu';
+} from '../../../components/ui/dropdown-menu';
 import { useTranslations } from 'next-intl';
 
 export default function LanguageButton() {

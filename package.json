@@ -10,7 +10,7 @@
     "prettier-fix": "prettier --write ./src",
     "prepare": "husky install",
     "test": "vitest",
-    "test:ui": "vitest --ui",
+    "test:ui": "vitest --ui --watch",
     "test:coverage": "vitest run --coverage",
     "test:ci": "vitest run"
   },

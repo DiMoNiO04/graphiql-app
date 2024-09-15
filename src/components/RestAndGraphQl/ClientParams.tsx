@@ -3,10 +3,10 @@ import { Input } from '../ui/input';
 import { Trash2, CirclePlus } from 'lucide-react';
 
 import { Checkbox } from '../ui/checkbox';
-import { Param } from '@/src/types/params';
+import { Param } from './../../../src/types/params';
 import toast from 'react-hot-toast';
 import { useTranslations } from 'next-intl';
-import { useParams } from '@/src/contexts/ParamsContext';
+import { useParams } from './../../../src/contexts/ParamsContext';
 const RestClientParams = ({ setUrl, url }: { setUrl: (url: string) => void; url: string }) => {
   const t = useTranslations('MainPage');
   const { params, setParams } = useParams();

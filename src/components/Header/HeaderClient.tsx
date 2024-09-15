@@ -3,7 +3,6 @@
 import { AppBar, Box, Toolbar, useScrollTrigger } from '@mui/material';
 import Logo from './Logo/Logo';
 import LanguageButton from './Language-button/LanguageButton';
-import { DecodedIdToken } from 'firebase-admin/auth';
 import SignOutButton from '../ui/SignOutButton';
 import BaseButton from '../ui/Button';
 import { useTranslations } from 'next-intl';

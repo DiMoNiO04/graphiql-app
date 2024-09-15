@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LineTabs from '@/src/components/ui/Tabs';
+import LineTabs from './../../../src/components/ui/Tabs';
 import { motion, AnimatePresence } from 'framer-motion';
 import RestClientHeaders from '../RestClient/RestClientHeaders';
 import QueryEditor from '../QueryEditor/QueryEditor';
