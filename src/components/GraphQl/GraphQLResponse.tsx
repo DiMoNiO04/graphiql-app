@@ -5,7 +5,7 @@ import RestClientResponseBody from '../RestClient/RestClientResponseBody';
 import RestClientResponseHeaders from '../RestClient/RestClientResponseHeaders';
 import RestClientResponseEditor from '../RestClient/RestClientResponseEditor';
 
-const GraphiQL = ({
+const GraphQL = ({
   response,
   responseStatus,
   responseTime,
@@ -54,4 +54,4 @@ const GraphiQL = ({
   );
 };
 
-export default GraphiQL;
+export default GraphQL;

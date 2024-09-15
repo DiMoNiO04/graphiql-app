@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input } from '../ui/input';
 
-const GraphiQLRequestHeader = ({
+const GraphQLRequestHeader = ({
   url,
   setUrl,
   sdlUrl,
@@ -46,4 +46,4 @@ const GraphiQLRequestHeader = ({
   );
 };
 
-export default GraphiQLRequestHeader;
+export default GraphQLRequestHeader;

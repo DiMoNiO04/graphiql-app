@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import LineTabs from '@/src/components/ui/Tabs';
 import { motion, AnimatePresence } from 'framer-motion';
 import RestClientHeaders from '../RestClient/RestClientHeaders';
-
 import QueryEditor from '../QueryEditor/QueryEditor';
-import VariablesEditor from '../VariablesEditor/VariablesEditor';
 import ClientParams from '../RestAndGraphQl/ClientParams';
+import VariablesEditor from '../VariablesEditor/VariablesEditor';
 
-const GraphiQLRequestTabs = ({
+const GraphQLRequestTabs = ({
   query,
   setQuery,
   variables,
@@ -24,7 +23,7 @@ const GraphiQLRequestTabs = ({
   setUrl: (url: string) => void;
   url: string;
 }) => {
-  const tabs = ['Headers', 'Query', 'Params'];
+  const tabs = ['Headers', 'Query', 'Params', 'Variables'];
   const [selectedTab, setSelectedTab] = useState('Headers');
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
@@ -57,4 +56,4 @@ const GraphiQLRequestTabs = ({
   );
 };
 
-export default GraphiQLRequestTabs;
+export default GraphQLRequestTabs;

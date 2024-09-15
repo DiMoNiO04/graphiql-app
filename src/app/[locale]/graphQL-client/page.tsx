@@ -8,16 +8,17 @@ import { encodeBase64 } from '@/src/utils/base64';
 import { useTranslations } from 'next-intl';
 import { convertJson, getArr, isBrackets, prettierTextArea } from '@/src/utils/prettifyUtils';
 import { useHeaders } from '@/src/contexts/HeaderContext';
-import GraphiQLRequestHeader from '@/src/components/GraphiQl/GraphiQlRequestHeader';
-import GraphiQLRequestTabs from '@/src/components/GraphiQl/GraphiQlRequestTabs';
+
 import { Send } from 'lucide-react';
-import GraphiQLResponse from '@/src/components/GraphiQl/GraphiQLResponse';
 import { fetchSchema } from '@/src/utils/fetchSchema';
 import Loader from '@/src/components/Loading/Loading';
 import { saveRequestToLocalStorage } from '@/src/utils/saveRequestToLocalStorage';
 import { useSearchParams } from 'next/navigation';
 import { getLocalStorageDataById } from '@/src/utils/getLocalStorageDataById';
 import { RequestHistoryItem } from '@/src/types/history';
+import GraphQLResponse from '@/src/components/GraphQl/GraphQLResponse';
+import GraphQLRequestTabs from '@/src/components/GraphQl/GraphQlRequestTabs';
+import GraphQLRequestHeader from '@/src/components/GraphQl/GraphQlRequestHeader';
 
 const GraphQlClient = () => {
   const t = useTranslations('MainPage');
@@ -78,6 +79,8 @@ const GraphQlClient = () => {
           query: query,
           variables: variables ? JSON.parse(variables) : undefined,
         }),
+        sdlUrl,
+
         'graphql'
       );
       setIsLoading(false);
@@ -122,6 +125,7 @@ const GraphQlClient = () => {
       setEndpointUrl(data?.url ?? '');
       setHeaders(data?.headers ?? []);
       setQuery(data?.body ?? '');
+      setSdlUrl(data?.sdlUrl ?? '');
     }
   }, [searchParams, setHeaders]);
 
@@ -130,8 +134,8 @@ const GraphQlClient = () => {
   return (
     <div className="flex justify-center flex-col py-16 px-10 max-w-[700px] mx-auto text-sm font-medium ">
       <div className="flex-1 flex flex-col gap-10">
-        <GraphiQLRequestHeader url={endpointUrl} setUrl={setEndpointUrl} sdlUrl={sdlUrl} setSdlUrl={setSdlUrl} />
-        <GraphiQLRequestTabs
+        <GraphQLRequestHeader url={endpointUrl} setUrl={setEndpointUrl} sdlUrl={sdlUrl} setSdlUrl={setSdlUrl} />
+        <GraphQLRequestTabs
           query={query}
           setQuery={setQuery}
           variables={variables}
@@ -150,7 +154,7 @@ const GraphQlClient = () => {
           <Send size={16} />
           Send
         </button>
-        <GraphiQLResponse
+        <GraphQLResponse
           response={response}
           isLoading={isLoading}
           responseTime={responseTime}
