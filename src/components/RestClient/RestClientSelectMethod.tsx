@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/src/components/ui/select';
-import { selectorMethods } from '@/src/constants/constants';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
+import { selectorMethods } from '../../constants/constants';
 
 const RestClientSelectMethod = ({ setMethod, method }: { setMethod: (method: string) => void; method: string }) => {
   return (

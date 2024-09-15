@@ -1,4 +1,4 @@
-import { getStatusStyle, getStatusText } from '@/src/utils/getStatusTextAndStyle';
+import { getStatusStyle, getStatusText } from '../../utils/getStatusTextAndStyle';
 import React from 'react';
 import { useTranslations } from 'next-intl';
 

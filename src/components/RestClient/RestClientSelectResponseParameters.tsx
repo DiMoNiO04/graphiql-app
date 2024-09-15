@@ -7,8 +7,8 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/src/components/ui/select';
-import { selectorResponseParameters } from '@/src/constants/constants';
+} from '../../components/ui/select';
+import { selectorResponseParameters } from '../../constants/constants';
 const RestClientSelectResponseParameters = ({
   setResponseParameters,
   responseParameters,
