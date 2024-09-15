@@ -39,7 +39,7 @@ const HistoryTable = ({ history, searchUrlTerm }: { history: RequestHistoryItem[
   };
 
   const redirectToClient = ({ url, method, date, status, id, type }: RequestHistoryItem) => {
-    const clientPath = type === 'rest-client' ? '/rest-client' : '/graphql';
+    const clientPath = type === 'rest-client' ? '/rest-client' : '/graphQL-client';
     console.log(id);
     router.push(`${clientPath}?id=${id}`);
   };
@@ -89,7 +89,7 @@ const HistoryTable = ({ history, searchUrlTerm }: { history: RequestHistoryItem[
             <TableCell>
               {status !== undefined && status !== null && status !== '' ? (
                 <span
-                  className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${getStatusStyle(status)}`}
+                  className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium  max-[815px]:px-1 max-[815px]:py-0 ${getStatusStyle(status)}`}
                 >
                   {status} {getStatusText(status)}
                 </span>

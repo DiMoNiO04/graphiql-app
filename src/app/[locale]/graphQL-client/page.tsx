@@ -1,29 +1,25 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 
 import Documentation from '@/src/components/Documentation/Documentation';
-import QueryEditor from '@/src/components/QueryEditor/QueryEditor';
-import ResponseViewer from '@/src/components/ResponseViewer/ResponseViewer';
-import UrlEditorGraphi from '@/src/components/UrlEditorGraphi/UrlEditorGraphi';
-import VariablesEditor from '@/src/components/VariablesEditor/VariablesEditor';
 import { a11yProps } from '@/src/lib/restClient/getAllyProps';
-import RestClientHeaders from '@/src/components/RestClient/RestClientHeaders';
 import { encodeBase64 } from '@/src/utils/base64';
 import { useTranslations } from 'next-intl';
 import { convertJson, getArr, isBrackets, prettierTextArea } from '@/src/utils/prettifyUtils';
 import { useHeaders } from '@/src/contexts/HeaderContext';
-
 import GraphiQLRequestHeader from '@/src/components/GraphiQl/GraphiQlRequestHeader';
 import GraphiQLRequestTabs from '@/src/components/GraphiQl/GraphiQlRequestTabs';
 import { Send } from 'lucide-react';
-
 import GraphiQLResponse from '@/src/components/GraphiQl/GraphiQLResponse';
 import { fetchSchema } from '@/src/utils/fetchSchema';
 import Loader from '@/src/components/Loading/Loading';
+import { saveRequestToLocalStorage } from '@/src/utils/saveRequestToLocalStorage';
+import { useSearchParams } from 'next/navigation';
+import { getLocalStorageDataById } from '@/src/utils/getLocalStorageDataById';
+import { RequestHistoryItem } from '@/src/types/history';
 
-const GraphiQlClientNew = () => {
+const GraphQlClient = () => {
   const t = useTranslations('MainPage');
   // SENT TO GRAPHQL
   const { headers, setHeaders } = useHeaders();
@@ -38,7 +34,10 @@ const GraphiQlClientNew = () => {
   const [isOpenDocumentation, setIsOpenDocumentation] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
   const [schema, setSchema] = useState('');
+  const [historyData, setHistoryData] = useState<RequestHistoryItem | null>(null);
   const [responseHeaders, setResponseHeaders] = useState<Record<string, string>>({});
+
+  const searchParams = useSearchParams();
 
   const handleSend = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -69,6 +68,18 @@ const GraphiQlClientNew = () => {
       console.log(responseHeaders);
       setResponseStatus(response['status']);
       setResponse(JSON.stringify(response['data'], null, 2));
+
+      saveRequestToLocalStorage(
+        endpointUrl,
+        'POST',
+        response['status'],
+        headers,
+        JSON.stringify({
+          query: query,
+          variables: variables ? JSON.parse(variables) : undefined,
+        }),
+        'graphql'
+      );
       setIsLoading(false);
 
       //  SCHEMA
@@ -101,6 +112,18 @@ const GraphiQlClientNew = () => {
       setVariables(convertJson(variables));
     }
   };
+
+  useEffect(() => {
+    const id = searchParams.get('id');
+    if (id) {
+      const data = getLocalStorageDataById(id);
+
+      setHistoryData(data);
+      setEndpointUrl(data?.url ?? '');
+      setHeaders(data?.headers ?? []);
+      setQuery(data?.body ?? '');
+    }
+  }, [searchParams, setHeaders]);
 
   return (
     <div className="flex justify-center flex-col py-16 px-10 max-w-[700px] mx-auto text-sm font-medium ">
@@ -157,4 +180,4 @@ const GraphiQlClientNew = () => {
   );
 };
 
-export default GraphiQlClientNew;
+export default GraphQlClient;
