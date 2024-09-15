@@ -3,18 +3,18 @@
 import React, { useState } from 'react';
 import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
 
-import ControlTabPanel from '@/src/components/ControlTabPanel/ControlTabPanel';
-import Documentation from '@/src/components/Documentation/Documentation';
-import QueryEditor from '@/src/components/QueryEditor/QueryEditor';
-import ResponseViewer from '@/src/components/ResponseViewer/ResponseViewer';
-import UrlEditorGraphi from '@/src/components/UrlEditorGraphi/UrlEditorGraphi';
-import VariablesEditor from '@/src/components/VariablesEditor/VariablesEditor';
-import { a11yProps } from '@/src/lib/restClient/getAllyProps';
-import RestClientHeaders from '@/src/components/RestClient/RestClientHeaders';
+import ControlTabPanel from '../../../components/ControlTabPanel/ControlTabPanel';
+import Documentation from '../../../components/Documentation/Documentation';
+import QueryEditor from '../../../components/QueryEditor/QueryEditor';
+import ResponseViewer from '../../../components/ResponseViewer/ResponseViewer';
+import UrlEditorGraphi from '../../../components/UrlEditorGraphi/UrlEditorGraphi';
+import VariablesEditor from '../../../components/VariablesEditor/VariablesEditor';
+import { a11yProps } from '../../../lib/restClient/getAllyProps';
+import RestClientHeaders from '../../../components/RestClient/RestClientHeaders';
 import { useTranslations } from 'next-intl';
-import { convertJson, getArr, isBrackets, prettierTextArea } from '@/src/utils/prettifyUtils';
-import { useHeaders } from '@/src/contexts/HeaderContext';
-import { Header } from '@/src/types/headers';
+import { convertJson, getArr, isBrackets, prettierTextArea } from '../../../utils/prettifyUtils';
+import { useHeaders } from '../../../contexts/HeaderContext';
+import { Header } from '../../../types/headers';
 import { buildClientSchema, getIntrospectionQuery, printSchema } from 'graphql';
 
 const GraphiQlClient = () => {

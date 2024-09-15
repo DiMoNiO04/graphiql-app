@@ -1,8 +1,7 @@
-import { IResponseViewer } from '@/src/types/responseViewerTypes';
-import { Editor } from '@monaco-editor/react';
+import { IResponseViewer } from '../../types/responseViewerTypes';
 import { Box, Stack } from '@mui/material';
 import React from 'react';
-import { getStatusStyle, getStatusText } from '@/src/utils/getStatusTextAndStyle';
+import { getStatusStyle, getStatusText } from '../../utils/getStatusTextAndStyle';
 import { useTranslations } from 'next-intl';
 import Loader from '../Loading/Loading';
 import GraphQLResponseEditor from './ResponseEditor';
