@@ -63,6 +63,8 @@ it('should sent request', async () => {
 
   waitFor(() => expect(screen.getByTestId('graphql-send')).not.toBeDisabled());
   waitFor(() => {
-    expect(screen.getByTestId('graphql-endpoint')).toHaveValue('https://countries.trevorblades.com/graphql');
+    expect(screen.getByPlaceholderText('endpoint-placeholder')).toHaveValue(
+      'https://countries.trevorblades.com/graphql'
+    );
   });
 });
