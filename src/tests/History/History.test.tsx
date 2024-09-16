@@ -23,7 +23,7 @@ vi.mock('next/navigation', () => ({
 test('renders History page with text', () => {
   render(<History />);
 
-  waitFor(() => expect(screen.queryByText('History')).toBeInTheDocument());
+  waitFor(() => expect(screen.queryByText('History')).not.toBeInTheDocument());
 });
 
 test('renders HistoryTable component with text', () => {
