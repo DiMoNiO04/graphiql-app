@@ -1,5 +1,5 @@
-import { Header } from '@/src/types/headers';
-import { decodeBase64 } from '@/src/utils/base64';
+import { Header } from './../../../../../types/headers';
+import { decodeBase64 } from './../../../../../utils/base64';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(

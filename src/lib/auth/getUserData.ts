@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { getFirebaseAuth } from '../../app/firebase/firebase-admin';
-import { SessionResult } from '@/src/types/sessionResult';
+import { SessionResult } from '../../../src/types/sessionResult';
 
 export async function getSession(): Promise<SessionResult> {
   const cookieStore = cookies();

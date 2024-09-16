@@ -12,7 +12,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       include: ['src/**/*.{ts,tsx}'],
-      exclude: ['src/types', 'src/tests'],
+      exclude: ['src/types', 'src/tests', 'src/app/firebase/firebase-admin.ts'],
       // thresholds: {
       //   statements: 80,
       // },

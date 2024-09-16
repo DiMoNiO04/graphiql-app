@@ -6,8 +6,8 @@ import { developers } from '../../constants/constants';
 import TeamMemberCard from '../../components/TeamMemberCard/TeamMemberCard';
 import BaseButton from '../../components/ui/Button';
 import { getTranslations } from 'next-intl/server';
-import { getSession } from '@/src/lib/auth/getUserData';
-import SessionHandler from '@/src/components/auth/SessionHandler';
+import { getSession } from '../../lib/auth/getUserData';
+import SessionHandler from '../../components/auth/SessionHandler';
 
 export default async function Home() {
   const session = await getSession();
