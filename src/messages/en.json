@@ -46,7 +46,7 @@
     "name-Maksym": "Maksym",
     "contribute-Yuliya": "Main Page, REST Client layout, Language support, Unit-tests, GraphQL Client page",
     "contribute-Dmitriy": "Set up project, GraphQL Client page",
-    "contribute-Maksym": "Sign In/Sign up pages, REST Client page, Unit-tests, History page",
+    "contribute-Maksym": "Sign In/Sign up pages, REST Client page, Unit-tests, History page,GraphQL Client page",
     "success-out": "You have been signed out successfully.",
     "console-out": "Error signing out:",
     "error-out": "An error occurred while signing out. Please try again.",
@@ -82,6 +82,14 @@
     "url-table": "URL",
     "method-table": "Method",
     "date-table": "Date",
-    "params": "Params"
+    "params": "Params",
+    "key": "Key",
+    "value": "Value",
+    "endpoint-label": "Enter your GraphQL endpoint URL",
+    "sdl-label": "Enter your SDL endpoint URL",
+    "add-params": "Add params",
+    "key-placeholder": "Key...",
+    "value-placeholder": "Value...",
+    "toast-param": "At least one param must remain"
   }
 }

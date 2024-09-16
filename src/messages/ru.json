@@ -46,7 +46,7 @@
     "name-Maksym": "Максим",
     "contribute-Yuliya": "Главная страница, REST Клиент макет, Поддержка языков, Юнит-тесты, GraphQL Клиент",
     "contribute-Dmitriy": "Настройка проекта, GraphQL Клиент",
-    "contribute-Maksym": "Логин и регистрация, REST Клиент, Юнит-тесты, История запросов",
+    "contribute-Maksym": "Логин и регистрация, REST Клиент, Юнит-тесты, История запросов, GraphQL Клиент",
     "success-out": "Вы успешно вышли из системы.",
     "console-out": "Ошибка выхода:",
     "error-out": "При выходе произошла ошибка. Пожалуйста, попробуйте еще раз.",
@@ -81,6 +81,14 @@
     "url-table": "Путь",
     "method-table": "Метод",
     "date-table": "Дата",
-    "params": "Параметры"
+    "params": "Параметры",
+     "key": "Ключ",
+    "value": "Значение",
+    "endpoint-label": "Введите GraphQL URL-адрес",
+    "sdl-label": "Введите SDL URL-адрес",
+    "add-params": "Добавить параметры",
+    "key-placeholder": "Ключ...",
+    "value-placeholder": "Значение...",
+    "toast-param": "Хотя бы один параметр должен остаться"
   }
 }

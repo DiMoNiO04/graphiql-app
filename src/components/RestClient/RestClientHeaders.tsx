@@ -73,14 +73,14 @@ const RestClientHeaders = () => {
                   <Input
                     type="text"
                     className="w-"
-                    placeholder="Header Key"
+                    placeholder={t('key-placeholder')}
                     value={header.key}
                     onChange={(e) => onHeaderChange(index, 'key', e.target.value)}
                   />
                   <Input
                     type="text"
                     className=" w-full"
-                    placeholder="Header Value"
+                    placeholder={t('value-placeholder')}
                     value={header.value}
                     onChange={(e) => onHeaderChange(index, 'value', e.target.value)}
                   />

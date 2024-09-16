@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 
 import Documentation from '@/src/components/Documentation/Documentation';
-import { a11yProps } from '@/src/lib/restClient/getAllyProps';
 import { encodeBase64 } from '@/src/utils/base64';
 import { useTranslations } from 'next-intl';
 import { convertJson, getArr, isBrackets, prettierTextArea } from '@/src/utils/prettifyUtils';
@@ -60,13 +59,10 @@ const GraphQlClient = () => {
       });
 
       const response = await result?.json();
-      console.log(response, 'response');
 
       const endTime = performance.now();
       setResponseTime(endTime - startTime);
       setResponseHeaders(response['headers']);
-      console.log('Just set headers:', response['headers']);
-      console.log(responseHeaders);
       setResponseStatus(response['status']);
       setResponse(JSON.stringify(response['data'], null, 2));
 
@@ -84,8 +80,6 @@ const GraphQlClient = () => {
         'graphql'
       );
       setIsLoading(false);
-
-      //  SCHEMA
 
       const schemaText = await fetchSchema(endpointUrl);
       if (schemaText) {

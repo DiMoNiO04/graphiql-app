@@ -28,7 +28,7 @@ const GraphQLRequestHeader = ({
       <h1 className="text-2xl font-bold">{historyData ? `GraphQL Client: ${historyData.id}` : t('graphQL-client')}</h1>
       <div className="flex gap-5 flex-col">
         <div className="flex flex-col gap-2">
-          <p className="text-black/90 text-base">{t('endpoint-placeholder')}</p>
+          <p className="text-black/90 text-base">{t('endpoint-label')}</p>
           <Input
             type="text"
             placeholder={t('endpoint-placeholder')}
@@ -38,7 +38,7 @@ const GraphQLRequestHeader = ({
           />
         </div>
         <div className="flex flex-col gap-2">
-          <p className="text-black/90 text-base">{t('sdl-placeholder')}</p>
+          <p className="text-black/90 text-base">{t('sdl-label')}</p>
           <Input
             type="text"
             placeholder={t('sdl-placeholder')}
