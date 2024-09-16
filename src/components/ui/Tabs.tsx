@@ -2,6 +2,7 @@
 import { cn } from './../../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface TabProps {
   text: string;
@@ -58,7 +59,8 @@ interface LineTabProps {
 }
 
 const LineTabs = ({ center, customID, onTabChange, tabs, prettierText }: LineTabProps) => {
-  const buttonOnTabs = ['Query', 'Variables'];
+  const t = useTranslations('MainPage');
+  const buttonOnTabs = [t('query'), t('variables')];
   const [selected, setSelected] = useState<string>(tabs[0]);
 
   const handleTabChange = (tab: string) => {

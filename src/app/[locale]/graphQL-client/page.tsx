@@ -2,27 +2,26 @@
 
 import React, { useEffect, useState } from 'react';
 
-import Documentation from '@/src/components/Documentation/Documentation';
-import { a11yProps } from '@/src/lib/restClient/getAllyProps';
-import { encodeBase64 } from '@/src/utils/base64';
+import Documentation from '../../../components/Documentation/Documentation';
+import { encodeBase64 } from '../../../utils/base64';
 import { useTranslations } from 'next-intl';
-import { convertJson, getArr, isBrackets, prettierTextArea } from '@/src/utils/prettifyUtils';
-import { useHeaders } from '@/src/contexts/HeaderContext';
+import { convertJson, getArr, isBrackets, prettierTextArea } from '../../../utils/prettifyUtils';
+import { useHeaders } from '../../../contexts/HeaderContext';
 
 import { Send } from 'lucide-react';
-import { fetchSchema } from '@/src/utils/fetchSchema';
-import Loader from '@/src/components/Loading/Loading';
-import { saveRequestToLocalStorage } from '@/src/utils/saveRequestToLocalStorage';
+import { fetchSchema } from '../../../utils/fetchSchema';
+import Loader from '../../../components/Loading/Loading';
+import { saveRequestToLocalStorage } from '../../../utils/saveRequestToLocalStorage';
 import { useSearchParams } from 'next/navigation';
-import { getLocalStorageDataById } from '@/src/utils/getLocalStorageDataById';
-import { RequestHistoryItem } from '@/src/types/history';
-import GraphQLResponse from '@/src/components/GraphQl/GraphQLResponse';
-import GraphQLRequestTabs from '@/src/components/GraphQl/GraphQlRequestTabs';
-import GraphQLRequestHeader from '@/src/components/GraphQl/GraphQlRequestHeader';
+import { getLocalStorageDataById } from '../../../utils/getLocalStorageDataById';
+import { RequestHistoryItem } from '../../../types/history';
+import GraphQLResponse from '../../../components/GraphQl/GraphQLResponse';
+import GraphQLRequestTabs from '../../../components/GraphQl/GraphQlRequestTabs';
+import GraphQLRequestHeader from '../../../components/GraphQl/GraphQlRequestHeader';
 
 const GraphQlClient = () => {
   const t = useTranslations('MainPage');
-  // SENT TO GRAPHQL
+
   const { headers, setHeaders } = useHeaders();
   const [endpointUrl, setEndpointUrl] = useState('');
   const [sdlUrl, setSdlUrl] = useState('');
@@ -60,13 +59,10 @@ const GraphQlClient = () => {
       });
 
       const response = await result?.json();
-      console.log(response, 'response');
 
       const endTime = performance.now();
       setResponseTime(endTime - startTime);
       setResponseHeaders(response['headers']);
-      console.log('Just set headers:', response['headers']);
-      console.log(responseHeaders);
       setResponseStatus(response['status']);
       setResponse(JSON.stringify(response['data'], null, 2));
 
@@ -84,8 +80,6 @@ const GraphQlClient = () => {
         'graphql'
       );
       setIsLoading(false);
-
-      //  SCHEMA
 
       const schemaText = await fetchSchema(endpointUrl);
       if (schemaText) {
@@ -129,8 +123,6 @@ const GraphQlClient = () => {
     }
   }, [searchParams, setHeaders]);
 
-  console.log(endpointUrl, 'endpointUrl');
-  console.log(sdlUrl, 'sdlUrl');
   return (
     <div className="flex justify-center flex-col py-16 px-10 max-w-[700px] mx-auto text-sm font-medium ">
       <div className="flex-1 flex flex-col gap-10">
@@ -156,9 +148,10 @@ const GraphQlClient = () => {
           }`}
           disabled={endpointUrl === ''}
           onClick={handleSend}
+          data-testid="graphql-send"
         >
           <Send size={16} />
-          Send
+          {t('send')}
         </button>
         <GraphQLResponse
           response={response}

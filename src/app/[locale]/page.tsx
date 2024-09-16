@@ -6,8 +6,8 @@ import { developers } from '../../constants/constants';
 import TeamMemberCard from '../../components/TeamMemberCard/TeamMemberCard';
 import BaseButton from '../../components/ui/Button';
 import { getTranslations } from 'next-intl/server';
-import { getSession } from '@/src/lib/auth/getUserData';
-import SessionHandler from '@/src/components/auth/SessionHandler';
+import { getSession } from '../../lib/auth/getUserData';
+import SessionHandler from '../../components/auth/SessionHandler';
 
 export default async function Home() {
   const session = await getSession();
@@ -95,17 +95,25 @@ export default async function Home() {
         </Stack>
         <Stack>
           <Heading sx={{ textAlign: 'center' }}>{t('team')}</Heading>
-          <Stack direction="row" gap="1.5rem" flexWrap="wrap" justifyContent="center" fontFamily={'inherit'}>
-            {developers.map((developer) => (
-              <TeamMemberCard
-                href={developer.href}
-                src={developer.imgSrc}
-                alt={developer.imgAlt}
-                name={developer.nameOfPerson}
-                contribution={developer.contribute}
-                key={developer.nameOfPerson}
-              />
-            ))}
+          <Stack direction="row" gap="1.5rem" flexWrap="wrap" justifyContent="center">
+            <TeamMemberCard
+              src={developers[0].imgSrc}
+              alt={developers[0].imgAlt}
+              name={t('name-Yuliya')}
+              contribution={t('contribute-Yuliya')}
+            />
+            <TeamMemberCard
+              src={developers[1].imgSrc}
+              alt={developers[1].imgAlt}
+              name={t('name-Dmitriy')}
+              contribution={t('contribute-Dmitriy')}
+            />
+            <TeamMemberCard
+              src={developers[2].imgSrc}
+              alt={developers[2].imgAlt}
+              name={t('name-Maksym')}
+              contribution={t('contribute-Maksym')}
+            />
           </Stack>
         </Stack>
       </Stack>

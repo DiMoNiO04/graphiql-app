@@ -37,14 +37,14 @@ describe('GraphQLRequestTabs', () => {
 
   it('renders without crashing', () => {
     render(<GraphQLRequestTabs {...defaultProps} />);
-    expect(screen.getByText('Headers')).toBeInTheDocument();
+    expect(screen.getByText('headers')).toBeInTheDocument();
   });
 
   it('renders all tabs', () => {
     render(<GraphQLRequestTabs {...defaultProps} />);
-    expect(screen.getByText('Headers')).toBeInTheDocument();
-    expect(screen.getByText('Query')).toBeInTheDocument();
-    expect(screen.getByText('Params')).toBeInTheDocument();
-    expect(screen.getByText('Variables')).toBeInTheDocument();
+    expect(screen.getByText('headers')).toBeInTheDocument();
+    expect(screen.getByText('query')).toBeInTheDocument();
+    expect(screen.getByText('params')).toBeInTheDocument();
+    expect(screen.getByText('variables')).toBeInTheDocument();
   });
 });

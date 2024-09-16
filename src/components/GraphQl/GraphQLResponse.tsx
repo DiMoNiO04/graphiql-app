@@ -4,6 +4,7 @@ import RestClientSelectResponseParameters from '../RestClient/RestClientSelectRe
 import RestClientResponseBody from '../RestClient/RestClientResponseBody';
 import RestClientResponseHeaders from '../RestClient/RestClientResponseHeaders';
 import RestClientResponseEditor from '../RestClient/RestClientResponseEditor';
+import { useTranslations } from 'next-intl';
 
 const GraphQL = ({
   response,
@@ -19,16 +20,17 @@ const GraphQL = ({
   responseHeaders: Record<string, string>;
 }) => {
   const [responseParameters, setResponseParameters] = useState<string>('Body');
+  const t = useTranslations('MainPage');
 
   return (
     <div>
-      <h2 className="text-xl font-semibold">Response</h2>
+      <h2 className="text-xl font-semibold">{t('response')}</h2>
       {isLoading ? (
         <div className="flex justify-center items-center py-64">
           <Loader size={40} />
         </div>
       ) : response === '' ? (
-        <div>No response</div>
+        <div>{t('no-response')}</div>
       ) : (
         <div className="flex flex-col gap-3 ">
           <div className="flex gap-3">

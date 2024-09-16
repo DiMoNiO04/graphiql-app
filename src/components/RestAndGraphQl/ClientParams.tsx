@@ -7,6 +7,7 @@ import { Param } from './../../../src/types/params';
 import toast from 'react-hot-toast';
 import { useTranslations } from 'next-intl';
 import { useParams } from './../../../src/contexts/ParamsContext';
+
 const RestClientParams = ({ setUrl, url }: { setUrl: (url: string) => void; url: string }) => {
   const t = useTranslations('MainPage');
   const { params, setParams } = useParams();
@@ -19,7 +20,7 @@ const RestClientParams = ({ setUrl, url }: { setUrl: (url: string) => void; url:
     } else {
       setParams([{ key: '', value: '' }]);
       setUrl(url.split('?')[0]);
-      toast.error('At least one param must remain');
+      toast.error(t('toast-param'));
     }
   };
 
@@ -67,8 +68,8 @@ const RestClientParams = ({ setUrl, url }: { setUrl: (url: string) => void; url:
     <div className="flex flex-col gap-4 ">
       <div className="flex flex-col gap-3">
         <div className="flex gap-2 w-full pl-8 ">
-          <div className="flex-1">Key</div>
-          <div className="flex-1">Value</div>
+          <div className="flex-1">{t('key')}</div>
+          <div className="flex-1">{t('value')}</div>
         </div>
         {params.map((param, index) => (
           <div className="flex gap-2 w-full " key={index}>
@@ -78,14 +79,14 @@ const RestClientParams = ({ setUrl, url }: { setUrl: (url: string) => void; url:
                 <Input
                   type="text"
                   className="w-"
-                  placeholder="Param Key"
+                  placeholder={t('key-placeholder')}
                   value={param.key}
                   onChange={(e) => onParamChange(index, 'key', e.target.value)}
                 />
                 <Input
                   type="text"
                   className=" w-full"
-                  placeholder="Param Value"
+                  placeholder={t('value-placeholder')}
                   value={param.value}
                   onChange={(e) => onParamChange(index, 'value', e.target.value)}
                 />
@@ -103,9 +104,10 @@ const RestClientParams = ({ setUrl, url }: { setUrl: (url: string) => void; url:
       <button
         className=" text-black border border-input px-4 py-2 rounded-md flex items-center gap-2 hover:bg-black/70 hover:text-white transition-all duration-300 w-full justify-center "
         onClick={onAddParam}
+        data-testid="add-params"
       >
         <CirclePlus size={18} />
-        Add Param
+        {t('add-params')}
       </button>
     </div>
   );

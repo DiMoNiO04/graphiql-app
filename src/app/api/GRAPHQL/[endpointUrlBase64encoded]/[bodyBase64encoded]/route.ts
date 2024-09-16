@@ -1,5 +1,5 @@
-import { Header } from '@/src/types/headers';
-import { decodeBase64 } from '@/src/utils/base64';
+import { Header } from '../../../../../types/headers';
+import { decodeBase64 } from '../../../../../utils/base64';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(
@@ -10,7 +10,6 @@ export async function POST(
   const url = new URL(request.url);
   const encodedHeaders = url.searchParams.get('headers') || '';
 
-  // headers
   const decodedHeaders = decodeBase64(encodedHeaders);
   const parsedHeaders = JSON.parse(decodedHeaders);
   const headersObject = parsedHeaders.reduce((acc: Record<string, string>, header: Header) => {

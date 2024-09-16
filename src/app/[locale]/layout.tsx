@@ -5,9 +5,8 @@ import Footer from '../../components/Footer/Footer';
 import { Toaster } from 'react-hot-toast';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import { GeistSans } from 'geist/font/sans';
-import { HeaderProvider } from '@/src/contexts/HeaderContext';
-import { ParamsProvider } from '@/src/contexts/ParamsContext';
+import { HeaderProvider } from '../../contexts/HeaderContext';
+import { ParamsProvider } from '../../contexts/ParamsContext';
 
 export const metadata: Metadata = {
   title: 'REST/GraphiQL Client',
@@ -24,7 +23,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={GeistSans.className}>
+    <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
           <HeaderProvider>

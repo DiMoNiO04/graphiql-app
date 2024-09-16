@@ -5,6 +5,7 @@ import RestClientHeaders from '../RestClient/RestClientHeaders';
 import QueryEditor from '../QueryEditor/QueryEditor';
 import ClientParams from '../RestAndGraphQl/ClientParams';
 import VariablesEditor from '../VariablesEditor/VariablesEditor';
+import { useTranslations } from 'next-intl';
 
 const GraphQLRequestTabs = ({
   query,
@@ -23,8 +24,9 @@ const GraphQLRequestTabs = ({
   setUrl: (url: string) => void;
   url: string;
 }) => {
-  const tabs = ['Headers', 'Query', 'Params', 'Variables'];
-  const [selectedTab, setSelectedTab] = useState('Headers');
+  const t = useTranslations('MainPage');
+  const tabs = [t('headers'), t('query'), t('params'), t('variables')];
+  const [selectedTab, setSelectedTab] = useState(t('headers'));
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
   };
@@ -46,10 +48,10 @@ const GraphQLRequestTabs = ({
           variants={contentVariants}
           transition={{ duration: 0.15, ease: 'easeInOut' }}
         >
-          {selectedTab === 'Headers' && <RestClientHeaders />}
-          {selectedTab === 'Query' && <QueryEditor value={query} onChange={setQuery} />}
-          {selectedTab === 'Variables' && <VariablesEditor value={variables} onChange={setVariables} />}
-          {selectedTab === 'Params' && <ClientParams setUrl={setUrl} url={url} />}
+          {selectedTab === t('headers') && <RestClientHeaders />}
+          {selectedTab === t('query') && <QueryEditor value={query} onChange={setQuery} />}
+          {selectedTab === t('variables') && <VariablesEditor value={variables} onChange={setVariables} />}
+          {selectedTab === t('params') && <ClientParams setUrl={setUrl} url={url} />}
         </motion.div>
       </AnimatePresence>
     </div>
