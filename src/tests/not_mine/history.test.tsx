@@ -1,8 +1,8 @@
 import { test, expect, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import History from '../app/[locale]/history/page';
-import HistoryTable from '../components/History/HistoryTable';
+import History from '../../app/[locale]/history/page';
+import HistoryTable from '../../components/History/HistoryTable';
 
 vi.mock('firebase/auth');
 

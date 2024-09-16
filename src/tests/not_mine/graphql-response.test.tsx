@@ -1,9 +1,9 @@
 import { waitFor, render, screen } from '@testing-library/react';
 import { test, expect, vi } from 'vitest';
 import React from 'react';
-import ResponseViewer from '../components/ResponseViewer/ResponseViewer';
-import ResponseEditor from '../components/ResponseViewer/ResponseEditor';
-import Loader from '../components/Loading/Loading';
+import ResponseViewer from '../../components/ResponseViewer/ResponseViewer';
+import ResponseEditor from '../../components/ResponseViewer/ResponseEditor';
+import Loader from '../../components/Loading/Loading';
 
 vi.mock('next-intl', () => ({
   ...vi.importActual('next-intl'),
