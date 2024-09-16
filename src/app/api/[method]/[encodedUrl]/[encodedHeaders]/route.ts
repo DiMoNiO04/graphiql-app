@@ -121,7 +121,6 @@ export async function DELETE(
     });
     const data = await response.json();
 
-    // get the headers from the response
     const responseHeaders: Record<string, string> = {};
     response.headers.forEach((value, key) => {
       responseHeaders[key] = value;
@@ -221,7 +220,6 @@ export async function PATCH(
     });
     const data = await response.json();
 
-    // get the headers from the response
     const responseHeaders: Record<string, string> = {};
     response.headers.forEach((value, key) => {
       responseHeaders[key] = value;

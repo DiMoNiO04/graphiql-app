@@ -23,15 +23,13 @@ const RestClient = () => {
   const [historyData, setHistoryData] = useState<RequestHistoryItem | null>(null);
   const { headers, setHeaders } = useHeaders();
 
-  console.log(url, 'url');
-
   const [responseHeaders, setResponseHeaders] = useState<Record<string, string>>({});
 
   const onSendButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const startTime = performance.now();
     setIsLoading(true);
-    console.log(method, 'method');
+
     try {
       let result;
       const encodedUrl = encodeBase64(url);

@@ -8,7 +8,6 @@ const Footer = () => {
   return (
     <footer
       style={{
-        // marginTop: '100px',
         width: '100%',
         zIndex: 1,
       }}

@@ -39,7 +39,6 @@ const HistoryTable = ({ history, searchUrlTerm }: { history: RequestHistoryItem[
 
   const redirectToClient = ({ url, method, date, status, id, type }: RequestHistoryItem) => {
     const clientPath = type === 'rest-client' ? '/rest-client' : '/graphQL-client';
-    console.log(id);
     router.push(`${clientPath}?id=${id}`);
   };
 
