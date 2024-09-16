@@ -104,6 +104,7 @@ const RestClientParams = ({ setUrl, url }: { setUrl: (url: string) => void; url:
       <button
         className=" text-black border border-input px-4 py-2 rounded-md flex items-center gap-2 hover:bg-black/70 hover:text-white transition-all duration-300 w-full justify-center "
         onClick={onAddParam}
+        data-testid="add-params"
       >
         <CirclePlus size={18} />
         {t('add-params')}

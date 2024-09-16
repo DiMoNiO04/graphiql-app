@@ -90,6 +90,7 @@
     "add-params": "Add params",
     "key-placeholder": "Key...",
     "value-placeholder": "Value...",
-    "toast-param": "At least one param must remain"
+    "toast-param": "At least one param must remain",
+    "toast-session": "Session expired. Please log in again."
   }
 }

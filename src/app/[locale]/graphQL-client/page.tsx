@@ -2,22 +2,22 @@
 
 import React, { useEffect, useState } from 'react';
 
-import Documentation from '@/src/components/Documentation/Documentation';
-import { encodeBase64 } from '@/src/utils/base64';
+import Documentation from '../../../components/Documentation/Documentation';
+import { encodeBase64 } from '../../../utils/base64';
 import { useTranslations } from 'next-intl';
-import { convertJson, getArr, isBrackets, prettierTextArea } from '@/src/utils/prettifyUtils';
-import { useHeaders } from '@/src/contexts/HeaderContext';
+import { convertJson, getArr, isBrackets, prettierTextArea } from '../../../utils/prettifyUtils';
+import { useHeaders } from '../../../contexts/HeaderContext';
 
 import { Send } from 'lucide-react';
-import { fetchSchema } from '@/src/utils/fetchSchema';
-import Loader from '@/src/components/Loading/Loading';
-import { saveRequestToLocalStorage } from '@/src/utils/saveRequestToLocalStorage';
+import { fetchSchema } from '../../../utils/fetchSchema';
+import Loader from '../../../components/Loading/Loading';
+import { saveRequestToLocalStorage } from '../../../utils/saveRequestToLocalStorage';
 import { useSearchParams } from 'next/navigation';
-import { getLocalStorageDataById } from '@/src/utils/getLocalStorageDataById';
-import { RequestHistoryItem } from '@/src/types/history';
-import GraphQLResponse from '@/src/components/GraphQl/GraphQLResponse';
-import GraphQLRequestTabs from '@/src/components/GraphQl/GraphQlRequestTabs';
-import GraphQLRequestHeader from '@/src/components/GraphQl/GraphQlRequestHeader';
+import { getLocalStorageDataById } from '../../../utils/getLocalStorageDataById';
+import { RequestHistoryItem } from '../../../types/history';
+import GraphQLResponse from '../../../components/GraphQl/GraphQLResponse';
+import GraphQLRequestTabs from '../../../components/GraphQl/GraphQlRequestTabs';
+import GraphQLRequestHeader from '../../../components/GraphQl/GraphQlRequestHeader';
 
 const GraphQlClient = () => {
   const t = useTranslations('MainPage');
@@ -148,6 +148,7 @@ const GraphQlClient = () => {
           }`}
           disabled={endpointUrl === ''}
           onClick={handleSend}
+          data-testid="graphql-send"
         >
           <Send size={16} />
           {t('send')}

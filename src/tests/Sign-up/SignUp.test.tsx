@@ -1,7 +1,7 @@
 import { waitFor, render, screen, fireEvent, act } from '@testing-library/react';
 import { test, expect, vi, beforeEach, describe } from 'vitest';
 import React from 'react';
-import SignUp from '../app/[locale]/(auth)/signup/page';
+import SignUp from '../../app/[locale]/(auth)/signup/page';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 vi.mock('firebase/auth');

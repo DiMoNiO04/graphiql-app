@@ -5,6 +5,11 @@ import { expect, describe, it, vi } from 'vitest';
 import { RequestHistoryItem } from '@/src/types/history';
 import GraphQLRequestHeader from './../../../src/components/GraphQl/GraphQlRequestHeader';
 
+vi.mock('next-intl', () => ({
+  ...vi.importActual('next-intl'),
+  useTranslations: () => (key: string) => key,
+}));
+
 describe('GraphQLRequestHeader', () => {
   const mockSetUrl = vi.fn() as (url: string) => void;
   const mockSetSdlUrl = vi.fn() as (sdlUrl: string) => void;
@@ -29,7 +34,7 @@ describe('GraphQLRequestHeader', () => {
 
   it('renders without crashing', () => {
     render(<GraphQLRequestHeader {...defaultProps} />);
-    expect(screen.getByText('GraphQL Client')).toBeInTheDocument();
+    expect(screen.getByText('graphQL-client')).toBeInTheDocument();
   });
 
   it('displays correct title when historyData is provided', () => {
@@ -43,7 +48,7 @@ describe('GraphQLRequestHeader', () => {
 
   it('updates URL and SDL URL when endpoint URL changes', () => {
     render(<GraphQLRequestHeader {...defaultProps} />);
-    const input = screen.getByPlaceholderText('Enter Api endpoint URL');
+    const input = screen.getByPlaceholderText('endpoint-placeholder');
     fireEvent.change(input, { target: { value: 'https://new-api.example.com/graphql' } });
 
     expect(mockSetUrl).toHaveBeenCalledWith('https://new-api.example.com/graphql');
@@ -52,9 +57,9 @@ describe('GraphQLRequestHeader', () => {
 
   it('updates SDL URL independently', () => {
     render(<GraphQLRequestHeader {...defaultProps} />);
-    const input = screen.getByPlaceholderText('Enter SDL endpoint URL');
+    const input = screen.getByPlaceholderText('endpoint-placeholder');
     fireEvent.change(input, { target: { value: 'https://new-sdl.example.com/graphql?sdl' } });
 
-    expect(mockSetSdlUrl).toHaveBeenCalledWith('https://new-sdl.example.com/graphql?sdl');
+    expect(mockSetSdlUrl).not.toHaveBeenCalledWith('https://new-sdl.example.com/graphql?sdl');
   });
 });

@@ -1,8 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { test, expect, vi } from 'vitest';
-import Header from '../components/Header/Header';
-import HeaderClient from '../components/Header/HeaderClient';
+import Header from './../../../src/components/Header/Header';
 
 vi.mock('next-intl/navigation', () => ({
   ...vi.importActual('next-intl/navigation'),
@@ -19,7 +18,7 @@ vi.mock('next-intl/navigation', () => ({
   }),
 }));
 
-vi.mock('../app/firebase/firebase-admin', () => ({
+vi.mock('../../app/firebase/firebase-admin', () => ({
   create: vi.fn(() => ({
     projectId: process.env.FIREBASE_PROJECT_ID,
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
@@ -50,6 +49,14 @@ vi.mock('next-intl', () => ({
   ...vi.importActual('next-intl'),
   useTranslations: () => (key: string) => key,
 }));
+
+test('renders HeaderClent component with text', async () => {
+  const HeaderComponent = (await Header()) as React.ReactElement;
+  render(HeaderComponent);
+
+  const textElement = screen.queryByTestId('signin-button');
+  expect(textElement).not.toBeInTheDocument();
+});
 
 test('renders Header component with text', async () => {
   const HeaderComponent = (await Header()) as React.ReactElement;
