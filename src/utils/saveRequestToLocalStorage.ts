@@ -14,6 +14,7 @@ export const saveRequestToLocalStorage = (
   status: number | string | null,
   headers: Header[],
   requestBody: string,
+  variables?: string,
   sdlUrl?: string,
   requestType?: 'rest-client' | 'graphql'
 ) => {
@@ -25,6 +26,7 @@ export const saveRequestToLocalStorage = (
     date: new Date().toISOString(),
     status,
     body: requestBody,
+    variables,
     headers,
     type: requestType,
     sdlUrl,

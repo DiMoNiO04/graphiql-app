@@ -72,7 +72,7 @@ const RestClient = () => {
       setResponseHeaders(data['headers']);
       setResponseStatus(data['status']);
       setResponse(JSON.stringify(data['data'], null, 2));
-      saveRequestToLocalStorage(url, method, data['status'], headers, requestBody, 'rest-client');
+      saveRequestToLocalStorage(url, method, data['status'], headers, requestBody, '', '', 'rest-client');
       setIsLoading(false);
     } catch (error) {
       console.error('Error:', error);
@@ -88,7 +88,6 @@ const RestClient = () => {
     const id = searchParams.get('id');
     if (id) {
       const data = getLocalStorageDataById(id);
-
       setHistoryData(data);
       setUrl(data?.url ?? '');
       setMethod(data?.method ?? 'GET');

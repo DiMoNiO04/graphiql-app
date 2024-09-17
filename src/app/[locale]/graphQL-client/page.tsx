@@ -65,20 +65,7 @@ const GraphQlClient = () => {
       setResponseHeaders(response['headers']);
       setResponseStatus(response['status']);
       setResponse(JSON.stringify(response['data'], null, 2));
-
-      saveRequestToLocalStorage(
-        endpointUrl,
-        'POST',
-        response['status'],
-        headers,
-        JSON.stringify({
-          query: query,
-          variables: variables ? JSON.parse(variables) : undefined,
-        }),
-        sdlUrl,
-
-        'graphql'
-      );
+      saveRequestToLocalStorage(endpointUrl, 'POST', response['status'], headers, query, variables, sdlUrl, 'graphql');
       setIsLoading(false);
 
       const schemaText = await fetchSchema(endpointUrl);
@@ -92,6 +79,7 @@ const GraphQlClient = () => {
       console.error('Error:', error);
       setResponse((error as Error).message);
       setResponseStatus(500);
+
       setResponseTime(null);
       setIsLoading(false);
       setIsOpenDocumentation(false);
@@ -120,6 +108,7 @@ const GraphQlClient = () => {
       setHeaders(data?.headers ?? []);
       setQuery(data?.body ?? '');
       setSdlUrl(data?.sdlUrl ?? '');
+      setVariables(data?.variables ?? '');
     }
   }, [searchParams, setHeaders]);
 

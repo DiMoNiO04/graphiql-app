@@ -1,6 +1,6 @@
 ### Built With
 
-This section lists the major frameworks/libraries used to bootstrap the project:
+This section lists the major frameworks/libraries used to build this project
 
 - ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
 - ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)

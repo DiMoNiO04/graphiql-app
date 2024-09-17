@@ -9,5 +9,7 @@ export interface RequestHistoryItem {
   body?: string;
   headers?: Header[];
   sdlUrl?: string;
+  query?: string;
+  variables?: string;
   type: 'rest-client' | 'graphql';
 }
